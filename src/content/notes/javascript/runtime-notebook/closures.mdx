@@ -1,0 +1,19 @@
+---
+slug: closures
+title: Closures keep their lexical environment
+topic: javascript
+sourceKind: Field notes
+sourceTitle: Runtime notebook
+sourceDetail: A sample console notebook
+reference: Language note · Scope
+excerpt: A function retains access to the lexical scope where it was created, even when it runs later elsewhere.
+sample: true
+---
+
+## Closures keep their scope
+
+A function can continue to access bindings from the lexical environment where it was created. That lets a function carry the state it needs into a callback or another later execution.
+
+Closures are useful, and they can also keep values alive longer than expected. Keep captured state small and intentional.
+
+> Sample note: replace this experiment with one from your own notebook.

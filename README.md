@@ -1,36 +1,52 @@
-# Astro + React + TypeScript + shadcn/ui
+# commonplace
 
-This is a template for a new Astro project with React, TypeScript, and shadcn/ui.
+A personal notebook built with Astro. Topic and note content is written in MDX under `src/content` and imported into the static pages at build time.
 
-## Adding components
+## Add a topic
 
-To add components to your app, run the following command:
+Create `src/content/topics/<topic-slug>.mdx` with this frontmatter:
 
-```bash
-npx shadcn@latest add button
+```mdx
+---
+slug: databases
+name: Databases
+number: "05"
+description: Storage, queries & data modeling
+---
+
+Write a short topic introduction here. It can include **MDX** formatting.
 ```
 
-This will place the ui components in the `src/components` directory.
+## Organize notes
 
-## Using components
+Content follows this hierarchy: **Topic → Source → Notes from that source**. A topic is a file in `src/content/topics/`. Store each individual note as an MDX file in `src/content/notes/<topic-slug>/<source-slug>/`. The `source-slug` folder is based on the source title, and `sourceTitle` in each note's frontmatter must match the source's display name. Notes in the same folder and with the same `sourceTitle` appear together on the source page.
 
-To use the components in your app, import them in an `.astro` file:
+## Add an individual note
 
-```astro
+Create one note file per note under `src/content/notes/<topic-slug>/<source-slug>/`. The topic folder must match the topic document's `slug`. Keep notes from a source together in its source folder and use the same `sourceTitle` in their frontmatter.
+
+```mdx
 ---
-import { Button } from "@/components/ui/button"
+slug: indexes
+title: Indexes trade space for faster lookups
+topic: databases
+sourceKind: Book
+sourceTitle: Database Systems
+sourceDetail: Author or other resource details
+reference: Chapter 4 · Indexes
+excerpt: A short summary shown in the note list.
+sample: false
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Astro App</title>
-  </head>
-  <body>
-    <div class="grid h-screen place-items-center content-center">
-      <Button>Button</Button>
-    </div>
-  </body>
-</html>
+Write the full note here. Headings, lists, links, and other MDX are supported.
+```
+
+`sourceKind` may be `Book`, `Video course`, `Course`, `Cohort`, or `Field notes`. `reference` is optional when the note has no chapter, lesson, or section reference. Use a unique `slug` for each note within its topic. The included Cyber, Data, JavaScript, and Python documents are labeled samples and can be replaced with your own content.
+
+## Development
+
+```sh
+bun run dev
+bun run build
+bun run typecheck
 ```

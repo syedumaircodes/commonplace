@@ -1,17 +1,104 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import { Book01Icon } from "@hugeicons/core-free-icons"
+import { topics } from "@/lib/topics"
+
+const categories = topics.map(({ data }) => ({
+  ...data,
+  href: `/notes/${data.slug}/`,
+}))
 ---
 
 <Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
-      </div>
+  <main class="min-h-svh">
+    <div class="relative mx-auto flex min-h-svh w-full flex-col overflow-hidden bg-background">
+      <header class="flex justify-center px-6 pt-6 sm:pt-8">
+        <a
+          href="/"
+          aria-label="commonplace home"
+          class="group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold tracking-tight transition-colors hover:text-muted-foreground"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="size-[18px]"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            {Book01Icon.map(([, attrs]) => (
+              <path
+                d={String(attrs.d)}
+                fill={String(attrs.fill ?? "none")}
+                stroke={String(attrs.stroke ?? "currentColor")}
+                stroke-width={String(attrs.strokeWidth ?? 1.5)}
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            ))}
+          </svg>
+          <span>commonplace</span>
+        </a>
+      </header>
+
+      <section class="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 md:px-16 lg:px-24 lg:py-16">
+        <div class="mx-auto max-w-3xl text-center">
+          <h1 class="mx-auto max-w-3xl text-5xl leading-[1.02] font-semibold tracking-[-0.04em] text-foreground sm:text-6xl md:text-7xl">
+            Oh, you found <br /> my notes.
+          </h1>
+          <p class="mx-auto mt-6 max-w-[38rem] text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+            I’m Syed Umair Ali, also known as{" "}
+            <span class="text-foreground">syedumaircodes</span>. I collect what
+            I learn here, and I hope you learn a lot from it too.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <a
+              href="#notes"
+              class="inline-flex min-h-11 items-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              Explore the notes
+            </a>
+            <a
+              href="https://syedumaircodes.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex min-h-11 items-center rounded-md px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              More about me <span class="sr-only">(opens in a new tab)</span>
+            </a>
+          </div>
+        </div>
+
+        <div id="notes" class="mt-16 scroll-mt-8 sm:mt-20 lg:mt-24">
+          <nav
+            aria-label="Note collections"
+            class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
+          >
+            {categories.map((category) => (
+              <a
+                href={category.href}
+                class="group flex min-h-40 flex-col justify-between rounded-xl border border-border bg-card p-4 transition-colors duration-200 hover:border-foreground/30 hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:min-h-48 sm:p-5"
+              >
+                <div>
+                  <h3 class="text-xl font-medium tracking-tight sm:text-2xl">
+                    {category.name}
+                  </h3>
+                  <p class="mt-1.5 text-xs leading-5 text-muted-foreground sm:text-sm">
+                    {category.description}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </nav>
+        </div>
+      </section>
+
+      <footer class="flex items-center justify-between border-t border-border px-6 py-4 text-xs text-muted-foreground sm:px-10 md:px-16 lg:px-24">
+        <span>Collected with curiosity.</span>
+        <span>© {new Date().getFullYear()} commonplace</span>
+      </footer>
     </div>
-  </div>
+  </main>
 </Layout>

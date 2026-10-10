@@ -1,0 +1,46 @@
+---
+slug: baraa-khatib-sql-1
+title: Introduction to SQL
+topic: databases
+sourceKind: Course
+sourceTitle: SQL Course by Baraa Khatib
+sourceDetail: Udemy course on relational databases
+---
+
+An individual can keep notes in a spreadsheet, a text document, or on paper. For a company handling daily records across customers, vendors, and staff, that approach isn't suitable.
+
+A database provides structured, secure storage that handles high volume while remaining easy to search and update. Analysts and engineers query it using SQL to pull precise answers immediately, which keeps company data fast and protected.
+
+Access happens through a few different ways. Data specialists write SQL directly against the database, employees in other departments use internal software for reporting and routine tasks, and customers interact with it through a website or app whenever they submit account details or activity.
+
+Because the database file is just passive storage, it cannot manage that incoming traffic on its own. That coordination falls to a Database Management System (DBMS). The DBMS handles query queues, decides which commands execute first, and verifies permissions before letting any statement touch the data.
+
+The entire environment rests on four pieces working together: the database holds the records, SQL provides the query language, the DBMS manages the rules and traffic, and a physical or cloud server supplies the hardware to run it all
+
+![[sql-infra.png]]
+
+## Types of Databases
+
+Databases organize data differently based on storage and query requirements. Most fall into two categories: relational databases that use SQL, and non-relational systems grouped under the NoSQL label. Relational models remain the standard image of a database, but several NoSQL architectures handle specialized engineering and analytical tasks.
+
+| Database Type | Architecture | Data Organization                                           | Primary Focus                                               | Notable Examples                        |
+| ------------- | ------------ | ----------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------- |
+| Relational    | SQL          | Rows and columns with defined table relationships           | General-purpose management of linked, structured records    | Microsoft SQL Server, MySQL, PostgreSQL |
+| Key-Value     | NoSQL        | Unique keys paired with values, like a dictionary           | Fast lookups through a single key                           | Redis, Amazon DynamoDB                  |
+| Column-Based  | NoSQL        | Data grouped by column instead of row                       | High-performance search and analytics across large datasets | Apache Cassandra, Amazon Redshift       |
+| Graph         | NoSQL        | Networked nodes tracking connections between entities       | Modeling interconnected networks and objects                | Neo4j                                   |
+| Document      | NoSQL        | Self-contained documents stored without rigid table schemas | Storing varied data together on flexible single pages       | MongoDB                                 |
+
+## SQL Commands
+
+SQL organizes commands into separate categories depending on the task. Setting up a database starts with creating the tables that will hold information. The commands that build, change, or remove these structures make up Data Definition Language (DDL). Running `CREATE` defines an empty table, while `ALTER` and `DROP` modify schemas or delete tables entirely.
+
+Once tables exist, they are filled with records from user actions and applications. Managing those records falls under Data Manipulation Language (DML). These commands update row contents without touching the table definitions.
+
+Reading that stored data requires Data Query Language (DQL). The SELECT command tells the database engine to search its records and return the requested results.
+
+| Category | Full Name                  | Primary Purpose                                        | Keywords               |
+| -------- | -------------------------- | ------------------------------------------------------ | ---------------------- |
+| DDL      | Data Definition Language   | Builds, alters, and deletes schemas and tables         | CREATE, ALTER, DROP    |
+| DML      | Data Manipulation Language | Adds, modifies, and removes data records inside tables | INSERT, UPDATE, DELETE |
+| DQL      | Data Query Language        | Retrieves, filters, and displays data                  | SELECT                 |
