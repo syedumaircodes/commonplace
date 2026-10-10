@@ -1,0 +1,77 @@
+---
+slug: baraa-khatib-sql-2
+title: Selecting Data
+topic: databases
+sourceKind: Course
+sourceTitle: SQL Course by Baraa Khatib
+sourceDetail: Udemy course on relational databases
+---
+
+An SQL statement relies on a few core syntax pieces to retrieve and modify data. In most editors, visual cues such as syntax highlighting colors and casing styles signal what each piece does, making queries easier to read and troubleshoot.
+
+Queries are organized into clauses that carry out specific tasks
+
+- `SELECT` specifies the columns to return.
+- `FROM` names the source table, and `WHERE` filters the rows.
+
+Writing reserved keywords in uppercase is standard practice because it cleanly separates the language commands from table names, column names, and static values.
+
+Database engines execute SQL queries in an order that differs from how they are written. Even though a query begins with `SELECT`, the engine evaluates the `FROM` clause first so it can locate and load the source table from storage. Once that data is in memory, it processes the `SELECT` clause to decide which columns appear in the result.
+
+```sql
+-- Select all columns
+SELECT * FROM table_name;
+
+-- Select required columns
+SELECT col1, col2 FROM table_name;
+```
+
+## The where clause
+
+The `WHERE` clause filters rows based on conditions you specify. The database tests each row individually, records that match the condition stay in the result, while non-matching records are dropped. This lets you isolate specific rows, such as customers in a given region or accounts over a numeric threshold.
+
+> Filtering rows vertically with `WHERE` and picking columns horizontally with `SELECT` allows you to cut down both dimensions of the table at once.
+
+## Ordering results
+
+The `ORDER BY` clause sorts query results so rows return in a consistent sequence rather than an arbitrary one. It requires at least one column name and an optional direction: ascending or descending.
+
+Omitting the keyword defaults to ascending order, but writing `ASC` directly is common practice because it keeps your intent clear to anyone reading the query.
+
+If a column has duplicate values, like multiple customers in the same country, sorting by that field alone leaves matching rows in an unpredictable internal order. To control that, SQL allows multi-column sorting with comma-separated column names. Each column can have its own sort direction
+
+Multi-column sorting evaluates fields strictly from left to right. The first column defines the primary order, and each following column only takes effect when rows share identical values in the preceding columns. Placing a column with unique values first makes every following sort column useless, since no ties ever occur.
+
+## Grouping results
+
+The `GROUP BY` clause condenses rows with matching values into a single summary row per category. Instead of listing every transaction or record, grouping produces one row for each distinct value or combination of values.
+
+Other columns are summarized using aggregate functions like `SUM` for totals or `COUNT` for row counts. Because calculated values do not belong to existing table columns, the engine typically displays generic headers like no column name. Adding an alias with the `AS` keyword gives the calculated field a clear, temporary name in the results without altering the table itself.
+
+> When GROUP BY is active, SQL restricts which columns you can include in the SELECT list
+
+## The having clause
+
+The `HAVING` clause filters results after data aggregation takes place. Standard filtering looks at individual rows, but `HAVING` inspects summary metrics calculated across groups. Because it acts on aggregated numbers, it works alongside `GROUP BY` and takes conditions built on aggregate functions like `SUM, AVG`, or `COUNT`.
+
+## Ditinct values
+
+The `DISTINCT` keyword removes duplicate rows from SQL results so each record appears only once. It sits directly after `SELECT` without commas or intervening keywords.
+
+> Deduplication requires extra processing, so using DISTINCT indiscriminately slows queries down.
+
+Relying on `DISTINCT` as a default safety net is poor query design. Running deduplication on columns that are already unique, like auto-incrementing customer IDs, forces the database to waste memory and CPU cycles checking for duplicates that cannot exist. The keyword belongs on queries where the data has actual repetition that needs to be consolidated.
+
+## Limiting Values
+
+The `TOP` clause, called `LIMIT` in several other database dialects, sets a maximum number of records a query can return. It does not evaluate data values against conditions. It simply acts as a row-count cutoff.
+
+Without an `ORDER BY` clause, `TOP` truncates rows arbitrarily based on how the engine retrieves them from storage. Paired with sorting, it works as a ranking tool. Because the engine sorts rows before truncating them, it organizes the dataset first and then applies TOP to keep only the highest- or lowest-ranked rows.
+
+---
+
+## Query execution
+
+Writing an SQL query requires following a fixed syntax order. A query starts with `SELECT`, followed by modifiers like `DISTINCT` and `TOP`, then the column list. Next comes `FROM` to specify the source table, `WHERE` to filter individual rows, `GROUP BY` to organize categories, `HAVING` to filter aggregated figures, and `ORDER BY` to sort rows. Leaving this sequence triggers syntax errors because the parser expects these keywords in an exact order.
+
+This execution order is why early-stage clauses like `WHERE` cannot reference aliases or expressions created in `SELECT` or `HAVING` as the engine has not calculated them yet. Keeping the distinction between written syntax and runtime execution in mind helps prevent syntax errors and makes query performance much easier to predict.

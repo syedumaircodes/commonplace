@@ -1,7 +1,8 @@
 ---
 import Layout from "@/layouts/main.astro"
+import SiteFooter from "@/components/site-footer.astro"
+import SiteHeader from "@/components/site-header.astro"
 import { notes as noteEntries, sourceSlug, topics } from "@/lib/topics"
-import { Book01Icon } from "@hugeicons/core-free-icons"
 
 export function getStaticPaths() {
   const groups = new Map()
@@ -35,52 +36,9 @@ const { topic, source, notes } = Astro.props
 <Layout>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-7xl flex-col bg-background">
-      <header class="px-6 pt-6 sm:px-10 sm:pt-8 md:px-12">
-        <a
-          href="/"
-          aria-label="commonplace home"
-          class="group inline-flex items-center gap-2 py-2 text-sm font-semibold tracking-tight transition-colors hover:text-muted-foreground"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="size-[18px]"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            {Book01Icon.map(([, attrs]) => (
-              <path
-                d={String(attrs.d)}
-                fill={String(attrs.fill ?? "none")}
-                stroke={String(attrs.stroke ?? "currentColor")}
-                stroke-width={String(attrs.strokeWidth ?? 1.5)}
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            ))}
-          </svg>
-          <span>commonplace</span>
-        </a>
-      </header>
+      <SiteHeader />
 
       <div class="mx-auto w-full max-w-3xl flex-1 px-6 pb-16 pt-10 sm:px-10 sm:pt-14 md:px-12 md:pt-16">
-        <nav
-          aria-label="Breadcrumb"
-          class="mb-10 flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
-        >
-          <a
-            href={`/notes/${Astro.params.slug}/`}
-            class="transition-colors hover:text-foreground"
-          >
-            {topic.data.name}
-          </a>
-          <span aria-hidden="true">/</span>
-          <span class="text-foreground">{source.title}</span>
-        </nav>
-
         <header class="pb-8 sm:pb-10">
           <p class="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
             {source.sourceKind}
@@ -93,35 +51,28 @@ const { topic, source, notes } = Astro.props
         <section aria-label={`Notes from ${source.title}`}>
           <ol class="grid gap-3 sm:gap-4">
             {notes.map((note: (typeof noteEntries)[number]) => (
-              <li class="rounded-xl border border-border bg-card p-5 transition-colors duration-200 hover:border-foreground/30 sm:p-6">
-                <div>
-                  <h2 class="text-lg font-medium tracking-tight sm:text-xl">
-                    <a
-                      class="underline decoration-border underline-offset-4 hover:decoration-foreground"
-                      href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
-                    >
-                      {note.data.title}
-                    </a>
+              <li>
+                <a
+                  class="block rounded-xl border border-border bg-card p-4 transition-colors duration-200 hover:border-foreground/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:p-5"
+                  href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
+                >
+                  <h2 class="text-lg font-medium tracking-tight underline decoration-border underline-offset-4 sm:text-xl">
+                    {note.data.title}
                   </h2>
                   <span class="mt-1 block text-xs leading-5 text-muted-foreground">
                     {note.data.reference}
                   </span>
-                </div>
+                </a>
               </li>
             ))}
           </ol>
         </section>
       </div>
 
-      <footer class="flex items-center justify-between border-t border-border px-6 py-4 text-xs text-muted-foreground sm:px-10 md:px-16 lg:px-24">
-        <a
-          href={`/notes/${Astro.params.slug}/`}
-          class="transition-colors hover:text-foreground"
-        >
-          ← {topic.data.name}
-        </a>
-        <span>© {new Date().getFullYear()} commonplace</span>
-      </footer>
+      <SiteFooter
+        backHref={`/notes/${Astro.params.slug}/`}
+        backLabel={topic.data.name}
+      />
     </div>
   </main>
 </Layout>

@@ -1,7 +1,8 @@
 ---
 import Layout from "@/layouts/main.astro"
+import SiteFooter from "@/components/site-footer.astro"
+import SiteHeader from "@/components/site-header.astro"
 import { notes, sourceSlug, topics } from "@/lib/topics"
-import { Book01Icon } from "@hugeicons/core-free-icons"
 
 export function getStaticPaths() {
   return topics.map(({ data }) => ({ params: { slug: data.slug } }))
@@ -26,36 +27,7 @@ const { Content } = topic
 <Layout>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-7xl flex-col bg-background">
-      <header class="flex justify-center px-6 pt-6 sm:pt-8">
-        <a
-          href="/"
-          aria-label="commonplace home"
-          class="group inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold tracking-tight transition-colors hover:text-muted-foreground"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="size-4.5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            {Book01Icon.map(([, attrs]) => (
-              <path
-                d={String(attrs.d)}
-                fill={String(attrs.fill ?? "none")}
-                stroke={String(attrs.stroke ?? "currentColor")}
-                stroke-width={String(attrs.strokeWidth ?? 1.5)}
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            ))}
-          </svg>
-          <span>commonplace</span>
-        </a>
-      </header>
+      <SiteHeader />
 
       <section class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 py-12 sm:px-10 sm:py-14 md:px-16 lg:px-24 lg:py-16">
         <div class="mx-auto max-w-3xl text-center">
@@ -74,7 +46,10 @@ const { Content } = topic
         <section class="mt-16 sm:mt-20 lg:mt-24">
           <div class="grid grid-cols-1 gap-2">
             {sources.map((source) => (
-              <article class="flex items-center justify-between gap-4 rounded-lg border border-border bg-card px-4 py-3 transition-colors duration-200 hover:border-foreground/30">
+              <a
+                href={`/notes/${slug}/${source.sourceSlug}/`}
+                class="flex min-h-16 items-center justify-between gap-4 rounded-lg border border-border bg-card px-4 py-3 transition-colors duration-200 hover:border-foreground/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
                 <div class="min-w-0">
                   <span class="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
                     {source.sourceKind}
@@ -83,24 +58,13 @@ const { Content } = topic
                     {source.sourceTitle}
                   </h2>
                 </div>
-                <a
-                  href={`/notes/${slug}/${source.sourceSlug}/`}
-                  class="inline-flex min-h-11 shrink-0 items-center text-xs font-medium text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:text-sm"
-                >
-                  Open notes
-                </a>
-              </article>
+              </a>
             ))}
           </div>
         </section>
       </section>
 
-      <footer class="flex items-center justify-between border-t border-border px-6 py-4 text-xs text-muted-foreground sm:px-10 md:px-16 lg:px-24">
-        <a href="/" class="transition-colors hover:text-foreground">
-          ← All topics
-        </a>
-        <span>© {new Date().getFullYear()} commonplace</span>
-      </footer>
+      <SiteFooter backHref="/" backLabel="All topics" />
     </div>
   </main>
 </Layout>
