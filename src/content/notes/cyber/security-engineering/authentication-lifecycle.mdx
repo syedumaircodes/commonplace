@@ -1,0 +1,49 @@
+---
+slug: intro-sec-eng
+title: Introduction to Security Engineering
+topic: cybersecurity
+sourceKind: Book
+sourceTitle: Security Engineering v3
+---
+
+> Security engineering is the process of building and securing new and legacy digital systems that can't be harmed or be exploited by bad actors.
+
+It focuses on the tools, processes, and methods needed to design, implement, and test complete systems, and to adapt existing systems as their environment evolves. It requires the team or person responsible to have cross disciplinary expertise in computer science, software, hardware, economics, laws, and psychology.
+
+Having domain knowledge about the environment for which you're building the system for is important and knowing how exactly people in your domain can hack or take over the system is important but safe guarding the system from all kinds of other threats (internal and external) is regarded as the best course of action.
+
+> You can't protect the system from a threat if you don't know how the attacker will attack so you must deliberately try to destroy the system yourself to learn the ways of a hacker.
+
+As everything becomes digitized and connected, security engineering is even more important now. If one system gets hacked all of the connected system can be compromised as well. You must know what should be protected and what should not be, as it is a common mistake that security teams make as they try to secure the right information the wrong way or even worse, secure the wrong information the right way.
+
+## Security Framework
+
+Before you start writing code, you need the four pillars of secure design defined and scoped.
+
+- Policy is for defining what you hope to achieve from this system and why securing it matters.
+- Mechanism is about how the system will be secured and who will get access and how.
+- Assurance is for making sure the system is actually secure and will stay secure during an attack or during peak load.
+- Incentive is the most important one and is about why should the people guarding the system guard it in the first place.
+
+<img
+  src="/images/notes/cyber/security-engineering/sec-framework.png"
+  alt="Security Framework"
+/>
+
+## Why banks need security
+
+The main threat to a bank is never an external threat but an internal one, a internal system that could be accessed publicly, an employee gone rouge or a system that failed to save data but showed it as being saved.
+
+> Money in the bank follows the first law of thermodynamics, the money cannot be created or destroyed, it can be only moved from one account to another.
+
+The public facing sides of banks, ATMs, PoS, and other FinTech systems are also vulnerable to both internal and external threats as someone with knowledge about how these systems work can hack into them. Protecting them from being used for fraud or theft requires the cross disciplinary capabilities we saw above.
+
+## Securing healthcare
+
+In healthcare, the primary security requirements shift toward patient safety and personal privacy. Hospitals face unique engineering challenges where software, infrastructure, and data directly impact human lives.
+
+> The most common issue is that different medical devices have different user interfaces and no standard exists for it. As devices gain wireless connectivity, the threat of cyber attacks has increased as well.
+
+Patient record management demands strict access control to protect medical privacy. European court rulings mandate that patients can restrict their health data exclusively to the clinical staff actively involved in their care, requiring systems to enforce precise, context-based rules, such as granting a nurse access only to patients treated in their department within a specific timeframe.
+
+Anonymizing medical data for research presents another significant hurdle because removing names or encrypting obvious identifiers is insufficient to prevent re-identification. Combining basic demographic data with specific dates and conditions.
