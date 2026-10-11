@@ -41,6 +41,16 @@ sample: false
 Write the full note here. Headings, lists, links, and other MDX are supported.
 ```
 
+## Add images to a note
+
+Place image files in `public/images/notes/<topic-slug>/<source-slug>/` to share one folder across all notes from a source. The source slug is the lowercased, hyphenated version of `sourceTitle` (for example, `SQL Course by Baraa Khatib` becomes `sql-course-by-baraa-khatib`). Reference images from a note's MDX by filename:
+
+```mdx
+![A diagram showing the idea](./diagram.png)
+```
+
+Images are displayed responsively on the individual note page. You can also use a root-relative path such as `/images/shared/diagram.png` or an external image URL.
+
 `sourceKind` may be `Book`, `Video course`, `Course`, `Cohort`, or `Field notes`. `reference` is optional when the note has no chapter, lesson, or section reference. Use a unique `slug` for each note within its topic. The included Cyber, Data, JavaScript, and Python documents are labeled samples and can be replaced with your own content.
 
 ## Development

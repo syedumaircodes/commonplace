@@ -25,6 +25,7 @@ export function getStaticPaths() {
 const { note, topic } = Astro.props
 const { Content } = note
 const source = sourceSlug(note.data.sourceTitle)
+const noteImages = `/images/notes/${topic.data.slug}/${source}/`
 ---
 
 <Layout>
@@ -45,7 +46,18 @@ const source = sourceSlug(note.data.sourceTitle)
         </header>
 
         <div class="mdx-content mt-8 text-base leading-7 text-foreground/90 sm:mt-10">
-          <Content />
+          <Content
+            components={{
+              img: (props: { src?: string; alt?: string; title?: string }) => (
+                <img
+                  {...props}
+                  src={props.src?.startsWith("./") ? `${noteImages}${props.src.slice(2)}` : props.src}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ),
+            }}
+          />
         </div>
       </article>
 

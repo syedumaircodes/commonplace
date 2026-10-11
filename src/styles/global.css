@@ -8,6 +8,15 @@
   margin-top: 1.25rem;
 }
 
+.mdx-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 0.125rem);
+}
+
 .mdx-content h2,
 .mdx-content h3 {
   margin-top: 2.25rem;
