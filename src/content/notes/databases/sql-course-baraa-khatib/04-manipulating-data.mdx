@@ -1,0 +1,29 @@
+---
+slug: baraa-khatib-sql-4
+title: Manipulating Data
+topic: databases
+sourceKind: Course
+sourceTitle: SQL Course by Baraa Khatib
+sourceDetail: Udemy course on relational databases
+---
+
+## Inserting Data
+
+The `INSERT INTO` command adds new rows to a database table. Because it modifies the table directly rather than reading it, the engine returns an affected-row count instead of a result grid.
+
+- Manually add data using `INSERT INTO` queries
+- Combine `SELECT` and `INSERT` and migrate data from table to another
+
+## Updating data
+
+The `UPDATE` statement modifies existing values in a table. Unlike an insert, it overwrites specific column data in place without adding new rows or altering the schema.
+
+An `UPDATE` statement names the target table, sets new values with the `SET` keyword, and separates multiple column assignments with commas.
+
+> `UPDATE` statements should almost always end with a `WHERE` clause. If you omit `WHERE`, the engine applies the update to every single record in the table, overwriting the target columns completely.
+
+## Deleting Data
+
+The `DELETE` statement removes existing rows from a database table. It permanently deletes records from storage while leaving the table structure and its columns untouched.
+
+Running `DELETE FROM table_name` without a condition deletes every row in the table. To avoid wiping out data unintentionally, queries use a `WHERE` clause to target specific records, such as deleting entries where an ID exceeds a certain number.

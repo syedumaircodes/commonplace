@@ -1,0 +1,25 @@
+---
+slug: baraa-khatib-sql-3
+title: Creating Databases and Tables
+topic: databases
+sourceKind: Course
+sourceTitle: SQL Course by Baraa Khatib
+sourceDetail: Udemy course on relational databases
+---
+
+Setting up a new environment begins with `CREATE TABLE`. Unlike query statements, DDL commands do not return data rows; the database engine simply returns a message confirming whether the command ran successfully. Running `SELECT *` on a newly created table displays the column names over zero rows, confirming that the structure exists.
+
+If you ever need to inspect or recreate an existing table definition, graphical database tools can reverse-engineer it: right-clicking the table lets you script its definition directly into a query window. This reads system metadata to regenerate the full DDL statement, including default schema prefixes. While useful for recovering lost scripts, the standard practice is to store all base DDL files in a version-control repository like Git, where schema changes can be tracked and shared across teams.
+
+## Altering Tables
+
+The `ALTER TABLE` statement modifies an existing table structure without rebuilding it from scratch. It handles schema updates, such as adding columns, changing data types, or deleting unused fields. Modifying an existing table involves different practical trade-offs than dropping and recreating it.
+
+- Altering a table preserves existing data and constraints and appends new columns to the end of the table.
+- Rebuilding the table from scratch deletes all records unless backed up and migrated but allows full control over column order in the schema.
+
+## Dropping tables
+
+The `DROP TABLE` command permanently deletes a table from a database. Unlike queries or schema alterations, `DROP` deletes both the table structure and every record inside it.
+
+The short syntax, `DROP TABLE table_name`, makes the command easy to run, but that brevity is what makes it hazardous. Running it by mistake can wipe out critical records because database engines provide no confirmation dialogs or built-in recovery buffers.
