@@ -1,0 +1,148 @@
+---
+slug: baraa-khatib-sql-5
+title: Filtering Data
+topic: databases
+sourceKind: Course
+sourceTitle: SQL Course by Baraa Khatib
+sourceDetail: Udemy course on relational databases
+---
+
+SQL includes several types of operators for filtering and checking data. Comparison operators for pairs of values, logical operators for multiple conditions, range checks (`BETWEEN`), membership tests (`IN`, `NOT IN`), and pattern searches (`LIKE`).
+
+- Comparison operators evaluate relationships between two expressions
+- Logical operators combine multiple conditional criteria
+- Range operators check whether a value falls within defined bounds
+- Membership operators verify if a value exists within a specified list
+- Search operators find patterns or partial matches within text
+
+## Comparison operators
+
+Comparison operators handle filtering inside the `WHERE` clause. A standard condition sits between two expressions. Those expressions can compare two columns directly, match a column against a literal value, transform columns with functions before comparing, run arithmetic across columns, or evaluate a nested subquery.
+
+| Syntax / Symbols | Evaluation Logic                                                   | Boundary Inclusion Example                      |
+| ---------------- | ------------------------------------------------------------------ | ----------------------------------------------- |
+| `=`              | Matches rows where both expressions are identical                  | Exact match only (`country = 'Germany'`)        |
+| `!=` or `<>`     | Matches rows where expressions are different                       | Excludes matches (`country != 'Germany'`)       |
+| `>`              | Matches rows where the left value strictly exceeds the right       | Excludes boundary (`score > 500` excludes 500)  |
+| `>=`             | Matches rows where the left value meets or exceeds the right       | Includes boundary (`score >= 500` includes 500) |
+| `<`              | Matches rows where the left value is strictly lower than the right | Excludes boundary (`score < 500` excludes 500)  |
+| `<=`             | Matches rows where the left value is lower than or meets the right | Includes boundary (`score <= 500` includes 500) |
+
+---
+
+## Logical operators
+
+SQL uses logical operators in the `WHERE` clause to filter data across single or multiple conditions. `AND` and `OR` combine separate conditions, while `NOT` inverts the outcome of an individual condition.
+
+The `AND` operator connects multiple conditions. Every condition must be true for a row to appear in the output. If any condition is false, the entire expression evaluates to false and SQL drops the row.
+
+| First Condition | Second Condition | Overall `AND` Result | Final Row Status     |
+| --------------- | ---------------- | -------------------- | -------------------- |
+| True            | True             | True                 | Kept in final output |
+| True            | False            | False                | Filtered out         |
+| False           | True             | False                | Filtered out         |
+| False           | False            | False                | Filtered out         |
+
+```sql
+WHERE country = 'USA' AND score > 500
+```
+
+The `OR` operator requires only one condition to be true for SQL to return a row. Unlike `AND`, which demands that every condition pass, `OR` keeps a row as long as a single criterion is met. SQL drops the row only if every connected condition is false.
+
+| First Condition | Second Condition | `AND` Evaluation Result | `OR` Evaluation Result |
+| --------------- | ---------------- | ----------------------- | ---------------------- |
+| True            | True             | True (Kept)             | True (Kept)            |
+| True            | False            | False (Excluded)        | True (Kept)            |
+| False           | True             | False (Excluded)        | True (Kept)            |
+| False           | False            | False (Excluded)        | False (Excluded)       |
+
+```sql
+WHERE country = 'USA' OR score > 500
+```
+
+> Customers who meet both criteria remain in the output, but customers meeting only one are now included as well: an overseas customer with a high score or a domestic customer with a low score. SQL excludes only the records that fail both requirements.
+
+The `NOT` operator reverses the truth value of a condition. While `AND` and `OR` link multiple expressions, `NOT` modifies a single expression. True becomes false, and false becomes true. Records that satisfy the base condition are excluded, while records that fail it are kept.
+
+| Base Condition Evaluation | Negated Evaluation with `NOT` | Impact on Row Retention      |
+| ------------------------- | ----------------------------- | ---------------------------- |
+| True (Meets criteria)     | False                         | Row is excluded from results |
+| False (Fails criteria)    | True                          | Row is included in results   |
+
+This allows reversing query logic without altering the comparison operator itself. Finding customers whose score is not under 500 can be written by flipping the comparison directly:
+
+```sql
+WHERE score >= 500
+```
+
+Or by applying `NOT` to the original comparison:
+
+```sql
+WHERE NOT score < 500
+```
+
+---
+
+## Range Operators
+
+The SQL `BETWEEN` operator filters for values that fall between a lower and an upper boundary. Any record with a value inside that interval passes the filter. Because the boundaries are inclusive, values that match either endpoint are also kept.
+
+```sql
+WHERE score BETWEEN 100 AND 500
+```
+
+| Evaluation Approach | Syntax Example                        | Inclusivity Visibility           | Primary Advantage                                      |
+| ------------------- | ------------------------------------- | -------------------------------- | ------------------------------------------------------ |
+| `BETWEEN` Operator  | `WHERE score BETWEEN 100 AND 500`     | Implicitly inclusive by design   | More compact and natural to read                       |
+| Compound Comparison | `WHERE score >= 100 AND score <= 500` | Explicitly shown via `=` symbols | Removes ambiguity about whether endpoints are included |
+
+You can write this same range by pairing comparison operators with `AND`:
+
+```sql
+WHERE score >= 100 AND score <= 500
+```
+
+Both queries return identical data. Developers often use the compound syntax because the `=` operators leave no doubt about whether the boundaries are included.
+
+The `IN` operator tests whether a column value matches any item in a specified list. If the row contains a matching value, the condition evaluates to true and the record is kept. The `NOT IN` operator reverses that check, discarding values in the list and keeping only the ones that are absent.
+
+```sql
+WHERE country IN ('Germany', 'USA')
+```
+
+```sql
+WHERE country NOT IN ('Germany', 'USA')
+```
+
+| Comparison Aspect           | Chained `OR` Approach                                                         | `IN` Operator Approach                                                              |
+| --------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Syntax Structure            | Repeated column declarations (`WHERE country = 'Germany' OR country = 'USA'`) | Single column declaration with a value list (`WHERE country IN ('Germany', 'USA')`) |
+| Readability and Maintenance | Cluttered, repetitive, and difficult to manage as value lists expand          | Concise, clean, and simple to extend by appending values                            |
+| Query Scalability           | Verbose and error-prone when handling dozens or hundreds of target values     | Compact, easier to read, and optimized for database execution plans                 |
+
+You can produce the same result by chaining `OR` checks (`WHERE country = 'Germany' OR country = 'USA'`), but repeating the column name gets tedious when checking dozens or hundreds of items. Using `IN` keeps the query compact, simpler to maintain, and easier for the query planner to optimize.
+
+---
+
+## Search Operators
+
+The SQL `LIKE` operator tests text columns against patterns instead of exact values. It relies on two wildcards: the percent sign (`%`) and the underscore (`_`). The percent sign matches zero, one, or multiple characters. The underscore is a positional placeholder that matches exactly one character or digit.
+
+| Wildcard Symbol    | Match Length                      | Match Flexibility                              | Common Pattern Example             |
+| ------------------ | --------------------------------- | ---------------------------------------------- | ---------------------------------- |
+| Percent Sign (`%`) | Zero, one, or multiple characters | Flexible; matches any leading or trailing text | `'M%'` (starts with M)             |
+| Underscore (`_`)   | Exactly one character             | Fixed; matches a single character position     | `'__R%'` (R in the third position) |
+
+How you position wildcards around literal characters controls the match:
+
+- Put `%` after a letter to match values starting with that letter.
+- Put `%` before a letter to match values ending with that letter.
+- Wrap a letter in `%` on both sides to find that character anywhere in the value.
+- Put underscores before a letter to lock in an exact character index.
+
+| Search Objective            | Pattern Syntax | Matching Rule                                     | Example Matches       |
+| --------------------------- | -------------- | ------------------------------------------------- | --------------------- |
+| Starts with character       | `'M%'`         | Starts with M, followed by any characters         | Maria, Martin, M      |
+| Ends with character         | `'%N'`         | Ends with N, preceded by any characters           | John, Martin, IN      |
+| Contains character anywhere | `'%R%'`        | Contains R at the start, middle, end, or alone    | Maria, Peter, Ryan    |
+| Exact character position    | `'__R%'`       | Two preceding characters, R in the third position | Maria, Martin, Albert |
