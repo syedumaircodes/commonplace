@@ -35,36 +35,45 @@ const { topic, source, notes } = Astro.props
 
 <Layout>
   <main class="min-h-svh">
-    <div class="mx-auto flex min-h-svh w-full max-w-6xl flex-col bg-background">
+    <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
       <SiteHeader />
 
-      <div class="mx-auto w-full max-w-6xl flex-1 px-6 sm:px-10 lg:px-16">
-        <header class="flex flex-col justify-center py-16 sm:py-20">
+      <div class="mx-auto w-full max-w-3xl flex-1 px-6 sm:px-10">
+        <header class="flex flex-col justify-center py-14 sm:py-18">
+          <p class="label-caps mb-3">
+            <a href={`/notes/${topic.data.slug}/`} class="hover:text-foreground">
+              {topic.data.name}
+            </a>
+          </p>
           <h1
-            class="max-w-[24ch] text-[clamp(2rem,5.5vw,3.75rem)] leading-[1] font-semibold tracking-[-0.04em] break-words text-foreground text-balance"
+            class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-medium break-words text-foreground text-balance"
           >
             {source.sourceTitle}
           </h1>
+          {
+            source.sourceDetail && (
+              <p class="mt-4 max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+                {source.sourceDetail}
+              </p>
+            )
+          }
         </header>
 
-        <section aria-label={`Notes from ${source.title}`} class="border-t border-hairline">
+        <section aria-label={`Notes from ${source.sourceTitle}`}>
+          <h2 class="label-caps mb-2">Notes</h2>
           <ol>
-            {notes.map((note: (typeof noteEntries)[number], index: number) => (
+            {notes.map((note: (typeof noteEntries)[number]) => (
               <li class="border-t border-hairline">
                 <a
-                  class="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 gap-y-1 py-6 sm:grid-cols-[3.5rem_1fr_auto] sm:py-7"
+                  class="block py-6 sm:py-7"
                   href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
                 >
-                  <span class="font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <span class="text-lg leading-snug font-medium tracking-[-0.01em] text-foreground sm:text-xl">
+                  <span class="font-display block text-[1.3125rem] leading-snug font-medium text-foreground sm:text-[1.4375rem]">
                     {note.data.title}
                   </span>
 
                   {note.data.reference && (
-                    <span class="col-start-2 row-start-2 text-sm text-muted-foreground sm:col-start-3 sm:row-start-1 sm:text-right">
+                    <span class="mt-1.5 block text-[0.875rem] text-muted-foreground">
                       {note.data.reference}
                     </span>
                   )}

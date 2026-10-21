@@ -4,9 +4,10 @@ import SiteFooter from "@/components/site-footer.astro"
 import SiteHeader from "@/components/site-header.astro"
 import { topics } from "@/lib/topics"
 
-const collections = topics.map(({ data }) => ({
+const collections = topics.map(({ data }, index) => ({
   ...data,
   href: `/notes/${data.slug}/`,
+  size: ["2.125rem", "2.5rem", "1.875rem"][index % 3],
 }))
 ---
 
@@ -14,45 +15,48 @@ const collections = topics.map(({ data }) => ({
   <main class="flex min-h-svh flex-col bg-background">
     <SiteHeader />
 
-    <section class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 sm:px-10 lg:px-16">
+    <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
       <!-- Hero -->
-      <div class="flex flex-1 flex-col justify-center py-20 sm:py-28 lg:py-32">
-        <h1
-          class="max-w-[18ch] text-[clamp(2.75rem,8vw,6rem)] leading-[0.98] font-semibold tracking-[-0.045em] text-foreground text-balance"
-        >
-          A garden of notes I keep tending.
+      <div class="flex flex-1 flex-col justify-center py-20 sm:py-24">
+        <h1 class="font-display max-w-[22ch] text-[clamp(2.25rem,6vw,3.75rem)] leading-[1.06] font-medium text-foreground text-balance">
+          Welcome to my personal spirit library
         </h1>
 
-        <p
-          class="mt-10 max-w-[54ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
-        >
-          I’m Syed Umair Ali — <span class="text-foreground">syedumaircodes</span
-          >. Everything I learn gets planted here and revisited. Nothing here is finished;
-          it grows as I go.
+        <p class="mt-8 max-w-xl text-[1.0625rem] leading-[1.75] text-muted-foreground">
+          I’m Syed Umair Ali —{" "}
+          <a
+            href="https://syedumaircodes.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            class="text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+          >
+            syedumaircodes
+          </a>
+          . Everything I learn gets saved here and revisited. The library grows
+          as I grow.
         </p>
       </div>
 
-      <!-- Collections -->
+      <!-- The garden path -->
       <section id="collections" class="scroll-mt-16">
+        <h2 class="label-caps mb-2">Collections</h2>
         <ul>
-          {
-            collections.map((collection) => (
-              <li>
-                <a
-                  href={collection.href}
-                  class="block py-6 sm:py-7"
+          {collections.map((collection) => (
+            <li class="border-t border-hairline">
+              <a href={collection.href} class="block py-7 sm:py-8">
+                <span
+                  class="font-display block text-foreground"
+                  style={`font-size: ${collection.size}; line-height: 1.15;`}
                 >
-                  <span class="text-2xl leading-tight font-medium tracking-[-0.02em] text-foreground sm:text-3xl">
-                    {collection.name}
-                  </span>
+                  {collection.name}
+                </span>
 
-                  <span class="mt-2 block max-w-[52ch] text-sm leading-relaxed text-muted-foreground">
-                    {collection.description}
-                  </span>
-                </a>
-              </li>
-            ))
-          }
+                <span class="mt-2.5 block max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground">
+                  {collection.description}
+                </span>
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
     </section>

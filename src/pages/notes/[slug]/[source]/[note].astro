@@ -30,22 +30,45 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
 
 <Layout>
   <main class="min-h-svh">
-    <div class="mx-auto flex min-h-svh w-full max-w-6xl flex-col bg-background">
+    <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
       <SiteHeader />
 
-      <article class="mx-auto w-full max-w-3xl flex-1 px-6 pb-16 pt-10 sm:px-10 sm:pt-14 md:px-12 md:pt-16">
-        <header class="border-b border-border pb-8 sm:pb-10">
-          <h1 class="mt-3 break-words text-3xl leading-tight font-semibold tracking-[-0.03em] sm:text-4xl md:text-5xl">
+      <article class="mx-auto w-full max-w-[41rem] flex-1 px-6 pb-20 pt-8 sm:px-10 sm:pt-10">
+        <nav aria-label="Breadcrumb" class="label-caps">
+          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <li>
+              <a href={`/notes/${topic.data.slug}/`} class="hover:text-foreground">
+                {topic.data.name}
+              </a>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li>
+              <a
+                href={`/notes/${topic.data.slug}/${source}/`}
+                class="hover:text-foreground"
+              >
+                {note.data.sourceTitle}
+              </a>
+            </li>
+          </ol>
+        </nav>
+
+        <header class="pb-8 sm:pb-10">
+          <h1
+            class="font-display mt-4 break-words text-[clamp(1.875rem,4.5vw,2.625rem)] leading-[1.15] font-medium text-foreground text-balance"
+          >
             {note.data.title}
           </h1>
-          {note.data.sample && (
-            <p class="mt-4 inline-flex rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-              Sample note · replace with your own
-            </p>
-          )}
+          {
+            note.data.sample && (
+              <p class="mt-4 text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+                A sample note, still growing — replace it with your own.
+              </p>
+            )
+          }
         </header>
 
-        <div class="mdx-content mt-8 text-base leading-7 text-foreground/90 sm:mt-10">
+        <div class="mdx-content">
           <Content
             components={{
               img: (props: { src?: string; alt?: string; title?: string }) => (

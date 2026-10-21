@@ -26,47 +26,45 @@ const { Content } = topic
 
 <Layout>
   <main class="min-h-svh">
-    <div class="mx-auto flex min-h-svh w-full max-w-6xl flex-col bg-background">
+    <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
       <SiteHeader />
 
-      <section class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 sm:px-10 lg:px-16">
-        <div class="flex flex-1 flex-col justify-center py-16 sm:py-20">
+      <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
+        <div class="flex flex-col py-14 sm:py-16">
           <h1
-            class="max-w-[20ch] text-[clamp(2.5rem,7vw,5rem)] leading-[0.98] font-semibold tracking-[-0.045em] text-foreground text-balance"
+            class="font-display max-w-[24ch] text-[clamp(2rem,5vw,3rem)] leading-[1.08] font-medium text-foreground text-balance"
           >
             {topic.data.name}
           </h1>
 
           <p
-            class="mt-8 max-w-[54ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+            class="mt-6 max-w-[54ch] text-[1.0625rem] leading-[1.75] text-muted-foreground"
           >
             {topic.data.description}
           </p>
 
-          <div class="prose-sample mt-8 max-w-[60ch] text-sm leading-6 text-muted-foreground">
+          <div class="mdx-content topic-blurb mt-6 max-w-[58ch] text-muted-foreground">
             <Content />
-          </div>
-        </div>
+          </div>        </div>
 
-        <section class="border-t border-hairline">
+        <section>
+          <h2 class="label-caps mb-2">Sources</h2>
           <ul>
-            {sources.map((source, index) => (
+            {sources.map((source) => (
               <li class="border-t border-hairline">
                 <a
                   href={`/notes/${slug}/${source.sourceSlug}/`}
-                  class="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 gap-y-1 py-6 sm:grid-cols-[3.5rem_1fr_auto] sm:py-7"
+                  class="block py-6 sm:py-7"
                 >
-                  <span class="font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <span class="text-lg leading-snug font-medium tracking-[-0.01em] text-foreground sm:text-xl">
+                  <span class="font-display block text-[1.3125rem] leading-snug font-medium text-foreground sm:text-[1.4375rem]">
                     {source.sourceTitle}
                   </span>
 
-                  <span class="col-start-2 row-start-2 text-sm text-muted-foreground sm:col-start-3 sm:row-start-1 sm:text-right">
-                    {source.sourceKind}
-                  </span>
+                  {source.sourceDetail && (
+                    <span class="mt-1.5 block max-w-[56ch] text-[0.9375rem] leading-[1.7] text-muted-foreground">
+                      {source.sourceDetail}
+                    </span>
+                  )}
                 </a>
               </li>
             ))}

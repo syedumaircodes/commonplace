@@ -10,13 +10,13 @@ const { backHref, backLabel, tagline } = Astro.props
 
 <footer>
   <div
-    class="mx-auto flex w-full max-w-6xl flex-col items-start gap-2 px-6 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10 lg:px-16"
+    class="mx-auto flex w-full max-w-3xl flex-col items-start gap-1 px-6 py-8 text-[0.8125rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10"
   >
     {
       backHref && backLabel ? (
         <a
           href={backHref}
-          class="inline-flex min-h-8 items-center gap-1.5 transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          class="inline-flex min-h-8 items-center gap-1.5 hover:text-foreground"
         >
           <span aria-hidden="true">←</span>
           <span>{backLabel}</span>
