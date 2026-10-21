@@ -20,11 +20,21 @@ Because the database file is just passive storage, it cannot manage that incomin
 The entire environment rests on four pieces working together: the database holds the records, SQL provides the query language, the DBMS manages the rules and traffic, and a physical or cloud server supplies the hardware to run it all
 
 <Diagram
-  label="The relational database infrastructure, layered from SQL queries at the top down to the server at the bottom."
+  label="The relational database infrastructure in three layers: access, where client applications issue SQL queries; engine, where the DBMS manages queries and permissions; and storage, where the database and its server live."
   source={`flowchart TD
-  Queries["SQL Queries"] --> DBMS["DBMS"]
-  DBMS --> Database["Database"]
-  Database --> Server["Server"]`}
+  subgraph Access["Access"]
+    direction LR
+    Clients["Client Applications"] --> Queries["SQL Queries"]
+  end
+  subgraph Engine["Engine"]
+    DBMS["DBMS"]
+  end
+  subgraph Storage["Storage"]
+    direction LR
+    Database["Database"] --- Server["Server"]
+  end
+  Queries --> DBMS
+  DBMS --> Database`}
 />
 
 ## Types of Databases
