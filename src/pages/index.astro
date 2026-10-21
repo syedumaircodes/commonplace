@@ -4,7 +4,7 @@ import SiteFooter from "@/components/site-footer.astro"
 import SiteHeader from "@/components/site-header.astro"
 import { topics } from "@/lib/topics"
 
-const categories = topics.map(({ data }) => ({
+const collections = topics.map(({ data }) => ({
   ...data,
   href: `/notes/${data.slug}/`,
 }))
@@ -17,36 +17,42 @@ const categories = topics.map(({ data }) => ({
     <section class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 sm:px-10 lg:px-16">
       <!-- Hero -->
       <div class="flex flex-1 flex-col justify-center py-20 sm:py-28 lg:py-32">
-        <h1 class="mt-8 max-w-[16ch] text-[clamp(2.75rem,9vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.045em] text-foreground text-balance">
-          Oh, you found my notes.
+        <h1
+          class="max-w-[18ch] text-[clamp(2.75rem,8vw,6rem)] leading-[0.98] font-semibold tracking-[-0.045em] text-foreground text-balance"
+        >
+          A garden of notes I keep tending.
         </h1>
 
-        <p class="mt-10 max-w-[52ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
-          I’m Syed Umair Ali —{" "}
-          <span class="text-foreground">syedumaircodes</span>. Everything I
-          learn, I write down here. Take what’s useful.
+        <p
+          class="mt-10 max-w-[54ch] text-base leading-relaxed text-muted-foreground sm:text-lg"
+        >
+          I’m Syed Umair Ali — <span class="text-foreground">syedumaircodes</span
+          >. Everything I learn gets planted here and revisited. Nothing here is finished;
+          it grows as I go.
         </p>
       </div>
 
       <!-- Collections -->
-      <section id="notes" class="scroll-mt-16">
+      <section id="collections" class="scroll-mt-16">
         <ul>
-          {categories.map((category, index) => (
-            <li class="border-t border-hairline">
-              <a
-                href={category.href}
-                class="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 gap-y-1 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9"
-              >
-                <span class="text-2xl leading-tight font-medium tracking-[-0.02em] text-foreground sm:text-3xl">
-                  {category.name}
-                </span>
+          {
+            collections.map((collection) => (
+              <li>
+                <a
+                  href={collection.href}
+                  class="block py-6 sm:py-7"
+                >
+                  <span class="text-2xl leading-tight font-medium tracking-[-0.02em] text-foreground sm:text-3xl">
+                    {collection.name}
+                  </span>
 
-                <span class="col-start-2 row-start-2 text-sm text-muted-foreground sm:col-start-3 sm:row-start-1 sm:text-right">
-                  {category.description}
-                </span>
-              </a>
-            </li>
-          ))}
+                  <span class="mt-2 block max-w-[52ch] text-sm leading-relaxed text-muted-foreground">
+                    {collection.description}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </section>
     </section>
