@@ -11,55 +11,46 @@ const categories = topics.map(({ data }) => ({
 ---
 
 <Layout>
-  <main class="min-h-svh">
-    <div class="relative mx-auto flex min-h-svh w-full flex-col overflow-hidden bg-background">
-      <SiteHeader />
+  <main class="flex min-h-svh flex-col bg-background">
+    <SiteHeader />
 
-      <section class="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-12 sm:px-10 sm:py-14 md:px-16 lg:px-24 lg:py-16">
-        <div class="mx-auto max-w-3xl text-center">
-          <h1 class="mx-auto max-w-3xl text-5xl leading-[1.02] font-semibold tracking-[-0.04em] text-foreground sm:text-6xl md:text-7xl">
-            Oh, you found <br /> my notes.
-          </h1>
-          <p class="mx-auto mt-6 max-w-152 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            I’m Syed Umair Ali, also known as{" "}
-            <span class="text-foreground">syedumaircodes</span>. I collect what
-            I learn here, and I hope you learn a lot from it too.
-          </p>
-          <div class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            <a
-              href="#notes"
-              class="inline-flex min-h-11 items-center rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              Explore the notes
-            </a>
-            <a
-              href="https://syedumaircodes.vercel.app"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex min-h-11 items-center rounded-md px-4 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              More about me <span class="sr-only">(opens in a new tab)</span>
-            </a>
-          </div>
-        </div>
+    <section class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 sm:px-10 lg:px-16">
+      <!-- Hero -->
+      <div class="flex flex-1 flex-col justify-center py-20 sm:py-28 lg:py-32">
+        <h1 class="mt-8 max-w-[16ch] text-[clamp(2.75rem,9vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.045em] text-foreground text-balance">
+          Oh, you found my notes.
+        </h1>
 
-        <div id="notes" class="mt-16 scroll-mt-8 sm:mt-20 lg:mt-24">
-          <nav aria-label="Note collections" class="grid grid-cols-1 gap-3">
-            {categories.map((category) => (
+        <p class="mt-10 max-w-[52ch] text-base leading-relaxed text-muted-foreground sm:text-lg">
+          I’m Syed Umair Ali —{" "}
+          <span class="text-foreground">syedumaircodes</span>. Everything I
+          learn, I write down here. Take what’s useful.
+        </p>
+      </div>
+
+      <!-- Collections -->
+      <section id="notes" class="scroll-mt-16">
+        <ul>
+          {categories.map((category, index) => (
+            <li class="border-t border-hairline">
               <a
                 href={category.href}
-                class="group flex min-h-12 items-center rounded-lg border border-border bg-card px-3 py-2 transition-colors duration-200 hover:border-foreground/30 hover:bg-muted/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:min-h-14 sm:px-4 sm:py-2.5"
+                class="grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 gap-y-1 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9"
               >
-                <h3 class="text-base font-medium tracking-tight sm:text-lg">
+                <span class="text-2xl leading-tight font-medium tracking-[-0.02em] text-foreground sm:text-3xl">
                   {category.name}
-                </h3>
-              </a>
-            ))}
-          </nav>
-        </div>
-      </section>
+                </span>
 
-      <SiteFooter tagline="Collected with curiosity." />
-    </div>
+                <span class="col-start-2 row-start-2 text-sm text-muted-foreground sm:col-start-3 sm:row-start-1 sm:text-right">
+                  {category.description}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </section>
+
+    <SiteFooter tagline="Collected with curiosity." />
   </main>
 </Layout>

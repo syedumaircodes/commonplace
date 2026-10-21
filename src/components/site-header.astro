@@ -2,35 +2,45 @@
 import { Book01Icon } from "@hugeicons/core-free-icons"
 ---
 
-<header
-  class="mx-auto w-full max-w-7xl px-6 pt-6 sm:px-10 sm:pt-8 md:px-16 lg:px-24"
->
-  <a
-    href="/"
-    aria-label="commonplace home"
-    class="inline-flex items-center gap-2 py-2 text-sm font-semibold tracking-tight transition-colors hover:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
-  >
-    <svg
-      viewBox="0 0 24 24"
-      class="size-[18px]"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
+<header class="mx-auto w-full max-w-6xl px-6 pt-6 sm:px-10 sm:pt-8 lg:px-16">
+  <div class="flex items-center justify-between">
+    <a
+      href="/"
+      aria-label="commonplace home"
+      class="inline-flex items-center gap-2 py-2 text-sm font-semibold tracking-tight hover:text-muted-foreground"
     >
-      {Book01Icon.map(([, attrs]) => (
-        <path
-          d={String(attrs.d)}
-          fill={String(attrs.fill ?? "none")}
-          stroke={String(attrs.stroke ?? "currentColor")}
-          stroke-width={String(attrs.strokeWidth ?? 1.5)}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      ))}
-    </svg>
-    <span>commonplace</span>
-  </a>
+      <svg
+        viewBox="0 0 24 24"
+        class="size-[18px]"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        {Book01Icon.map(([, attrs]) => (
+          <path
+            d={String(attrs.d)}
+            fill={String(attrs.fill ?? "none")}
+            stroke={String(attrs.stroke ?? "currentColor")}
+            stroke-width={String(attrs.strokeWidth ?? 1.5)}
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        ))}
+      </svg>
+      <span>commonplace</span>
+    </a>
+
+    <a
+      href="https://syedumaircodes.vercel.app"
+      target="_blank"
+      rel="noreferrer"
+      class="text-sm tracking-wide text-muted-foreground hover:text-foreground"
+    >
+      About
+      <span class="sr-only">(opens in a new tab)</span>
+    </a>
+  </div>
 </header>
