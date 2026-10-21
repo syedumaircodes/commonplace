@@ -151,6 +151,25 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Diagrams — Pele renders Mermaid to SVG, themed from these variables.
+--------------------------------------------------------------------------- */
+
+.pele {
+  --pele-bg: transparent;
+  --pele-fg: var(--foreground);
+  --pele-muted: var(--muted-foreground);
+  --pele-line: color-mix(in oklab, var(--foreground) 70%, transparent);
+  --pele-surface: color-mix(in oklab, var(--card) 70%, transparent);
+  --pele-surface-alt: color-mix(in oklab, var(--muted) 80%, transparent);
+  --pele-border: color-mix(in oklab, var(--foreground) 30%, transparent);
+  --pele-accent: var(--accent);
+  --pele-critical: var(--destructive);
+  --pele-font: var(--font-sans);
+  --pele-font-mono: var(--font-mono);
+  --pele-radius: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
    Display type — Fraunces, soft and bookish. Never tight-tracked.
 --------------------------------------------------------------------------- */
 

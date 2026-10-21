@@ -6,6 +6,8 @@ sourceKind: Book
 sourceTitle: Security Engineering v3
 ---
 
+import Diagram from "@/components/diagram.astro"
+
 > Security engineering is the process of building and securing new and legacy digital systems that can't be harmed or be exploited by bad actors.
 
 It focuses on the tools, processes, and methods needed to design, implement, and test complete systems, and to adapt existing systems as their environment evolves. It requires the team or person responsible to have cross disciplinary expertise in computer science, software, hardware, economics, laws, and psychology.
@@ -25,9 +27,14 @@ Before you start writing code, you need the four pillars of secure design define
 - Assurance is for making sure the system is actually secure and will stay secure during an attack or during peak load.
 - Incentive is the most important one and is about why should the people guarding the system guard it in the first place.
 
-<img
-  src="/images/notes/cyber/security-engineering/sec-framework.png"
-  alt="Security Framework"
+<Diagram
+  label="The four pillars of the security framework in a cycle: policy, mechanism, assurance, and incentive."
+  caption="The four pillars of secure design feed into one another."
+  source={`flowchart LR
+  Policy["Policy"] --> Mechanism["Mechanism"]
+  Mechanism --> Assurance["Assurance"]
+  Assurance --> Incentive["Incentive"]
+  Incentive --> Policy`}
 />
 
 ## Why banks need security
