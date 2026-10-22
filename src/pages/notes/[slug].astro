@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import { notes, sourceSlug, topics } from "@/lib/topics"
+import { SITE } from "@/lib/site"
 
 export function getStaticPaths() {
   return topics.map(({ data }) => ({ params: { slug: data.slug } }))
@@ -22,7 +23,10 @@ const sources = Array.from(
 const { Content } = topic
 ---
 
-<Layout>
+<Layout
+  title={topic.data.name}
+  description={`${topic.data.description} — notes and references from ${SITE.name}, a living spirit library curated by ${SITE.author.handle}.`}
+>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
       <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">

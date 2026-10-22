@@ -26,7 +26,11 @@ const source = sourceSlug(note.data.sourceTitle)
 const noteImages = `/images/notes/${topic.data.slug}/${source}/`
 ---
 
-<Layout>
+<Layout
+  title={note.data.title}
+  type="article"
+  description={note.data.excerpt}
+>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
       <article class="mx-auto w-full max-w-[41rem] flex-1 px-6 pb-20 pt-8 sm:px-10 sm:pt-10">

@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import { topics } from "@/lib/topics"
+import { SITE } from "@/lib/site"
 
 const collections = topics.map(({ data }, index) => ({
   ...data,
@@ -9,24 +10,28 @@ const collections = topics.map(({ data }, index) => ({
 }))
 ---
 
-<Layout>
+<Layout description={SITE.description}>
   <main class="flex min-h-svh flex-col bg-background">
     <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
       <!-- Hero -->
       <div class="flex flex-1 flex-col justify-center py-20 sm:py-24">
+        <p class="label-caps mb-4">{SITE.name}</p>
+
         <h1 class="font-display max-w-[22ch] text-[clamp(2.25rem,6vw,3.75rem)] leading-[1.06] font-medium text-foreground text-balance">
           Welcome to my personal spirit library
         </h1>
 
         <p class="mt-8 max-w-xl text-[1.0625rem] leading-[1.75] text-muted-foreground">
-          I’m Syed Umair Ali —{" "}
+          Kept the way Wan Shi Tong kept his library in{" "}
+          <span class="text-foreground italic">Avatar: The Last Airbender</span>{" "}
+          — every note catalogued, nothing thrown away. I’m Syed Umair Ali —{" "}
           <a
-            href="https://syedumaircodes.vercel.app"
+            href={SITE.author.url}
             target="_blank"
-            rel="noreferrer"
+            rel="me noopener noreferrer"
             class="text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
           >
-            syedumaircodes
+            {SITE.author.handle}
           </a>
           . Everything I learn gets saved here and revisited. The library grows
           as I grow.

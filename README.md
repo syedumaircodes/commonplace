@@ -53,6 +53,10 @@ Images are displayed responsively on the individual note page. You can also use 
 
 `sourceKind` may be `Book`, `Video course`, `Course`, `Cohort`, or `Field notes`. `reference` is optional when the note has no chapter, lesson, or section reference. Use a unique `slug` for each note within its topic. The included Cyber, Data, JavaScript, and Python documents are labeled samples and can be replaced with your own content.
 
+## SEO
+
+Global metadata lives in `src/lib/site.ts` (site name, description, author, social links, inspiration credit). `src/layouts/main.astro` turns it into the page `<title>`, description, canonical URL, Open Graph/Twitter cards, and Person/WebSite JSON-LD. The social card image is `public/og-image.png`. `src/pages/sitemap.xml.ts` generates the sitemap and `public/robots.txt` points at it. Set the canonical domain in `astro.config.mjs` (`site`) when the deployment URL changes.
+
 ## Development
 
 ```sh
