@@ -6,11 +6,11 @@
 export const SITE = {
   name: "Spirit Library",
   shortName: "Spirit Library",
-  url: "https://syedumaircodes.vercel.app",
+  url: "https://spiritlibrary.vercel.app",
   locale: "en_US",
   title: "Spirit Library — a living notebook",
   description:
-    "A living spirit library: notes on databases, security, and engineering, curated the way Wan Shi Tong kept the library in Avatar: The Last Airbender.",
+    "A living spirit library: notes on tech and software engineering, databases, security, and cloud, curated the way Wan Shi Tong kept the library in Avatar.",
   keywords: [
     "spirit library",
     "Wan Shi Tong",

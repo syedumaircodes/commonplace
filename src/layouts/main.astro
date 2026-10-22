@@ -57,7 +57,10 @@ const websiteSchema = {
     <meta name="description" content={description} />
     <meta name="keywords" content={SITE.keywords.join(", ")} />
     <meta name="author" content={SITE.author.name} />
-    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
     <link rel="canonical" href={canonical} />
     <link rel="me" href={SITE.author.url} />
     <link rel="me" href={SITE.author.github} />
@@ -69,7 +72,10 @@ const websiteSchema = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={imageUrl} />
-    <meta property="og:image:alt" content={`${SITE.name} — a living notebook by ${SITE.author.name}`} />
+    <meta
+      property="og:image:alt"
+      content={`${SITE.name} — a living notebook by ${SITE.author.name}`}
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     {type === "article" && (
@@ -83,7 +89,10 @@ const websiteSchema = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
-    <meta name="twitter:image:alt" content={`${SITE.name} — a living notebook by ${SITE.author.name}`} />
+    <meta
+      name="twitter:image:alt"
+      content={`${SITE.name} — a living notebook by ${SITE.author.name}`}
+    />
 
     <script
       type="application/ld+json"
@@ -93,35 +102,5 @@ const websiteSchema = {
   </head>
   <body>
     <slot />
-
-    <footer class="mx-auto w-full max-w-3xl px-6 pb-10 sm:px-10">
-      <div
-        class="label-caps flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-hairline pt-6"
-      >
-        <span>
-          Curated by
-          <a
-            href={SITE.author.url}
-            target="_blank"
-            rel="me noopener noreferrer"
-            class="text-foreground underline decoration-hairline underline-offset-4 hover:decoration-accent"
-          >
-            {SITE.author.handle}
-          </a>
-        </span>
-        <span aria-hidden="true">·</span>
-        <span>
-          After
-          <a
-            href={SITE.inspiration.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-foreground underline decoration-hairline underline-offset-4 hover:decoration-accent"
-          >
-            {SITE.inspiration.name}
-          </a>
-        </span>
-      </div>
-    </footer>
   </body>
 </html>
