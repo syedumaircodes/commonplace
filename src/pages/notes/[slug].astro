@@ -1,7 +1,5 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteFooter from "@/components/site-footer.astro"
-import SiteHeader from "@/components/site-header.astro"
 import { notes, sourceSlug, topics } from "@/lib/topics"
 
 export function getStaticPaths() {
@@ -27,25 +25,26 @@ const { Content } = topic
 <Layout>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
-      <SiteHeader />
-
       <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
         <div class="flex flex-col py-14 sm:py-16">
-          <h1
-            class="font-display max-w-[24ch] text-[clamp(2rem,5vw,3rem)] leading-[1.08] font-medium text-foreground text-balance"
-          >
+          <p class="label-caps mb-3">
+            <a href="/" class="hover:text-foreground">
+              ← All topics
+            </a>
+          </p>
+
+          <h1 class="font-display max-w-[24ch] text-[clamp(2rem,5vw,3rem)] leading-[1.08] font-medium text-foreground text-balance">
             {topic.data.name}
           </h1>
 
-          <p
-            class="mt-6 max-w-[54ch] text-[1.0625rem] leading-[1.75] text-muted-foreground"
-          >
+          <p class="mt-6 max-w-[54ch] text-[1.0625rem] leading-[1.75] text-muted-foreground">
             {topic.data.description}
           </p>
 
           <div class="mdx-content topic-blurb mt-6 max-w-[58ch] text-muted-foreground">
             <Content />
-          </div>        </div>
+          </div>
+        </div>
 
         <section>
           <h2 class="label-caps mb-2">Sources</h2>
@@ -71,8 +70,6 @@ const { Content } = topic
           </ul>
         </section>
       </section>
-
-      <SiteFooter backHref="/" backLabel="All topics" />
     </div>
   </main>
 </Layout>

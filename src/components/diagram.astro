@@ -18,7 +18,7 @@ const { svg } = render(source, { fontFamily })
 
 const labelled = svg.replace(
   "<svg ",
-  `<svg role="img"${label ? ` aria-label="${label.replace(/"/g, "&quot;")}"` : ""} `,
+  `<svg role="img"${label ? ` aria-label="${label.replace(/"/g, "&quot;")}"` : ""} `
 )
 ---
 
@@ -27,13 +27,11 @@ const labelled = svg.replace(
     class="diagram-frame overflow-x-auto rounded-lg border border-hairline bg-card/40 p-4 sm:p-6"
     set:html={labelled}
   />
-  {
-    caption && (
-      <figcaption class="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">
-        {caption}
-      </figcaption>
-    )
-  }
+  {caption && (
+    <figcaption class="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">
+      {caption}
+    </figcaption>
+  )}
 </figure>
 
 <style>

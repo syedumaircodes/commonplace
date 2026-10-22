@@ -1,7 +1,5 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteFooter from "@/components/site-footer.astro"
-import SiteHeader from "@/components/site-header.astro"
 import { notes, sourceSlug, topics } from "@/lib/topics"
 
 export function getStaticPaths() {
@@ -31,13 +29,14 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
 <Layout>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
-      <SiteHeader />
-
       <article class="mx-auto w-full max-w-[41rem] flex-1 px-6 pb-20 pt-8 sm:px-10 sm:pt-10">
         <nav aria-label="Breadcrumb" class="label-caps">
           <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
             <li>
-              <a href={`/notes/${topic.data.slug}/`} class="hover:text-foreground">
+              <a
+                href={`/notes/${topic.data.slug}/`}
+                class="hover:text-foreground"
+              >
                 {topic.data.name}
               </a>
             </li>
@@ -54,18 +53,14 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
         </nav>
 
         <header class="pb-8 sm:pb-10">
-          <h1
-            class="font-display mt-4 break-words text-[clamp(1.875rem,4.5vw,2.625rem)] leading-[1.15] font-medium text-foreground text-balance"
-          >
+          <h1 class="font-display mt-4 break-words text-[clamp(1.875rem,4.5vw,2.625rem)] leading-[1.15] font-medium text-foreground text-balance">
             {note.data.title}
           </h1>
-          {
-            note.data.sample && (
-              <p class="mt-4 text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
-                A sample note, still growing — replace it with your own.
-              </p>
-            )
-          }
+          {note.data.sample && (
+            <p class="mt-4 text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+              A sample note, still growing — replace it with your own.
+            </p>
+          )}
         </header>
 
         <div class="mdx-content">
@@ -74,7 +69,11 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
               img: (props: { src?: string; alt?: string; title?: string }) => (
                 <img
                   {...props}
-                  src={props.src?.startsWith("./") ? `${noteImages}${props.src.slice(2)}` : props.src}
+                  src={
+                    props.src?.startsWith("./")
+                      ? `${noteImages}${props.src.slice(2)}`
+                      : props.src
+                  }
                   loading="lazy"
                   decoding="async"
                 />
@@ -83,11 +82,6 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
           />
         </div>
       </article>
-
-      <SiteFooter
-        backHref={`/notes/${topic.data.slug}/${source}/`}
-        backLabel={`Back to ${note.data.sourceTitle}`}
-      />
     </div>
   </main>
 </Layout>

@@ -1,7 +1,5 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteFooter from "@/components/site-footer.astro"
-import SiteHeader from "@/components/site-header.astro"
 import { topics } from "@/lib/topics"
 
 const collections = topics.map(({ data }, index) => ({
@@ -13,8 +11,6 @@ const collections = topics.map(({ data }, index) => ({
 
 <Layout>
   <main class="flex min-h-svh flex-col bg-background">
-    <SiteHeader />
-
     <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
       <!-- Hero -->
       <div class="flex flex-1 flex-col justify-center py-20 sm:py-24">
@@ -60,7 +56,5 @@ const collections = topics.map(({ data }, index) => ({
         </ul>
       </section>
     </section>
-
-    <SiteFooter tagline="Collected with curiosity." />
   </main>
 </Layout>

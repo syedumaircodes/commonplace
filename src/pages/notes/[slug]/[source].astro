@@ -1,7 +1,5 @@
 ---
 import Layout from "@/layouts/main.astro"
-import SiteFooter from "@/components/site-footer.astro"
-import SiteHeader from "@/components/site-header.astro"
 import { notes as noteEntries, sourceSlug, topics } from "@/lib/topics"
 
 export function getStaticPaths() {
@@ -36,27 +34,24 @@ const { topic, source, notes } = Astro.props
 <Layout>
   <main class="min-h-svh">
     <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
-      <SiteHeader />
-
       <div class="mx-auto w-full max-w-3xl flex-1 px-6 sm:px-10">
         <header class="flex flex-col justify-center py-14 sm:py-18">
           <p class="label-caps mb-3">
-            <a href={`/notes/${topic.data.slug}/`} class="hover:text-foreground">
+            <a
+              href={`/notes/${topic.data.slug}/`}
+              class="hover:text-foreground"
+            >
               {topic.data.name}
             </a>
           </p>
-          <h1
-            class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-medium break-words text-foreground text-balance"
-          >
+          <h1 class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-medium break-words text-foreground text-balance">
             {source.sourceTitle}
           </h1>
-          {
-            source.sourceDetail && (
-              <p class="mt-4 max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
-                {source.sourceDetail}
-              </p>
-            )
-          }
+          {source.sourceDetail && (
+            <p class="mt-4 max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+              {source.sourceDetail}
+            </p>
+          )}
         </header>
 
         <section aria-label={`Notes from ${source.sourceTitle}`}>
@@ -83,11 +78,6 @@ const { topic, source, notes } = Astro.props
           </ol>
         </section>
       </div>
-
-      <SiteFooter
-        backHref={`/notes/${Astro.params.slug}/`}
-        backLabel={topic.data.name}
-      />
     </div>
   </main>
 </Layout>
