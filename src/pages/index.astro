@@ -11,6 +11,18 @@ const collections = topics.map(({ data }, index) => ({
 ---
 
 <Layout description={SITE.description}>
+  <!-- Disclaimer banner -->
+  <aside
+    class="border-b border-hairline bg-background"
+    role="note"
+    aria-label="Disclaimer"
+  >
+    <p class="mx-auto max-w-3xl px-6 py-3 text-[0.875rem] leading-[1.6] text-muted-foreground sm:px-10">
+      These are my personal notes — they don’t cover everything from the
+      sources. I only keep what I need.
+    </p>
+  </aside>
+
   <main class="flex min-h-svh flex-col bg-background">
     <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
       <!-- Hero -->
