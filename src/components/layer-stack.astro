@@ -1,0 +1,60 @@
+---
+interface Layer {
+  /** Left-hand label, e.g. "4 · AI libraries". */
+  title: string
+  /** Right-hand detail, e.g. "torch, jax, transformers". */
+  detail: string
+  /** Emphasise this layer. Conventionally the top one. */
+  highlight?: boolean
+}
+
+interface Props {
+  /** Layers in display order, top to bottom. */
+  layers: Layer[]
+  /** Accessible description of the whole stack. */
+  label?: string
+  /** Optional caption below the diagram. */
+  caption?: string
+}
+
+const { layers, label, caption } = Astro.props
+---
+
+<figure class="my-8 not-prose">
+  <div
+    class="flex flex-col gap-2.5"
+    role="img"
+    aria-label={
+      label ??
+      layers.map((layer) => `${layer.title}: ${layer.detail}`).join(". ")
+    }
+  >
+    {layers.map((layer) => (
+      <div
+        class:list={[
+          "flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 rounded-lg border px-4 py-3.5 sm:px-5",
+          layer.highlight
+            ? "border-accent/60 bg-accent/5"
+            : "border-hairline bg-card/40",
+        ]}
+      >
+        <span
+          class:list={[
+            "font-display text-[0.9375rem] leading-snug font-medium sm:text-base",
+            layer.highlight ? "text-accent" : "text-foreground",
+          ]}
+        >
+          {layer.title}
+        </span>
+        <span class="ml-auto font-mono text-[0.75rem] leading-relaxed text-muted-foreground sm:text-[0.8125rem]">
+          {layer.detail}
+        </span>
+      </div>
+    ))}
+  </div>
+  {caption && (
+    <figcaption class="mt-4 text-center font-mono text-[0.75rem] leading-relaxed text-muted-foreground">
+      {caption}
+    </figcaption>
+  )}
+</figure>
