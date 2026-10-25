@@ -6,6 +6,9 @@ sourceKind: Mooc
 sourceTitle: AI Engineering from Scratch
 ---
 
+import Diagram from "@/components/diagram.astro"
+import GitFlow from "@/components/git-flow.astro"
+import GitGraph from "@/components/git-graph.astro"
 import LayerStack from "@/components/layer-stack.astro"
 
 This phase is a pre-check phase for setting up my system for the course so I don't run into any problems later down the line.
@@ -29,3 +32,15 @@ I skipped installing the GPU drivers as I don't have a dedicated GPU and will us
     { title: "1 · system", detail: "Ubuntu, drivers, CUDA / Metal" },
   ]}
 />
+
+## Version control
+
+The next step was to setup git and github, I already have both installed and setup so I just skimmed through the section and moved on. I really liked how the curriculum makes new comers understand how the git workflow and branches work.
+
+A change moves through four places. It starts in the working directory, is staged, committed to the local repository, and only leaves the machine when pushed. Fetch and pull bring the remote's history back the other way.
+
+<GitFlow caption="commits travel outward, fetch and pull travel back" />
+
+Branches make experiments cheap: work happens on a copy of the history, and it only joins the main line when it is worth keeping.
+
+<GitGraph branch="feature/lr-sweep" caption="experiment on a branch, merge when it works" />

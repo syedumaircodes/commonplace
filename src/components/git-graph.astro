@@ -1,0 +1,149 @@
+---
+interface Props {
+  /** Name of the experiment branch. */
+  branch?: string
+  /** Label next to the merge commit. */
+  mergeLabel?: string
+  /** Optional caption below the diagram. */
+  caption?: string
+  /** Accessible description. */
+  label?: string
+}
+
+const {
+  branch = "feature/lr-sweep",
+  mergeLabel = "merge commit",
+  caption,
+  label,
+} = Astro.props
+
+const width = 540
+const height = 190
+const mainY = 118
+const mainDots = [70, 175, 355, 495]
+const branchDots = [
+  { x: 250, y: 62 },
+  { x: 330, y: 62 },
+]
+
+const description =
+  label ??
+  `A branch graph. The main line has three commits. ${branch} starts at the second commit, adds one commit, and merges back into main as a merge commit.`
+---
+
+<figure class="my-8 not-prose">
+  <div class="diagram-frame mx-auto w-fit max-w-full rounded-lg border border-hairline bg-card/40 p-4 sm:p-5">
+    <svg
+      viewBox={`-6 -6 ${width + 12} ${height + 12}`}
+      width={width + 12}
+      height={height + 12}
+      role="img"
+      aria-label={description}
+      class="h-auto max-w-full"
+      style="color: var(--diagram-line)"
+    >
+      <!-- dashed rule, like a divider in a sketch -->
+      <line
+        x1="0.5"
+        y1="16"
+        x2={width - 0.5}
+        y2="16"
+        stroke="currentColor"
+        stroke-width="1"
+        stroke-opacity="0.55"
+        stroke-dasharray="4 4"
+      />
+
+      <!-- main line -->
+      <line
+        x1={mainDots[0] - 14}
+        y1={mainY}
+        x2={mainDots[3] + 14}
+        y2={mainY}
+        stroke="currentColor"
+        stroke-width="1.5"
+      />
+
+      <!-- branch arc -->
+      <path
+        d={`M${mainDots[1]},${mainY} L${branchDots[0].x},${branchDots[0].y} L${branchDots[1].x},${branchDots[1].y} L${mainDots[3]},${mainY}`}
+        fill="none"
+        stroke="var(--accent)"
+        stroke-width="1.75"
+        stroke-linejoin="round"
+      />
+
+      <!-- branch commits -->
+      {branchDots.map((dot) => (
+        <circle
+          cx={dot.x}
+          cy={dot.y}
+          r="6.5"
+          fill="var(--background)"
+          stroke="var(--accent)"
+          stroke-width="1.75"
+        />
+      ))}
+
+      <!-- main commits -->
+      {mainDots.slice(0, 3).map((x) => (
+        <circle
+          cx={x}
+          cy={mainY}
+          r="6.5"
+          fill="var(--background)"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
+      ))}
+
+      <!-- merge commit -->
+      <circle
+        cx={mainDots[3]}
+        cy={mainY}
+        r="7"
+        fill="var(--background)"
+        stroke="var(--accent)"
+        stroke-width="2"
+      />
+
+      <text
+        x={mainDots[0] - 22}
+        y={mainY + 4}
+        text-anchor="end"
+        class="font-mono"
+        font-size="10.5"
+        fill="var(--muted-foreground)"
+      >
+        main
+      </text>
+
+      <text
+        x={(branchDots[0].x + branchDots[1].x) / 2}
+        y={branchDots[0].y - 18}
+        text-anchor="middle"
+        class="font-mono"
+        font-size="10.5"
+        fill="var(--muted-foreground)"
+      >
+        {branch}
+      </text>
+
+      <text
+        x={mainDots[3]}
+        y={mainY + 28}
+        text-anchor="middle"
+        class="font-mono"
+        font-size="10.5"
+        fill="var(--accent)"
+      >
+        {mergeLabel}
+      </text>
+    </svg>
+  </div>
+  {caption && (
+    <figcaption class="mt-4 text-center font-mono text-[0.75rem] leading-relaxed text-muted-foreground">
+      {caption}
+    </figcaption>
+  )}
+</figure>

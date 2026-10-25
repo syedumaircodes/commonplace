@@ -1,0 +1,143 @@
+---
+interface Props {
+  /** The four places a change can live. */
+  stages?: [string, string, string, string]
+  /** Optional caption below the diagram. */
+  caption?: string
+  /** Accessible description. */
+  label?: string
+}
+
+const {
+  stages = [
+    "Working Directory",
+    "Staging Area",
+    "Local Repo",
+    "Remote (GitHub)",
+  ],
+  caption,
+  label,
+} = Astro.props
+
+const width = 540
+const height = 300
+const boxWidth = 124
+const boxHeight = 40
+const topBoxY = 0
+const bottomBoxY = height - boxHeight
+const centers = [64, 208, 352, 496]
+
+const commands = [
+  { from: 0, to: 1, text: "git add", y: 70 },
+  { from: 1, to: 2, text: "git commit", y: 108 },
+  { from: 2, to: 3, text: "git push", y: 146 },
+  { from: 3, to: 2, text: "git fetch", y: 184 },
+  { from: 3, to: 0, text: "git pull", y: 222 },
+]
+
+const description =
+  label ??
+  `Git workflow. ${stages[0]} to ${stages[1]} with git add, ${stages[1]} to ${stages[2]} with git commit, ${stages[2]} to ${stages[3]} with git push. git fetch returns changes from ${stages[3]} to ${stages[2]}, and git pull returns them all the way to ${stages[0]}.`
+---
+
+<figure class="my-8 not-prose">
+  <div class="diagram-frame mx-auto w-fit max-w-full rounded-lg border border-hairline bg-card/40 p-4 sm:p-5">
+    <svg
+      viewBox={`-6 -6 ${width + 12} ${height + 12}`}
+      width={width + 12}
+      height={height + 12}
+      role="img"
+      aria-label={description}
+      class="h-auto max-w-full"
+      style="color: var(--diagram-line)"
+    >
+      <defs>
+        <marker
+          id="git-flow-arrow"
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="7"
+          markerHeight="7"
+          orient="auto-start-reverse"
+        >
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+        </marker>
+      </defs>
+
+      <!-- lifelines -->
+      {centers.map((cx) => (
+        <line
+          x1={cx}
+          y1={topBoxY + boxHeight}
+          x2={cx}
+          y2={bottomBoxY}
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-opacity="0.75"
+        />
+      ))}
+
+      <!-- commands -->
+      {commands.map((command) => (
+        <g>
+          <line
+            x1={centers[command.from]}
+            y1={command.y}
+            x2={centers[command.to]}
+            y2={command.y}
+            stroke="currentColor"
+            stroke-width="1.25"
+            marker-end="url(#git-flow-arrow)"
+          />
+          <text
+            x={(centers[command.from] + centers[command.to]) / 2}
+            y={command.y - 9}
+            text-anchor="middle"
+            class="font-mono"
+            font-size="10.5"
+            fill="var(--muted-foreground)"
+          >
+            {command.text}
+          </text>
+        </g>
+      ))}
+
+      <!-- boxes, drawn last so they cover the lifelines -->
+      {stages.map((stage, index) => (
+        <>
+          {[topBoxY, bottomBoxY].map((boxY) => (
+            <g>
+              <rect
+                x={centers[index] - boxWidth / 2}
+                y={boxY}
+                width={boxWidth}
+                height={boxHeight}
+                rx="5"
+                fill="var(--card)"
+                stroke="var(--diagram-line)"
+                stroke-opacity="0.5"
+                stroke-width="1.25"
+              />
+              <text
+                x={centers[index]}
+                y={boxY + boxHeight / 2 + 4}
+                text-anchor="middle"
+                class="font-mono"
+                font-size="11"
+                fill="var(--foreground)"
+              >
+                {stage}
+              </text>
+            </g>
+          ))}
+        </>
+      ))}
+    </svg>
+  </div>
+  {caption && (
+    <figcaption class="mt-4 text-center font-mono text-[0.75rem] leading-relaxed text-muted-foreground">
+      {caption}
+    </figcaption>
+  )}
+</figure>
