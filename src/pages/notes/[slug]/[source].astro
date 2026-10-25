@@ -48,7 +48,7 @@ const { topic, source, notes } = Astro.props
               {topic.data.name}
             </a>
           </p>
-          <h1 class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-medium break-words text-foreground text-balance">
+          <h1 class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-normal break-words text-foreground text-balance">
             {source.sourceTitle}
           </h1>
           {source.sourceDetail && (
@@ -67,7 +67,7 @@ const { topic, source, notes } = Astro.props
                   class="block py-6 sm:py-7"
                   href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
                 >
-                  <span class="font-display block text-[1.3125rem] leading-snug font-medium text-foreground sm:text-[1.4375rem]">
+                  <span class="font-display block text-[1.3125rem] leading-snug font-normal text-foreground sm:text-[1.4375rem]">
                     {note.data.title}
                   </span>
 
