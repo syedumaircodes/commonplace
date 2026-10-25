@@ -1,8 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/literata/opsz.css";
-@import "@fontsource-variable/fraunces/opsz.css";
+@import "@fontsource-variable/work-sans";
+@import "@fontsource/instrument-serif";
+@import "@fontsource/instrument-serif/400-italic.css";
 @import "@fontsource-variable/google-sans-code";
 
 /* ---------------------------------------------------------------------------
@@ -52,9 +53,9 @@
 }
 
 @theme inline {
-  --font-sans: "Literata Variable", Georgia, "Times New Roman", serif;
-  --font-serif: "Literata Variable", Georgia, "Times New Roman", serif;
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Work Sans Variable", system-ui, sans-serif;
+  --font-serif: "Work Sans Variable", Georgia, "Times New Roman", serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "Google Sans Code Variable", ui-monospace, monospace;
   --color-hairline: var(--hairline);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -110,8 +111,6 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    font-optical-sizing: auto;
-    font-variation-settings: "opsz" 18;
     line-height: 1.7;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -145,7 +144,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-variation-settings: "opsz" 48;
+    font-weight: 400;
     letter-spacing: -0.005em;
   }
 }
@@ -170,12 +169,12 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Display type — Fraunces, soft and bookish. Never tight-tracked.
+   Display type — Instrument Serif, sharp and editorial. Never tight-tracked.
 --------------------------------------------------------------------------- */
 
 @utility display-type {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 60;
+  font-weight: 400;
   letter-spacing: -0.012em;
 }
 
@@ -183,7 +182,6 @@
 @utility label-caps {
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-variation-settings: "opsz" 12;
   letter-spacing: 0.08em;
   text-transform: lowercase;
   color: var(--muted-foreground);
@@ -198,7 +196,6 @@
   font-size: 1.125rem;
   line-height: 1.78;
   color: var(--foreground);
-  font-variation-settings: "opsz" 18;
 }
 
 .mdx-content > * + * {
