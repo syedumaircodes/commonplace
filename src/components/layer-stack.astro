@@ -40,7 +40,7 @@ const { layers, label, caption } = Astro.props
       >
         <span
           class:list={[
-            "font-display text-[0.9375rem] leading-snug font-normal sm:text-base",
+            "text-[0.9375rem] leading-snug font-medium sm:text-base",
             layer.highlight ? "text-accent" : "text-foreground",
           ]}
         >
@@ -53,7 +53,7 @@ const { layers, label, caption } = Astro.props
     ))}
   </div>
   {caption && (
-    <figcaption class="mt-4 text-center font-mono text-[0.75rem] leading-relaxed text-muted-foreground">
+    <figcaption class="mt-4 text-center text-[0.8125rem] leading-[1.55] text-pretty text-muted-foreground">
       {caption}
     </figcaption>
   )}

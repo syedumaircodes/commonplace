@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site"
 const collections = topics.map(({ data }, index) => ({
   ...data,
   href: `/notes/${data.slug}/`,
-  size: ["2.125rem", "2.5rem", "1.875rem"][index % 3],
+  size: ["2.75rem", "3.25rem", "2.375rem"][index % 3],
 }))
 ---
 
@@ -17,7 +17,7 @@ const collections = topics.map(({ data }, index) => ({
     role="note"
     aria-label="Disclaimer"
   >
-    <p class="mx-auto max-w-3xl px-6 py-3 text-[0.875rem] leading-[1.6] text-muted-foreground sm:px-10">
+    <p class="mx-auto max-w-4xl px-6 py-3 text-[0.875rem] leading-[1.6] text-muted-foreground sm:px-10">
       These are my personal notes — they don’t cover everything from the
       sources. I only keep what I need.
     </p>
@@ -27,14 +27,14 @@ const collections = topics.map(({ data }, index) => ({
     <section class="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 sm:px-10">
       <!-- Hero -->
       <div class="flex flex-1 flex-col justify-center py-20 sm:py-24">
-        <h1 class="font-display max-w-[22ch] text-[clamp(2.25rem,6vw,3.75rem)] leading-[1.06] font-normal text-foreground text-balance">
-          Welcome to my personal spirit library
+        <h1 class="display-type text-display max-w-[20ch] text-foreground">
+          Welcome to my personal <em class="italic">spirit library</em>
         </h1>
 
-        <p class="mt-8 max-w-xl text-[1.0625rem] leading-[1.75] text-muted-foreground">
+        <p class="text-lede mt-8 max-w-xl text-pretty text-muted-foreground">
           Kept the way Wan Shi Tong kept his library in{" "}
-          <span class="text-foreground italic">Avatar.</span> I’m Syed Umair Ali
-          —{" "}
+          <span class="font-serif text-foreground italic">Avatar.</span> I’m
+          Syed Umair Ali —{" "}
           <a
             href={SITE.author.url}
             target="_blank"
@@ -56,13 +56,13 @@ const collections = topics.map(({ data }, index) => ({
             <li class="border-t border-hairline">
               <a href={collection.href} class="block py-7 sm:py-8">
                 <span
-                  class="font-display block text-foreground"
-                  style={`font-size: ${collection.size}; line-height: 1.15;`}
+                  class="display-type block text-foreground"
+                  style={`font-size: ${collection.size}; line-height: 1.02;`}
                 >
                   {collection.name}
                 </span>
 
-                <span class="mt-2.5 block max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground">
+                <span class="mt-2.5 block max-w-[52ch] text-[0.9375rem] leading-[1.65] text-pretty text-muted-foreground">
                   {collection.description}
                 </span>
               </a>

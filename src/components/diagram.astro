@@ -12,7 +12,7 @@ interface Props {
 
 const { source, label, caption } = Astro.props
 
-const fontFamily = '"Work Sans Variable", system-ui, sans-serif'
+const fontFamily = '"Work Sans Variable", ui-sans-serif, system-ui, sans-serif'
 
 const { svg } = render(source, { fontFamily })
 
@@ -28,7 +28,7 @@ const labelled = svg.replace(
     set:html={labelled}
   />
   {caption && (
-    <figcaption class="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">
+    <figcaption class="mt-3 text-[0.8125rem] leading-[1.55] text-pretty text-muted-foreground">
       {caption}
     </figcaption>
   )}

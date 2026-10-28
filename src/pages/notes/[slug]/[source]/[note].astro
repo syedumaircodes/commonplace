@@ -53,11 +53,11 @@ const noteImages = `/images/notes/${topic.data.slug}/${source}/`
         </nav>
 
         <header class="pb-8 sm:pb-10">
-          <h1 class="font-display mt-4 break-words text-[clamp(1.875rem,4.5vw,2.625rem)] leading-[1.15] font-normal text-foreground text-balance">
+          <h1 class="display-type text-heading mt-4 break-words text-foreground">
             {note.data.title}
           </h1>
           {note.data.sample && (
-            <p class="mt-4 text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+            <p class="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-muted-foreground italic">
               A sample note, still growing — replace it with your own.
             </p>
           )}

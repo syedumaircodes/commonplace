@@ -37,11 +37,11 @@ const { Content } = topic
             </a>
           </p>
 
-          <h1 class="font-display max-w-[24ch] text-[clamp(2rem,5vw,3rem)] leading-[1.08] font-normal text-foreground text-balance">
+          <h1 class="display-type text-title max-w-[24ch] text-foreground">
             {topic.data.name}
           </h1>
 
-          <p class="mt-6 max-w-[54ch] text-[1.0625rem] leading-[1.75] text-muted-foreground">
+          <p class="text-lede mt-6 max-w-[54ch] text-pretty text-muted-foreground">
             {topic.data.description}
           </p>
 
@@ -59,12 +59,12 @@ const { Content } = topic
                   href={`/notes/${slug}/${source.sourceSlug}/`}
                   class="block py-6 sm:py-7"
                 >
-                  <span class="font-display block text-[1.3125rem] leading-snug font-normal text-foreground sm:text-[1.4375rem]">
+                  <span class="display-type block text-[1.4375rem] leading-[1.2] text-foreground sm:text-[1.5625rem]">
                     {source.sourceTitle}
                   </span>
 
                   {source.sourceDetail && (
-                    <span class="mt-1.5 block max-w-[56ch] text-[0.9375rem] leading-[1.7] text-muted-foreground">
+                    <span class="mt-1.5 block max-w-[56ch] text-[0.9375rem] leading-[1.65] text-pretty text-muted-foreground">
                       {source.sourceDetail}
                     </span>
                   )}

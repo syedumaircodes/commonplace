@@ -48,11 +48,11 @@ const { topic, source, notes } = Astro.props
               {topic.data.name}
             </a>
           </p>
-          <h1 class="font-display max-w-[26ch] text-[clamp(1.875rem,4.5vw,2.75rem)] leading-[1.1] font-normal break-words text-foreground text-balance">
+          <h1 class="display-type text-title max-w-[26ch] break-words text-foreground">
             {source.sourceTitle}
           </h1>
           {source.sourceDetail && (
-            <p class="mt-4 max-w-[52ch] text-[0.9375rem] leading-[1.7] text-muted-foreground italic">
+            <p class="mt-4 max-w-[52ch] font-serif text-[1.125rem] leading-[1.5] text-muted-foreground italic">
               {source.sourceDetail}
             </p>
           )}
@@ -67,12 +67,12 @@ const { topic, source, notes } = Astro.props
                   class="block py-6 sm:py-7"
                   href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
                 >
-                  <span class="font-display block text-[1.3125rem] leading-snug font-normal text-foreground sm:text-[1.4375rem]">
+                  <span class="display-type block text-[1.4375rem] leading-[1.2] text-foreground sm:text-[1.5625rem]">
                     {note.data.title}
                   </span>
 
                   {note.data.reference && (
-                    <span class="mt-1.5 block text-[0.875rem] text-muted-foreground">
+                    <span class="mt-1.5 block text-[0.8125rem] text-muted-foreground">
                       {note.data.reference}
                     </span>
                   )}
