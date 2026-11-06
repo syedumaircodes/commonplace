@@ -1,64 +1,59 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/work-sans";
-@import "@fontsource-variable/work-sans/wght-italic.css";
-@import "@fontsource/instrument-serif/latin.css";
-@import "@fontsource/instrument-serif/latin-italic.css";
 @import "@fontsource-variable/google-sans-code";
+@import "@fontsource-variable/inter";
 
 /* ---------------------------------------------------------------------------
-   Lamplight Paper — a warm reading room.
-   No motion, no badges, no counts. Paper and ink.
+   Lamplight Paper — a reading room after dark.
+   No motion, no badges, no counts. Charcoal paper and ink.
 --------------------------------------------------------------------------- */
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --background: oklch(0.968 0.012 85);
-  --foreground: oklch(0.245 0.015 65);
-  --card: oklch(0.94 0.016 82);
-  --card-foreground: oklch(0.245 0.015 65);
-  --popover: oklch(0.968 0.012 85);
-  --popover-foreground: oklch(0.245 0.015 65);
-  --primary: oklch(0.245 0.015 65);
-  --primary-foreground: oklch(0.968 0.012 85);
-  --secondary: oklch(0.94 0.016 82);
-  --secondary-foreground: oklch(0.245 0.015 65);
-  --muted: oklch(0.928 0.014 83);
-  --muted-foreground: oklch(0.505 0.018 70);
-  --accent: oklch(0.505 0.078 150);
-  --accent-foreground: oklch(0.968 0.012 85);
-  --destructive: oklch(0.52 0.16 27);
-  --border: oklch(0.245 0.015 65 / 12%);
-  --input: oklch(0.245 0.015 65 / 16%);
-  --ring: oklch(0.505 0.078 150);
-  --chart-1: oklch(0.505 0.078 150);
-  --chart-2: oklch(0.55 0.11 40);
-  --chart-3: oklch(0.42 0.07 255);
-  --chart-4: oklch(0.65 0.09 85);
-  --chart-5: oklch(0.505 0.018 70);
+  --background: #121111;
+  --foreground: #F9F9F9;
+  --card: #1a1919;
+  --card-foreground: #F9F9F9;
+  --popover: #121111;
+  --popover-foreground: #F9F9F9;
+  --primary: #F9F9F9;
+  --primary-foreground: #121111;
+  --secondary: #1a1919;
+  --secondary-foreground: #F9F9F9;
+  --muted: #201e1e;
+  --muted-foreground: #a7a1a8;
+  --accent: #85b8fc;
+  --accent-foreground: #121111;
+  --destructive: #e5484d;
+  --border: rgb(249 249 249 / 12%);
+  --input: rgb(249 249 249 / 16%);
+  --ring: #85b8fc;
+  --chart-1: #85b8fc;
+  --chart-2: #f2a15b;
+  --chart-3: #6f9df2;
+  --chart-4: #d9c26a;
+  --chart-5: #a7a1a8;
   --radius: 0.375rem;
-  --sidebar: oklch(0.94 0.016 82);
-  --sidebar-foreground: oklch(0.245 0.015 65);
-  --sidebar-primary: oklch(0.505 0.078 150);
-  --sidebar-primary-foreground: oklch(0.968 0.012 85);
-  --sidebar-accent: oklch(0.928 0.014 83);
-  --sidebar-accent-foreground: oklch(0.245 0.015 65);
-  --sidebar-border: oklch(0.245 0.015 65 / 12%);
-  --sidebar-ring: oklch(0.505 0.078 150);
-  --hairline: oklch(0.245 0.015 65 / 12%);
+  --sidebar: #1a1919;
+  --sidebar-foreground: #F9F9F9;
+  --sidebar-primary: #85b8fc;
+  --sidebar-primary-foreground: #121111;
+  --sidebar-accent: #201e1e;
+  --sidebar-accent-foreground: #F9F9F9;
+  --sidebar-border: rgb(249 249 249 / 12%);
+  --sidebar-ring: #85b8fc;
+  --hairline: rgb(249 249 249 / 10%);
   --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @theme inline {
-  --font-sans: "Work Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype",
-    Georgia, serif;
-  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype",
-    Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Google Sans Code Variable", ui-monospace, "SFMono-Regular",
     monospace;
 
@@ -138,16 +133,15 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Paper grain — static, decorative, never animated. */
-  body::before {
+  /* Paper grain — a single overlay above all content so the canvas is uniform. */
+  body::after {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: 9999;
     pointer-events: none;
     background-image: var(--paper-grain);
-    opacity: 0.035;
-    mix-blend-mode: multiply;
+    opacity: 0.04;
   }
 
   ::selection {
@@ -197,7 +191,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Display type — Instrument Serif, sharp and editorial.
+   Display type — Inter, keyed from the Inter Variable face.
    Pair with text-display / text-title / text-heading for the scale.
 --------------------------------------------------------------------------- */
 
