@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/main.astro"
+import NoteSidebar from "@/components/note-sidebar.astro"
 import { notes as noteEntries, sourceSlug } from "@/lib/notes"
 import { SITE } from "@/lib/site"
 
@@ -26,55 +27,57 @@ export function getStaticPaths() {
 }
 
 const { source, notes } = Astro.props
+const { Content } = notes[0]
+const current = notes[0].data
+const sourceSlugValue = sourceSlug(source.sourceTitle)
+const noteImages = `/images/notes/${sourceSlugValue}/`
 ---
 
-<Layout
-  title={source.sourceTitle}
-  description={`${source.sourceTitle}${source.sourceDetail ? ` — ${source.sourceDetail}` : ""}. Notes from ${SITE.name}, curated by ${SITE.author.handle}.`}
->
-  <main class="min-h-svh">
-    <div class="mx-auto flex min-h-svh w-full max-w-3xl flex-col bg-background">
-      <div class="mx-auto w-full max-w-3xl flex-1 px-6 sm:px-10">
-        <header class="flex flex-col justify-center py-14 sm:py-18">
-          <p class="label-caps mb-3">
-            <a href="/" class="hover:text-foreground">
-              ← All sources
-            </a>
-          </p>
-          <h1 class="display-type text-title max-w-[26ch] break-words text-foreground">
-            {source.sourceTitle}
+<Layout title={current.title} type="article" description={current.excerpt}>
+  <div class="flex min-h-svh flex-col lg:flex-row">
+    <NoteSidebar
+      sourceTitle={source.sourceTitle}
+      notes={notes.map(({ data }) => data)}
+      activeNoteSlug={current.slug}
+    />
+
+    <main class="min-w-0 flex-1">
+      <article class="mx-auto w-full max-w-[42rem] px-4 pb-14 pt-8 sm:px-6">
+        <header>
+          <h1 class="display-type text-heading break-words text-foreground">
+            {current.title}
           </h1>
           {source.sourceDetail && (
-            <p class="mt-4 max-w-[52ch] font-serif text-[1.125rem] leading-[1.5] text-muted-foreground italic">
-              {source.sourceDetail}
+            <p class="mt-2 text-[0.9375rem] leading-[1.6] text-muted-foreground">
+              {source.sourceTitle}{` — `}{source.sourceDetail}
+            </p>
+          )}
+          {current.sample && (
+            <p class="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-muted-foreground italic">
+              A sample note, still growing — replace it with your own.
             </p>
           )}
         </header>
 
-        <section aria-label={`Notes from ${source.sourceTitle}`}>
-          <h2 class="label-caps mb-2">Notes</h2>
-          <ol>
-            {notes.map((note: (typeof noteEntries)[number]) => (
-              <li class="border-t border-hairline">
-                <a
-                  class="block py-6 sm:py-7"
-                  href={`/notes/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
-                >
-                  <span class="display-type block text-[1.4375rem] leading-[1.2] text-foreground sm:text-[1.5625rem]">
-                    {note.data.title}
-                  </span>
-
-                  {note.data.reference && (
-                    <span class="mt-1.5 block text-[0.8125rem] text-muted-foreground">
-                      {note.data.reference}
-                    </span>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </div>
-    </div>
-  </main>
+        <div class="mdx-content mt-8">
+          <Content
+            components={{
+              img: (props: { src?: string; alt?: string; title?: string }) => (
+                <img
+                  {...props}
+                  src={
+                    props.src?.startsWith("./")
+                      ? `${noteImages}${props.src.slice(2)}`
+                      : props.src
+                  }
+                  loading="lazy"
+                  decoding="async"
+                />
+              ),
+            }}
+          />
+        </div>
+      </article>
+    </main>
+  </div>
 </Layout>
