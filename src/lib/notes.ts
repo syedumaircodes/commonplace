@@ -1,13 +1,6 @@
-export type TopicData = {
-  slug: string
-  name: string
-  description: string
-}
-
 export type NoteData = {
   slug: string
   title: string
-  topic: string
   sourceKind: "Book" | "Video course" | "Course" | "Cohort" | "Field notes"
   sourceTitle: string
   sourceDetail: string
@@ -21,17 +14,9 @@ type MdxModule<Data> = {
   default: AstroComponentFactory
 }
 
-const topicModules = import.meta.glob("../content/topics/*.mdx", {
-  eager: true,
-}) as Record<string, MdxModule<TopicData>>
-
 const noteModules = import.meta.glob("../content/notes/**/*.mdx", {
   eager: true,
 }) as Record<string, MdxModule<NoteData>>
-
-export const topics = Object.values(topicModules).map(
-  ({ frontmatter, default: Content }) => ({ data: frontmatter, Content })
-)
 
 export const notes = Object.values(noteModules).map(
   ({ frontmatter, default: Content }) => ({ data: frontmatter, Content })

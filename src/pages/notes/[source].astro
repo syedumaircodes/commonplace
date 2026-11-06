@@ -1,27 +1,23 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { notes as noteEntries, sourceSlug, topics } from "@/lib/topics"
+import { notes as noteEntries, sourceSlug } from "@/lib/notes"
 import { SITE } from "@/lib/site"
 
 export function getStaticPaths() {
   const groups = new Map()
   for (const note of noteEntries) {
-    const key = `${note.data.topic}/${sourceSlug(note.data.sourceTitle)}`
+    const key = sourceSlug(note.data.sourceTitle)
     const group = groups.get(key) ?? []
     group.push(note)
     groups.set(key, group)
   }
   return Array.from(groups.values()).flatMap((group) => {
     const note = group[0]
-    const topic = topics.find(({ data }) => data.slug === note.data.topic)
-    if (!topic) return []
     return {
       params: {
-        slug: note.data.topic,
         source: sourceSlug(note.data.sourceTitle),
       },
       props: {
-        topic,
         source: note.data,
         notes: group,
       },
@@ -29,7 +25,7 @@ export function getStaticPaths() {
   })
 }
 
-const { topic, source, notes } = Astro.props
+const { source, notes } = Astro.props
 ---
 
 <Layout
@@ -41,11 +37,8 @@ const { topic, source, notes } = Astro.props
       <div class="mx-auto w-full max-w-3xl flex-1 px-6 sm:px-10">
         <header class="flex flex-col justify-center py-14 sm:py-18">
           <p class="label-caps mb-3">
-            <a
-              href={`/notes/${topic.data.slug}/`}
-              class="hover:text-foreground"
-            >
-              {topic.data.name}
+            <a href="/" class="hover:text-foreground">
+              ← All sources
             </a>
           </p>
           <h1 class="display-type text-title max-w-[26ch] break-words text-foreground">
@@ -65,7 +58,7 @@ const { topic, source, notes } = Astro.props
               <li class="border-t border-hairline">
                 <a
                   class="block py-6 sm:py-7"
-                  href={`/notes/${note.data.topic}/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
+                  href={`/notes/${sourceSlug(note.data.sourceTitle)}/${note.data.slug}/`}
                 >
                   <span class="display-type block text-[1.4375rem] leading-[1.2] text-foreground sm:text-[1.5625rem]">
                     {note.data.title}
