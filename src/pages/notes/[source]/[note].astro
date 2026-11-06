@@ -1,0 +1,73 @@
+---
+import Layout from "@/layouts/main.astro"
+import NoteSidebar from "@/components/note-sidebar.astro"
+import { notes, sourceSlug } from "@/lib/notes"
+
+export function getStaticPaths() {
+  const groups = new Map()
+  for (const note of notes) {
+    const key = sourceSlug(note.data.sourceTitle)
+    const group = groups.get(key) ?? []
+    group.push(note)
+    groups.set(key, group)
+  }
+  return Array.from(groups.values()).flatMap((group) =>
+    group.map((note) => ({
+      params: {
+        source: sourceSlug(note.data.sourceTitle),
+        note: note.data.slug,
+      },
+      props: { note, group },
+    }))
+  )
+}
+
+const { note, group } = Astro.props
+const { Content } = note
+const source = sourceSlug(note.data.sourceTitle)
+const noteImages = `/images/notes/${source}/`
+---
+
+<Layout title={note.data.title} type="article" description={note.data.excerpt}>
+  <div class="flex min-h-svh flex-col lg:flex-row">
+    <NoteSidebar
+      sourceTitle={note.data.sourceTitle}
+      notes={group.map(({ data }) => data)}
+      activeNoteSlug={note.data.slug}
+    />
+
+    <main class="min-w-0 flex-1">
+      <article class="mx-auto w-full max-w-[42rem] px-4 pb-14 pt-8 sm:px-6">
+        <header>
+          <h1 class="display-type text-heading break-words text-foreground">
+            {note.data.title}
+          </h1>
+          {note.data.sample && (
+            <p class="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-muted-foreground italic">
+              A sample note, still growing — replace it with your own.
+            </p>
+          )}
+        </header>
+
+        <div class="mdx-content mt-8">
+          <Content
+            components={{
+              img: (props: { src?: string; alt?: string; title?: string }) => (
+                <img
+                  {...props}
+                  src={
+                    props.src?.startsWith("./")
+                      ? `${noteImages}${props.src.slice(2)}`
+                      : props.src
+                  }
+                  loading="lazy"
+                  decoding="async"
+                />
+              ),
+            }}
+          />
+        </div>
+      </article>
+    </main>
+  </div>
+</Layout>

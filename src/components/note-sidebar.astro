@@ -1,0 +1,61 @@
+---
+import { sourceSlug } from "@/lib/notes"
+
+type NoteEntry = {
+  slug: string
+  title: string
+  reference?: string
+}
+
+type Props = {
+  sourceTitle: string
+  notes: NoteEntry[]
+  activeNoteSlug: string
+}
+
+const { sourceTitle, notes, activeNoteSlug } = Astro.props
+const source = sourceSlug(sourceTitle)
+---
+
+<aside
+  aria-label={`Notes from ${sourceTitle}`}
+  class="border-hairline px-6 py-8 sm:px-8 lg:sticky lg:top-0 lg:h-svh lg:w-64 lg:shrink-0 lg:overflow-y-auto lg:border-r lg:py-10 lg:pr-6"
+>
+  <p class="mb-1">
+    <a href="/" class="text-[0.8125rem] text-muted-foreground hover:text-foreground">
+      ← All sources
+    </a>
+  </p>
+  <p class="display-type mb-6 text-[1.25rem] leading-[1.25] text-foreground" style="font-weight: 500;">
+    <a href={`/notes/${source}/`} class="hover:text-accent">
+      {sourceTitle}
+    </a>
+  </p>
+
+  <ol class="space-y-0.5">
+    {
+      notes.map((note) => (
+        <li>
+          <a
+            href={`/notes/${source}/${note.slug}/`}
+            aria-current={note.slug === activeNoteSlug ? "page" : undefined}
+            class:list={[
+              "block rounded border-l-2 px-2.5 py-1.5 text-[0.8125rem] leading-[1.45] transition-colors",
+              note.slug === activeNoteSlug
+                ? "border-accent bg-muted text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground",
+            ]}
+          >
+            {note.title}
+
+            {note.reference && (
+              <span class="mt-0.5 block text-[0.625rem] text-muted-foreground">
+                {note.reference}
+              </span>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</aside>

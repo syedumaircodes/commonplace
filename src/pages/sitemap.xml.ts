@@ -1,20 +1,15 @@
 import type { APIRoute } from "astro"
-import { notes, sourceSlug, topics } from "@/lib/topics"
+import { notes, sourceSlug } from "@/lib/notes"
 import { SITE } from "@/lib/site"
 
 export const GET: APIRoute = () => {
   const base = SITE.url.replace(/\/$/, "")
 
   const urls: string[] = ["/"]
-  for (const topic of topics) {
-    urls.push(`/notes/${topic.data.slug}/`)
-  }
   for (const note of notes) {
-    const topic = topics.find(({ data }) => data.slug === note.data.topic)
-    if (!topic) continue
     const source = sourceSlug(note.data.sourceTitle)
-    urls.push(`/notes/${topic.data.slug}/${source}/`)
-    urls.push(`/notes/${topic.data.slug}/${source}/${note.data.slug}/`)
+    urls.push(`/notes/${source}/`)
+    urls.push(`/notes/${source}/${note.data.slug}/`)
   }
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

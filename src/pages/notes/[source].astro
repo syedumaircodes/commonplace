@@ -1,0 +1,83 @@
+---
+import Layout from "@/layouts/main.astro"
+import NoteSidebar from "@/components/note-sidebar.astro"
+import { notes as noteEntries, sourceSlug } from "@/lib/notes"
+import { SITE } from "@/lib/site"
+
+export function getStaticPaths() {
+  const groups = new Map()
+  for (const note of noteEntries) {
+    const key = sourceSlug(note.data.sourceTitle)
+    const group = groups.get(key) ?? []
+    group.push(note)
+    groups.set(key, group)
+  }
+  return Array.from(groups.values()).flatMap((group) => {
+    const note = group[0]
+    return {
+      params: {
+        source: sourceSlug(note.data.sourceTitle),
+      },
+      props: {
+        source: note.data,
+        notes: group,
+      },
+    }
+  })
+}
+
+const { source, notes } = Astro.props
+const { Content } = notes[0]
+const current = notes[0].data
+const sourceSlugValue = sourceSlug(source.sourceTitle)
+const noteImages = `/images/notes/${sourceSlugValue}/`
+---
+
+<Layout title={current.title} type="article" description={current.excerpt}>
+  <div class="flex min-h-svh flex-col lg:flex-row">
+    <NoteSidebar
+      sourceTitle={source.sourceTitle}
+      notes={notes.map(({ data }) => data)}
+      activeNoteSlug={current.slug}
+    />
+
+    <main class="min-w-0 flex-1">
+      <article class="mx-auto w-full max-w-[42rem] px-4 pb-14 pt-8 sm:px-6">
+        <header>
+          <h1 class="display-type text-heading break-words text-foreground">
+            {current.title}
+          </h1>
+          {source.sourceDetail && (
+            <p class="mt-2 text-[0.9375rem] leading-[1.6] text-muted-foreground">
+              {source.sourceTitle}{` — `}{source.sourceDetail}
+            </p>
+          )}
+          {current.sample && (
+            <p class="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-muted-foreground italic">
+              A sample note, still growing — replace it with your own.
+            </p>
+          )}
+        </header>
+
+        <div class="mdx-content mt-8">
+          <Content
+            components={{
+              img: (props: { src?: string; alt?: string; title?: string }) => (
+                <img
+                  {...props}
+                  src={
+                    props.src?.startsWith("./")
+                      ? `${noteImages}${props.src.slice(2)}`
+                      : props.src
+                  }
+                  loading="lazy"
+                  decoding="async"
+                />
+              ),
+            }}
+          />
+        </div>
+      </article>
+    </main>
+  </div>
+</Layout>

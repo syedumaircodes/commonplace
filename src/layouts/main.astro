@@ -101,6 +101,24 @@ const websiteSchema = {
     />
   </head>
   <body>
+    <aside
+      class="border-b border-hairline bg-background"
+      role="note"
+      aria-label="About"
+    >
+      <p class="mx-auto max-w-4xl px-6 py-3 text-[0.875rem] leading-[1.6] text-muted-foreground sm:px-10">
+        Hi, I’m <a
+          href={SITE.author.url}
+          target="_blank"
+          rel="me noopener noreferrer"
+          class="text-foreground underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
+        >
+          Umair
+        </a> — these are my personal notes. They don’t cover everything from the
+        sources; I only keep what I need.
+      </p>
+    </aside>
+
     <slot />
   </body>
 </html>
