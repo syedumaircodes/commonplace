@@ -1,11 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/work-sans";
-@import "@fontsource-variable/work-sans/wght-italic.css";
-@import "@fontsource/instrument-serif/latin.css";
-@import "@fontsource/instrument-serif/latin-italic.css";
 @import "@fontsource-variable/google-sans-code";
+@import "@fontsource-variable/inter";
 
 /* ---------------------------------------------------------------------------
    Lamplight Paper — a reading room after dark.
@@ -54,11 +51,9 @@
 }
 
 @theme inline {
-  --font-sans: "Work Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype",
-    Georgia, serif;
-  --font-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype",
-    Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Google Sans Code Variable", ui-monospace, "SFMono-Regular",
     monospace;
 
@@ -196,7 +191,7 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Display type — Instrument Serif, sharp and editorial.
+   Display type — Inter, keyed from the Inter Variable face.
    Pair with text-display / text-title / text-heading for the scale.
 --------------------------------------------------------------------------- */
 
