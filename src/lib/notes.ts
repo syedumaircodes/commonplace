@@ -1,16 +1,22 @@
 export type NoteData = {
   slug: string
   title: string
-  sourceKind: "Book" | "Video course" | "Course" | "Cohort" | "Field notes"
+  sourceKind: "Book" | "Video course" | "Course" | "Cohort" | "Field notes" | "Mooc"
   sourceTitle: string
-  sourceDetail: string
+  /** Optional — some sources carry no blurb. */
+  sourceDetail?: string
   reference?: string
-  excerpt: string
+  excerpt?: string
   sample?: boolean
 }
 
-type MdxModule<Data> = {
-  frontmatter: Data
+export type NoteEntry = {
+  data: NoteData
+  Content: AstroComponentFactory
+}
+
+type MdxModule<T> = {
+  frontmatter: T
   default: AstroComponentFactory
 }
 
@@ -18,7 +24,7 @@ const noteModules = import.meta.glob("../content/notes/**/*.mdx", {
   eager: true,
 }) as Record<string, MdxModule<NoteData>>
 
-export const notes = Object.values(noteModules).map(
+export const notes: NoteEntry[] = Object.values(noteModules).map(
   ({ frontmatter, default: Content }) => ({ data: frontmatter, Content })
 )
 

@@ -9,53 +9,235 @@ type NoteEntry = {
 
 type Props = {
   sourceTitle: string
+  sourceDetail?: string
   notes: NoteEntry[]
-  activeNoteSlug: string
+  activeNoteSlug?: string
 }
 
-const { sourceTitle, notes, activeNoteSlug } = Astro.props
+const { sourceTitle, sourceDetail, notes, activeNoteSlug } = Astro.props
 const source = sourceSlug(sourceTitle)
+const collectionIsCurrent = !activeNoteSlug
 ---
 
+<!-- Phone: the only piece of the nav that is visible until it is opened. -->
+<div class="note-nav-bar">
+  <button
+    class="note-nav-bar__btn"
+    type="button"
+    data-nav-open
+    aria-expanded="false"
+    aria-controls="note-nav"
+  >
+    <svg
+      class="h-3.5 w-3.5 shrink-0"
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2.5 4h9M2.5 7h9M2.5 10h6" />
+    </svg>
+  </button>
+</div>
+
+<!-- The nav itself: a collapsible column on the desktop, a drawer on a phone. -->
 <aside
-  aria-label={`Notes from ${sourceTitle}`}
-  class="border-hairline px-6 py-8 sm:px-8 lg:sticky lg:top-0 lg:h-svh lg:w-64 lg:shrink-0 lg:overflow-y-auto lg:border-r lg:py-10 lg:pr-6"
+  class="note-nav"
+  id="note-nav"
+  aria-label={`Navigation for ${sourceTitle}`}
+  data-drawer="closed"
 >
-  <p class="mb-1">
-    <a href="/" class="text-[0.8125rem] text-muted-foreground hover:text-foreground">
-      ← All sources
-    </a>
-  </p>
-  <p class="display-type mb-6 text-[1.25rem] leading-[1.25] text-foreground" style="font-weight: 500;">
-    <a href={`/notes/${source}/`} class="hover:text-accent">
-      {sourceTitle}
-    </a>
-  </p>
+  <div class="note-nav__head">
+    <button
+      class="note-nav__toggle"
+      type="button"
+      data-nav-collapse
+      aria-expanded="true"
+      aria-controls="note-nav-body"
+      aria-label="Collapse navigation"
+    >
+      <svg
+        class="note-nav__chevron h-3.5 w-3.5 shrink-0"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M7.5 2.5L3.5 6l4 3.5" />
+      </svg>
+      <span class="note-nav__toggle-text">Collapse</span>
+    </button>
 
-  <ol class="space-y-0.5">
-    {
-      notes.map((note) => (
-        <li>
-          <a
-            href={`/notes/${source}/${note.slug}/`}
-            aria-current={note.slug === activeNoteSlug ? "page" : undefined}
-            class:list={[
-              "block rounded border-l-2 px-2.5 py-1.5 text-[0.8125rem] leading-[1.45] transition-colors",
-              note.slug === activeNoteSlug
-                ? "border-accent bg-muted text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground",
-            ]}
-          >
-            {note.title}
+    <button class="note-nav__close" type="button" data-nav-close>
+      <svg
+        class="h-3.5 w-3.5"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M3.5 3.5l7 7M10.5 3.5l-7 7" />
+      </svg>
+      <span class="sr-only">Close navigation</span>
+    </button>
+  </div>
 
-            {note.reference && (
-              <span class="mt-0.5 block text-[0.625rem] text-muted-foreground">
-                {note.reference}
+  <div class="note-nav__body" id="note-nav-body">
+    <nav aria-label="Library" class="note-nav__back">
+      <a
+        href="/"
+        class="group inline-flex items-center gap-2 text-[0.8125rem] text-muted-foreground transition-colors duration-300 hover:text-foreground"
+      >
+        <svg
+          class="h-3 w-3 shrink-0 transition-transform duration-300 group-hover:-translate-x-0.5"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M7.5 2.5L3.5 6l4 3.5" />
+        </svg>
+        All collections
+      </a>
+    </nav>
+
+    <div
+      class:list={[
+        "note-nav__identity mt-7",
+        collectionIsCurrent && "note-nav__identity--current",
+      ]}
+    >
+      <p class="note-nav__title">
+        <a
+          href={`/notes/${source}/`}
+          aria-current={collectionIsCurrent ? "page" : undefined}
+          class="display-type text-[1.3125rem] leading-[1.2] tracking-[-0.015em] text-foreground transition-colors duration-300 hover:text-accent"
+        >
+          {sourceTitle}
+        </a>
+      </p>
+
+      {sourceDetail && (
+        <p class="mt-2 text-[0.8125rem] leading-[1.55] text-pretty text-muted-foreground">
+          {sourceDetail}
+        </p>
+      )}
+    </div>
+
+    <nav aria-label={`Notes from ${sourceTitle}`} class="note-nav__list mt-7">
+      <p class="note-nav__label">Notes</p>
+
+      <ol class="note-nav__list-items mt-3">
+        {notes.map((note, index) => (
+          <li>
+            <a
+              href={`/notes/${source}/${note.slug}/`}
+              aria-current={note.slug === activeNoteSlug ? "page" : undefined}
+              class:list={[
+                "note-nav__item",
+                note.slug === activeNoteSlug
+                  ? "is-active"
+                  : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+              ]}
+            >
+              <span class="note-nav__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
               </span>
-            )}
-          </a>
-        </li>
-      ))
-    }
-  </ol>
+              <span class="note-nav__item-body">
+                {note.title}
+
+                {note.reference && (
+                  <span class="mt-0.5 block text-[0.6875rem] leading-[1.45] text-muted-foreground/70">
+                    {note.reference}
+                  </span>
+                )}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  </div>
 </aside>
+
+<div class="note-nav-scrim" data-nav-scrim hidden></div>
+
+<script>
+  const KEY = "spirit-library:nav"
+  const DESKTOP = "(min-width: 64rem)"
+
+  const root = document.documentElement
+  const nav = document.getElementById("note-nav")
+  const scrim = document.querySelector<HTMLElement>("[data-nav-scrim]")
+  const collapseBtn = document.querySelector<HTMLButtonElement>(
+    "[data-nav-collapse]"
+  )
+  const openBtn = document.querySelector<HTMLButtonElement>("[data-nav-open]")
+  const closeBtn = document.querySelector<HTMLButtonElement>("[data-nav-close]")
+
+  /* --- collapsed / expanded (desktop) --- */
+  const setCollapsed = (collapsed: boolean, persist = true) => {
+    root.dataset.nav = collapsed ? "collapsed" : "expanded"
+    collapseBtn?.setAttribute("aria-expanded", String(!collapsed))
+    collapseBtn?.setAttribute(
+      "aria-label",
+      collapsed ? "Expand navigation" : "Collapse navigation"
+    )
+    const text = collapseBtn?.querySelector(".note-nav__toggle-text")
+    if (text) text.textContent = collapsed ? "Expand" : "Collapse"
+    if (persist) {
+      try {
+        localStorage.setItem(KEY, collapsed ? "collapsed" : "expanded")
+      } catch {}
+    }
+  }
+
+  collapseBtn?.addEventListener("click", () => {
+    setCollapsed(root.dataset.nav !== "collapsed")
+  })
+
+  /* --- drawer (phone) --- */
+  const setDrawer = (open: boolean) => {
+    nav?.setAttribute("data-drawer", open ? "open" : "closed")
+    openBtn?.setAttribute("aria-expanded", String(open))
+    if (scrim) scrim.hidden = !open
+    document.body.style.overflow = open ? "hidden" : ""
+    if (open) closeBtn?.focus()
+    else openBtn?.focus()
+  }
+
+  openBtn?.addEventListener("click", () => setDrawer(true))
+  closeBtn?.addEventListener("click", () => setDrawer(false))
+  scrim?.addEventListener("click", () => setDrawer(false))
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nav?.getAttribute("data-drawer") === "open") {
+      setDrawer(false)
+    }
+  })
+
+  /* Leaving the phone breakpoint must not strand the drawer open. */
+  window.matchMedia(DESKTOP).addEventListener("change", (event) => {
+    if (event.matches && nav?.getAttribute("data-drawer") === "open") {
+      nav.setAttribute("data-drawer", "closed")
+      if (scrim) scrim.hidden = true
+      document.body.style.overflow = ""
+    }
+  })
+
+  /* Restore the desktop preference. */
+  try {
+    if (localStorage.getItem(KEY) === "collapsed") setCollapsed(true, false)
+  } catch {}
+</script>

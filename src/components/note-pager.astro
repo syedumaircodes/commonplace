@@ -1,0 +1,61 @@
+---
+type Props = {
+  previous?: { title: string; href: string }
+  next?: { title: string; href: string }
+}
+
+const { previous, next } = Astro.props
+---
+
+{
+  (previous || next) && (
+    <nav class="note-pager" aria-label="Note navigation">
+      {previous ? (
+        <a href={previous.href} class="note-pager__link note-pager__link--prev">
+          <span class="note-pager__label">
+            <svg
+              class="h-3 w-3 shrink-0"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7.5 2.5L3.5 6l4 3.5" />
+            </svg>
+            Previous
+          </span>
+          <span class="note-pager__title">{previous.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+
+      {next && (
+        <a
+          href={next.href}
+          class="note-pager__link note-pager__link--next"
+        >
+          <span class="note-pager__label">
+            Next
+            <svg
+              class="h-3 w-3 shrink-0"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4.5 2.5L8.5 6l-4 3.5" />
+            </svg>
+          </span>
+          <span class="note-pager__title">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  )
+}

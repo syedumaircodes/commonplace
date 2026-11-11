@@ -13,7 +13,6 @@ const sources = Array.from(
         title: data.sourceTitle,
         detail: data.sourceDetail,
         kind: data.sourceKind,
-        count: 0,
         titles: [] as string[],
       },
     ])
@@ -27,78 +26,108 @@ const sources = Array.from(
     title: data.title,
     detail: data.detail,
     kind: data.kind,
-    count: titles.length,
     titles,
     href: `/notes/${sourceSlugValue}/`,
   }
 })
 
+/* A collection is described by its source, or failing that by what it holds —
+   never by a blank space. */
+const described = sources.map((source) => ({
+  ...source,
+  summary:
+    source.detail?.trim() ||
+    (source.titles.length
+      ? source.titles.join(", ")
+      : `A ${source.kind.toLowerCase()} in the library.`),
+}))
+
 ---
 
 <Layout description={SITE.description}>
-  <main class="flex min-h-svh flex-col bg-background">
-    <section
-      class="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center gap-5 px-6 py-14 sm:px-10 sm:py-16"
+  <main class="flex flex-1 flex-col bg-background">
+    <div
+      class="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 pb-20 pt-12 sm:px-10 sm:pb-28 sm:pt-16"
     >
-      <!-- The library itself — one wide card -->
-      <div
-        class="card-lift relative flex min-h-[11rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border border-hairline bg-card p-6 sm:min-h-[12.5rem] sm:p-7"
+      <!-- Masthead -->
+      <header class="mb-9 sm:mb-12">
+        <h1
+          class="arrival display-type max-w-[16ch] text-[clamp(2.25rem,6vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground"
+          style="--arrival-delay: 0ms"
+        >
+          {SITE.name}
+        </h1>
+        <p
+          class="arrival mt-5 max-w-[58ch] text-[1.0625rem] leading-[1.7] text-pretty text-muted-foreground"
+          style="--arrival-delay: 90ms"
+        >
+          {SITE.description}
+        </p>
+      </header>
+
+      <!-- The cover — the library itself -->
+      <figure
+        class="cover cover-settle relative overflow-hidden rounded-[1.75rem] border border-hairline bg-card"
+        style="--arrival-delay: 40ms"
       >
         <Image
           src={heroImage}
-          alt=""
-          aria-hidden="true"
-          class="absolute inset-0 h-full w-full object-cover"
-          widths={[640, 1024, 1536]}
-          sizes="(min-width: 1024px) 72rem, 100vw"
+          alt="The domed facade of a baroque library, framed by trees and a wrought-iron fence."
+          class="aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
+          widths={[480, 768, 1152, 1536]}
+          sizes="(min-width: 1152px) 1152px, 100vw"
           loading="eager"
           fetchpriority="high"
         />
-        <span
-          class="absolute inset-0"
-          style="background: linear-gradient(to top, rgb(18 17 17 / 0.55) 0%, rgb(18 17 17 / 0.15) 55%, rgb(18 17 17 / 0.1) 100%);"
-          aria-hidden="true"
-        ></span>
-      </div>
+      </figure>
 
-      <!-- The collections — smaller cards -->
-      <section id="collections" class="scroll-mt-16">
-        <h2 class="mb-4 text-[0.9375rem] text-foreground">Collections</h2>
+      <!-- The collections -->
+      <section id="collections" class="mt-14 scroll-mt-16 sm:mt-20">
+        <div
+          class="arrival flex items-center gap-5 sm:gap-7"
+          style="--arrival-delay: 220ms"
+        >
+          <h2
+            class="display-type shrink-0 text-[1.5rem] leading-[1.15] tracking-[-0.015em] text-foreground sm:text-[1.875rem]"
+          >
+            Collections
+          </h2>
+          <span class="h-px flex-1 bg-hairline"></span>
+        </div>
 
-        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sources.map((source) => (
+        <ul class="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5">
+          {described.map((source, index) => (
             <li class="h-full">
               <a
                 href={source.href}
-                aria-label={source.title}
-                class="card-lift relative flex h-full min-h-[11rem] flex-col justify-end overflow-hidden rounded-[1.75rem] border border-hairline bg-card p-6"
+                class="collection-card arrival group flex h-full flex-col justify-between gap-8 rounded-[1.25rem] border border-hairline bg-card p-6 sm:p-7"
+                style={`--arrival-delay: ${240 + index * 60}ms`}
               >
-                <span class="relative flex items-start justify-between gap-4">
-                  <span class="text-[0.9375rem] text-muted-foreground">
-                    {source.kind}
-                  </span>
-                </span>
-
-                <span class="relative mt-5 block">
+                <span class="block">
                   <span
                     class="display-type block text-[1.375rem] leading-[1.15] text-foreground sm:text-[1.5rem]"
                   >
                     {source.title}
                   </span>
 
-                  {source.detail && (
-                    <span
-                      class="mt-2 block max-w-[42ch] text-[0.9375rem] leading-[1.6] text-pretty text-muted-foreground"
-                    >
-                      {source.detail}
-                    </span>
-                  )}
+                  <span
+                    class="mt-2.5 block max-w-[46ch] text-[0.9375rem] leading-[1.6] text-pretty text-muted-foreground"
+                  >
+                    {source.summary}
+                  </span>
+                </span>
+
+                <span
+                  class="flex items-center gap-3 border-t border-hairline pt-4 text-[0.8125rem] text-muted-foreground"
+                >
+                  <span class="h-px w-5 bg-hairline"></span>
+                  {source.kind}
                 </span>
               </a>
             </li>
           ))}
         </ul>
       </section>
-    </section>
+    </div>
   </main>
 </Layout>

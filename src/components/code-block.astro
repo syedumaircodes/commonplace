@@ -1,0 +1,22 @@
+---
+interface Props {
+  "data-language"?: string
+  class?: string
+  style?: string
+  tabindex?: string
+}
+
+const { ...rest } = Astro.props
+const language = Astro.props["data-language"]
+---
+
+<figure class="code-block not-prose">
+  {
+    language && (
+      <span class="code-block__label" aria-hidden="true">
+        {language}
+      </span>
+    )
+  }
+  <pre {...rest}><slot /></pre>
+</figure>

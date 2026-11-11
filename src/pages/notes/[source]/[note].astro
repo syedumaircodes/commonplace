@@ -1,10 +1,12 @@
 ---
 import Layout from "@/layouts/main.astro"
+import CodeBlock from "@/components/code-block.astro"
+import NotePager from "@/components/note-pager.astro"
 import NoteSidebar from "@/components/note-sidebar.astro"
-import { notes, sourceSlug } from "@/lib/notes"
+import { notes, sourceSlug, type NoteEntry } from "@/lib/notes"
 
 export function getStaticPaths() {
-  const groups = new Map()
+  const groups = new Map<string, NoteEntry[]>()
   for (const note of notes) {
     const key = sourceSlug(note.data.sourceTitle)
     const group = groups.get(key) ?? []
@@ -22,36 +24,69 @@ export function getStaticPaths() {
   )
 }
 
-const { note, group } = Astro.props
+type Props = {
+  note: NoteEntry
+  group: NoteEntry[]
+}
+
+const { note, group } = Astro.props as Props
 const { Content } = note
 const source = sourceSlug(note.data.sourceTitle)
 const noteImages = `/images/notes/${source}/`
+
+const index = group.findIndex((entry) => entry.data.slug === note.data.slug)
+const previous = index > 0 ? group[index - 1] : undefined
+const next = index < group.length - 1 ? group[index + 1] : undefined
 ---
 
 <Layout title={note.data.title} type="article" description={note.data.excerpt}>
-  <div class="flex min-h-svh flex-col lg:flex-row">
+  <div class="flex flex-1 flex-col lg:flex-row">
     <NoteSidebar
       sourceTitle={note.data.sourceTitle}
+      sourceDetail={note.data.sourceDetail}
       notes={group.map(({ data }) => data)}
       activeNoteSlug={note.data.slug}
     />
 
     <main class="min-w-0 flex-1">
-      <article class="mx-auto w-full max-w-[42rem] px-4 pb-14 pt-8 sm:px-6">
-        <header>
+      <article class="note mx-auto w-full max-w-[42rem] px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
+        <header class="note__header">
           <h1 class="display-type text-heading break-words text-foreground">
             {note.data.title}
           </h1>
-          {note.data.sample && (
-            <p class="mt-4 font-serif text-[1.0625rem] leading-[1.5] text-muted-foreground italic">
-              A sample note, still growing — replace it with your own.
-            </p>
-          )}
+
+          <p class="note__context">
+            <a
+              href={`/notes/${source}/`}
+              class="note__context-link"
+            >
+              {note.data.sourceTitle}
+            </a>
+            {
+              note.data.sourceDetail && (
+                <>
+                  <span class="note__context-sep" aria-hidden="true">
+                    ·
+                  </span>
+                  <span>{note.data.sourceDetail}</span>
+                </>
+              )
+            }
+          </p>
+
+          {
+            note.data.sample && (
+              <p class="note__sample">
+                A sample note, still growing — replace it with your own.
+              </p>
+            )
+          }
         </header>
 
-        <div class="mdx-content mt-8">
+        <div class="mdx-content mt-9">
           <Content
             components={{
+              pre: CodeBlock,
               img: (props: { src?: string; alt?: string; title?: string }) => (
                 <img
                   {...props}
@@ -67,6 +102,22 @@ const noteImages = `/images/notes/${source}/`
             }}
           />
         </div>
+
+        <NotePager
+          previous={
+            previous
+              ? {
+                  title: previous.data.title,
+                  href: `/notes/${source}/${previous.data.slug}/`,
+                }
+              : undefined
+          }
+          next={
+            next
+              ? { title: next.data.title, href: `/notes/${source}/${next.data.slug}/` }
+              : undefined
+          }
+        />
       </article>
     </main>
   </div>
