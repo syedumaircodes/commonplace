@@ -1,0 +1,25 @@
+---
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+
+const { sidebar, id } = Astro.locals.starlightRoute;
+
+// Pages are nested under `notes/<topic>/`, so the route id tells us which
+// topic the reader is currently in.
+const topic = id.match(/^notes\/([^/]+)/)?.[1];
+
+type SidebarEntry = (typeof sidebar)[number];
+
+function belongsToCurrentTopic(entry: SidebarEntry): boolean {
+	if (!topic) return true;
+	if (entry.type === 'link') return entry.href.startsWith(`/notes/${topic}/`);
+	return entry.entries.some(belongsToCurrentTopic);
+}
+
+const visibleSidebar = sidebar.filter(belongsToCurrentTopic);
+---
+
+<SidebarPersister><SidebarSublist sublist={visibleSidebar} /></SidebarPersister>
+
+<div class="md:sl-hidden"><MobileMenuFooter /></div>

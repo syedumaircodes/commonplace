@@ -1,0 +1,304 @@
+:root {
+	/* =========================================================================
+	   Design tokens — shared by every page.
+	   ========================================================================= */
+
+	--font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+	--font-body: 'Manrope', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+	--sl-font: var(--font-body);
+	--sl-font-mono: var(--font-mono);
+
+	/* Cool ink on a deep charcoal ground. */
+	--bg: #272935;
+	--surface: color-mix(in srgb, #272935 85%, #566876);
+	--ink: #bbbbbb;
+	--ink-muted: color-mix(in srgb, #bbbbbb 72%, #566876);
+	--ink-faint: #566876;
+	--line: color-mix(in srgb, #566876 38%, transparent);
+	--line-strong: #566876;
+	--accent: #a8d8ee;
+
+	/* Starlight theme mapping. */
+	--sl-color-white: var(--ink);
+	--sl-color-gray-1: #bbbbbb;
+	--sl-color-gray-2: var(--ink-muted);
+	--sl-color-gray-3: var(--ink-muted);
+	--sl-color-gray-4: var(--ink-faint);
+	--sl-color-gray-5: var(--line-strong);
+	--sl-color-gray-6: var(--surface);
+	--sl-color-black: #1e2029;
+
+	--sl-color-bg: var(--bg);
+	--sl-color-bg-nav: var(--bg);
+	--sl-color-bg-sidebar: var(--bg);
+
+	--sl-color-text: #bbbbbb;
+	--sl-color-text-accent: var(--accent);
+
+	--sl-color-accent: var(--accent);
+	--sl-color-accent-high: #a8d8ee;
+	--sl-color-accent-low: color-mix(in srgb, #a8d8ee 18%, #272935);
+	--sl-color-bg-accent: var(--accent);
+	--sl-color-text-invert: var(--bg);
+
+	--sl-color-hairline: var(--line);
+	--sl-color-hairline-light: var(--line-strong);
+	--sl-color-hairline-shade: transparent;
+
+	--sl-card-bg: var(--surface);
+	--sl-color-bg-inline-code: var(--surface);
+}
+
+/* No social links in the header, so remove the divider that follows them. */
+.social-icons::after {
+	display: none;
+}
+
+body {
+	background-color: var(--bg);
+	color: var(--sl-color-text);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+::selection {
+	background: color-mix(in srgb, var(--accent) 82%, transparent);
+	color: var(--bg);
+}
+
+:where(a, button, summary, [tabindex]):focus-visible {
+	outline: 1.5px solid var(--accent);
+	outline-offset: 3px;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--line-strong) transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+/* =========================================================================
+   Top navigation
+   ========================================================================= */
+
+header.header {
+	background: color-mix(in srgb, var(--bg) 84%, transparent);
+	-webkit-backdrop-filter: blur(18px) saturate(140%);
+	backdrop-filter: blur(18px) saturate(140%);
+	border-bottom-color: color-mix(in srgb, var(--line) 75%, transparent);
+}
+
+.site-title {
+	font-family: var(--font-display);
+	font-size: 1.5rem;
+	font-weight: 400;
+	letter-spacing: -0.012em;
+	color: var(--ink);
+	transition: color 400ms var(--ease-out);
+}
+
+.site-title:hover {
+	color: var(--accent);
+}
+
+/* Search pill */
+
+site-search button {
+	min-height: 2.25rem;
+	padding: 0.35rem 0.9rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--ink-muted);
+	transition:
+		border-color 350ms var(--ease-out),
+		color 350ms var(--ease-out),
+		background-color 350ms var(--ease-out);
+}
+
+site-search button:hover {
+	border-color: var(--line-strong);
+	background: color-mix(in srgb, var(--ink) 5%, transparent);
+	color: var(--ink);
+}
+
+site-search button kbd {
+	border-color: var(--line-strong);
+	border-radius: 4px;
+	background: transparent;
+	color: var(--ink-faint);
+}
+
+/* The search dialog is a surface panel, not a page background. */
+
+site-search dialog {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 1rem;
+	color: var(--sl-color-text);
+}
+
+site-search dialog input {
+	color: var(--ink);
+}
+
+site-search dialog :focus-visible {
+	outline-color: var(--accent);
+}
+
+/* Sidebar and mobile menu */
+
+.sidebar-pane,
+.sidebar-content {
+	background: var(--bg);
+}
+
+.sidebar-content {
+	border-right: 1px solid var(--line);
+}
+
+.sidebar-content a {
+	color: var(--ink-muted);
+	transition: color 300ms var(--ease-out);
+}
+
+.sidebar-content a:hover {
+	color: var(--accent);
+}
+
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='true'] {
+	color: var(--accent);
+	background: color-mix(in srgb, var(--accent) 8%, transparent);
+	border-radius: 0.375rem;
+}
+
+.mobile-menu {
+	background: var(--bg);
+}
+
+/* =========================================================================
+   Notes page
+   ========================================================================= */
+
+main h1 {
+	font-family: var(--font-display);
+	font-size: clamp(2.4rem, 5vw, 3.4rem);
+	font-weight: 400;
+	line-height: 1.1;
+	letter-spacing: -0.022em;
+	color: var(--ink);
+}
+
+.sl-markdown-content h2 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	letter-spacing: -0.014em;
+	color: var(--ink);
+}
+
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6 {
+	font-weight: 600;
+	letter-spacing: -0.008em;
+	color: var(--ink);
+}
+
+.sl-markdown-content p,
+.sl-markdown-content li {
+	color: var(--ink-muted);
+}
+
+.sl-markdown-content strong {
+	color: var(--ink);
+}
+
+.sl-markdown-content a {
+	color: var(--accent);
+	text-underline-offset: 0.2em;
+}
+
+.sl-markdown-content a:hover {
+	color: color-mix(in srgb, var(--accent) 82%, #ffffff);
+}
+
+.sl-markdown-content hr {
+	border-bottom-color: var(--line);
+}
+
+.sl-markdown-content blockquote {
+	border-inline-start-color: var(--line-strong);
+	color: var(--ink-muted);
+}
+
+.sl-markdown-content code {
+	color: var(--ink);
+}
+
+.sl-markdown-content :not(pre) > code {
+	background: var(--surface);
+	border: 1px solid var(--line);
+}
+
+.sl-markdown-content table {
+	border-color: var(--line);
+}
+
+.sl-markdown-content th {
+	background: var(--surface);
+	color: var(--ink);
+}
+
+.sl-markdown-content td {
+	border-color: var(--line);
+	color: var(--ink-muted);
+}
+
+/* =========================================================================
+   Home page only
+   Layout rules that only apply to the splash hero.
+   ========================================================================= */
+
+html[data-has-hero] {
+	--sl-content-width: 76rem;
+}
+
+[data-has-hero] main {
+	padding: 0;
+}
+
+[data-has-hero] .content-panel {
+	padding: 0;
+}
+
+html[data-has-hero] .sl-container {
+	max-width: 76rem;
+	margin-inline: auto;
+	padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+	padding-block-end: clamp(3rem, 6vw, 5rem);
+}
+
+/* Starlight's own page footer is empty on the splash page. */
+[data-has-hero] .sl-container > footer {
+	display: none;
+}
+
+[data-has-hero] .sl-markdown-content {
+	--sl-content-gap-y: 1.5rem;
+}
+
+#topics {
+	margin-top: clamp(1.5rem, 3vw, 3rem);
+	scroll-margin-top: calc(var(--sl-nav-height) + 2.5rem);
+}

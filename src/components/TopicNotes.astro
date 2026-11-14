@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+	/** Topic slug matching the folder under `src/content/docs/notes/`. */
+	topic: string;
+}
+
+const { topic } = Astro.props;
+const prefix = `notes/${topic}`;
+
+const notes = (await getCollection('docs', ({ id }) => id.startsWith(`${prefix}/`)))
+	.filter(({ id }) => id !== `${prefix}/index`)
+	.sort((a, b) => a.id.localeCompare(b.id));
+---
+
+{
+	notes.length === 0 ? (
+		<p class="empty-state">No notes yet — add an MDX file to this topic’s folder to see it here.</p>
+	) : (
+		<ul class="note-grid">
+			{notes.map((note) => (
+				<li>
+					<a class="note-card" href={`/${note.id}/`}>
+						<span class="note-title">{note.data.title}</span>
+						{note.data.description && (
+							<span class="note-description">{note.data.description}</span>
+						)}
+					</a>
+				</li>
+			))}
+		</ul>
+	)
+}
+
+<style>
+	.note-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+		gap: 0.875rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.note-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		height: 100%;
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 0.5rem;
+		padding: 1rem 1.125rem;
+		background: var(--sl-card-bg, var(--sl-color-bg-nav));
+		color: var(--sl-color-text);
+		text-decoration: none;
+		transition: border-color 150ms ease;
+	}
+
+	.note-card:hover {
+		border-color: var(--sl-color-accent);
+	}
+
+	.note-title {
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
+	.note-description {
+		font-size: 0.875rem;
+		line-height: 1.55;
+		color: color-mix(in oklab, var(--sl-color-text) 68%, transparent);
+	}
+
+	.empty-state {
+		border: 1px dashed var(--sl-color-hairline);
+		border-radius: 0.5rem;
+		padding: 1.25rem;
+		color: color-mix(in oklab, var(--sl-color-text) 68%, transparent);
+	}
+</style>
