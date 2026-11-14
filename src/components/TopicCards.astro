@@ -1,0 +1,184 @@
+---
+import { topics } from '@/data/topics';
+---
+
+<ol class="topic-list">
+	{
+		topics.map((topic) => (
+			<li>
+				<a class="topic-row" href={`/notes/${topic.slug}/`}>
+					<span class="topic-main">
+						<span class="topic-title">{topic.title}</span>
+						<span class="topic-description">{topic.description}</span>
+					</span>
+					<span class="topic-arrow" aria-hidden="true">
+						<svg viewBox="0 0 16 16">
+							<path
+								d="M4.75 11.25 11.25 4.75M5.75 4.75h5.5v5.5"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</span>
+				</a>
+			</li>
+		))
+	}
+</ol>
+
+<style>
+	.topic-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+		gap: clamp(0.75rem, 1.6vw, 1.1rem);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.topic-list li {
+		background: var(--surface);
+		border-radius: 1rem;
+		overflow: hidden;
+		transition: background-color 450ms var(--ease-out);
+	}
+
+	.topic-list li:has(.topic-row:hover),
+	.topic-list li:has(.topic-row:focus-visible) {
+		background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+	}
+
+	.topic-row {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: clamp(1rem, 3vw, 2.5rem);
+		align-items: center;
+		height: 100%;
+		padding: clamp(1.35rem, 2.6vw, 2rem) clamp(1.25rem, 2.6vw, 1.9rem);
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.topic-list.is-reveal .topic-row {
+		opacity: 0;
+	}
+
+	.topic-list.is-reveal .topic-row.is-visible {
+		animation: row-in 0.85s var(--ease-out) var(--reveal-delay, 0ms) both;
+	}
+
+	.topic-main {
+		display: block;
+		min-width: 0;
+	}
+
+	.topic-title {
+		display: block;
+		font-family: var(--font-display);
+		font-size: clamp(1.5rem, 3.2vw, 2.125rem);
+		font-weight: 400;
+		line-height: 1.12;
+		letter-spacing: -0.018em;
+		color: var(--ink);
+		text-wrap: balance;
+	}
+
+	.topic-description {
+		display: block;
+		max-width: 54ch;
+		margin-top: 0.55rem;
+		font-size: 0.9375rem;
+		line-height: 1.62;
+		color: var(--ink-muted);
+		text-wrap: pretty;
+	}
+
+	.topic-arrow {
+		display: grid;
+		place-items: center;
+		align-self: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 50%;
+		color: var(--ink-muted);
+		transition:
+			background-color 450ms var(--ease-out),
+			border-color 450ms var(--ease-out),
+			color 450ms var(--ease-out),
+			transform 450ms var(--ease-out);
+	}
+
+	.topic-arrow svg {
+		width: 1rem;
+		height: 1rem;
+		transition: transform 550ms var(--ease-out);
+	}
+
+	.topic-row:hover .topic-arrow,
+	.topic-row:focus-visible .topic-arrow {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--bg);
+	}
+
+	.topic-row:hover .topic-arrow svg,
+	.topic-row:focus-visible .topic-arrow svg {
+		transform: translate(1px, -1px);
+	}
+
+	@keyframes row-in {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.topic-list.is-reveal .topic-row {
+			opacity: 1;
+			animation: none;
+		}
+
+		.topic-title,
+		.topic-arrow,
+		.topic-arrow svg {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	const list = document.querySelector<HTMLElement>('.topic-list');
+	const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	if (list && !reduceMotion) {
+		const rows = [...list.querySelectorAll<HTMLElement>('.topic-row')];
+		list.classList.add('is-reveal');
+
+		rows.forEach((row, index) => {
+			row.style.setProperty('--reveal-delay', `${index * 70}ms`);
+		});
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					entry.target.classList.add('is-visible');
+					observer.unobserve(entry.target);
+				}
+			},
+			{ threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
+		);
+
+		rows.forEach((row) => observer.observe(row));
+	}
+</script>

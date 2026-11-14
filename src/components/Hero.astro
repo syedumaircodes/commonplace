@@ -1,0 +1,186 @@
+---
+const { entry } = Astro.locals.starlightRoute;
+const { title = entry.data.title, tagline, actions = [] } = entry.data.hero ?? {};
+---
+
+<div class="hero">
+	<h1 id="_top" data-page-title set:html={title} />
+
+	{tagline && <p class="tagline" set:html={tagline} />}
+
+	{
+		actions.length > 0 && (
+			<div class="actions">
+				{actions.map(({ text, link: href, variant = 'primary' }) => {
+					const external = /^https?:\/\//.test(href);
+					return (
+						<a
+							class:list={['action', `is-${variant}`]}
+							href={href}
+							target={external ? '_blank' : undefined}
+							rel={external ? 'noopener noreferrer' : undefined}
+						>
+							<span>{text}</span>
+							{external ? (
+								<svg viewBox="0 0 16 16" aria-hidden="true">
+									<path
+										d="M6.5 3.5H3.75A1.25 1.25 0 0 0 2.5 4.75v7.5A1.25 1.25 0 0 0 3.75 13.5h7.5A1.25 1.25 0 0 0 12.5 12.25V9.5M9 2.5h4.5V7M13 3 7.25 8.75"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							) : (
+								<svg viewBox="0 0 16 16" aria-hidden="true">
+									<path
+										d="M8 2.75v10.5M3.75 8.75 8 13l4.25-4.25"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							)}
+						</a>
+					);
+				})}
+			</div>
+		)
+	}
+</div>
+
+<style>
+	.hero {
+		position: relative;
+		padding-block: clamp(3.5rem, 8vw, 7.5rem) clamp(2rem, 4vw, 3rem);
+	}
+
+	h1 {
+		margin: 0;
+		max-width: 13ch;
+		font-family: var(--font-display);
+		font-size: clamp(3.4rem, 8.4vw, 7.75rem);
+		font-weight: 400;
+		line-height: 0.94;
+		letter-spacing: -0.035em;
+		color: var(--ink);
+		text-wrap: balance;
+		animation: title-in 1s var(--ease-out) 0.08s both;
+	}
+
+	h1 :global(em) {
+		font-style: italic;
+		color: var(--accent);
+	}
+
+	.tagline {
+		margin: 1.6rem 0 0;
+		max-width: 40ch;
+		font-size: clamp(1rem, 1.5vw, 1.1875rem);
+		line-height: 1.65;
+		color: var(--ink-muted);
+		text-wrap: pretty;
+		animation: rise 0.9s var(--ease-out) 0.28s both;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2.5rem;
+		animation: rise 0.9s var(--ease-out) 0.4s both;
+	}
+
+	.action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.7rem;
+		padding: 0.8rem 1.4rem;
+		border: 1px solid transparent;
+		border-radius: 999px;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		letter-spacing: -0.005em;
+		text-decoration: none;
+		transition:
+			background-color 400ms var(--ease-out),
+			border-color 400ms var(--ease-out),
+			color 400ms var(--ease-out),
+			transform 400ms var(--ease-out);
+	}
+
+	.action.is-primary {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--bg);
+	}
+
+	.action.is-primary:hover {
+		background: color-mix(in srgb, var(--accent) 85%, #ffffff);
+		border-color: color-mix(in srgb, var(--accent) 85%, #ffffff);
+		transform: translateY(-1px);
+	}
+
+	.action.is-secondary {
+		background: transparent;
+		border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+		color: var(--ink);
+	}
+
+	.action.is-secondary:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+		transform: translateY(-1px);
+	}
+
+	.action svg {
+		width: 1rem;
+		height: 1rem;
+		transition: transform 500ms var(--ease-out);
+	}
+
+	.action.is-primary:hover svg {
+		transform: translateY(2px);
+	}
+
+	.action.is-secondary:hover svg {
+		transform: translate(2px, -2px);
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(18px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* The clip region extends past the box so descenders (e.g. the italic
+	   "g" in "keeping.") are never shaved off. */
+	@keyframes title-in {
+		from {
+			opacity: 0;
+			transform: translateY(26px);
+			clip-path: inset(-0.3em -0.2em 24% -0.2em);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			clip-path: inset(-0.3em -0.2em -0.3em -0.2em);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		h1,
+		.tagline,
+		.actions {
+			animation: none;
+		}
+	}
+</style>

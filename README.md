@@ -1,66 +1,52 @@
-# commonplace
+# SpiritLibrary
 
-A personal notebook built with Astro. Topic and note content is written in MDX under `src/content` and imported into the static pages at build time.
+Personal notes on AI engineering, databases, security, and SQL.
+
+The site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build). The home page shows topics as cards, and each topic opens a documentation section containing its notes.
+
+## Project structure
+
+```
+src/
+├── components/
+│   ├── TopicCards.astro   # topic cards shown on the home page
+│   └── TopicNotes.astro   # note cards shown on a topic page
+├── content/docs/
+│   ├── index.mdx          # home page
+│   └── notes/
+│       └── <topic>/       # one folder per topic
+│           ├── index.mdx  # topic overview + note list
+│           └── <note>.mdx # individual notes
+└── data/topics.ts         # topic titles and descriptions
+```
 
 ## Add a topic
 
-Create `src/content/topics/<topic-slug>.mdx` with this frontmatter:
+1. Add the topic to `src/data/topics.ts` so it appears as a card on the home page.
+2. Create `src/content/docs/notes/<topic-slug>/index.mdx` with the topic title, description, and a `<TopicNotes topic="<topic-slug>" />` component.
+3. Add a sidebar group for the topic in `astro.config.mjs`.
+
+## Add a note
+
+Create an MDX file in the topic’s folder, for example `src/content/docs/notes/<topic-slug>/<note-slug>.mdx`:
 
 ```mdx
 ---
-slug: databases
-name: Databases
-number: "05"
-description: Storage, queries & data modeling
+title: My note title
+description: A short summary shown on the topic page.
 ---
 
-Write a short topic introduction here. It can include **MDX** formatting.
+Write the note here.
 ```
 
-## Organize notes
+The note automatically appears in the topic’s note list and in the sidebar.
 
-Content follows this hierarchy: **Topic → Source → Notes from that source**. A topic is a file in `src/content/topics/`. Store each individual note as an MDX file in `src/content/notes/<topic-slug>/<source-slug>/`. The `source-slug` folder is based on the source title, and `sourceTitle` in each note's frontmatter must match the source's display name. Notes in the same folder and with the same `sourceTitle` appear together on the source page.
+## Commands
 
-## Add an individual note
-
-Create one note file per note under `src/content/notes/<topic-slug>/<source-slug>/`. The topic folder must match the topic document's `slug`. Keep notes from a source together in its source folder and use the same `sourceTitle` in their frontmatter.
-
-```mdx
----
-slug: indexes
-title: Indexes trade space for faster lookups
-topic: databases
-sourceKind: Book
-sourceTitle: Database Systems
-sourceDetail: Author or other resource details
-reference: Chapter 4 · Indexes
-excerpt: A short summary shown in the note list.
-sample: false
----
-
-Write the full note here. Headings, lists, links, and other MDX are supported.
-```
-
-## Add images to a note
-
-Place image files in `public/images/notes/<topic-slug>/<source-slug>/` to share one folder across all notes from a source. The source slug is the lowercased, hyphenated version of `sourceTitle` (for example, `SQL Course by Baraa Khatib` becomes `sql-course-by-baraa-khatib`). Reference images from a note's MDX by filename:
-
-```mdx
-![A diagram showing the idea](./diagram.png)
-```
-
-Images are displayed responsively on the individual note page. You can also use a root-relative path such as `/images/shared/diagram.png` or an external image URL.
-
-`sourceKind` may be `Book`, `Video course`, `Course`, `Cohort`, or `Field notes`. `reference` is optional when the note has no chapter, lesson, or section reference. Use a unique `slug` for each note within its topic. The included Cyber, Data, JavaScript, and Python documents are labeled samples and can be replaced with your own content.
-
-## SEO
-
-Global metadata lives in `src/lib/site.ts` (site name, description, author, social links, inspiration credit). `src/layouts/main.astro` turns it into the page `<title>`, description, canonical URL, Open Graph/Twitter cards, and Person/WebSite JSON-LD. The social card image is `public/og-image.png`. `src/pages/sitemap.xml.ts` generates the sitemap and `public/robots.txt` points at it. Set the canonical domain in `astro.config.mjs` (`site`) when the deployment URL changes.
-
-## Development
-
-```sh
-bun run dev
-bun run build
-bun run typecheck
-```
+| Command           | Action                                      |
+| :---------------- | :------------------------------------------ |
+| `bun install`     | Installs dependencies                       |
+| `bun dev`         | Starts the dev server at `localhost:4321`   |
+| `bun build`       | Builds the production site to `./dist/`     |
+| `bun preview`     | Previews the production build locally       |
+| `bun astro ...`   | Runs Astro CLI commands                     |
