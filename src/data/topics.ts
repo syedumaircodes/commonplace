@@ -9,12 +9,6 @@ export interface Topic {
 
 export const topics: Topic[] = [
   {
-    slug: "ai-engineering-from-scratch",
-    title: "AI Engineering from Scratch",
-    description:
-      "Environment setup, runtimes, and the foundations for building AI systems.",
-  },
-  {
     slug: "grokking-relational-database-design",
     title: "Grokking Relational Database Design",
     description:

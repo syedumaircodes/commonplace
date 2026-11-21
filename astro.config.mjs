@@ -40,13 +40,6 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
-					label: 'AI Engineering from Scratch',
-					items: [
-						{ label: 'Overview', link: '/notes/ai-engineering-from-scratch/' },
-						{ autogenerate: { directory: 'notes/ai-engineering-from-scratch' } },
-					],
-				},
-				{
 					label: 'Grokking Relational Database Design',
 					items: [
 						{ label: 'Overview', link: '/notes/grokking-relational-database-design/' },
