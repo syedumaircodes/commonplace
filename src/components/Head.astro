@@ -1,0 +1,41 @@
+---
+const { head } = Astro.locals.starlightRoute;
+---
+
+{head.map(({ tag: Tag, attrs, content }) => (
+	<Tag {...attrs} set:html={content} />
+))}
+
+<script>
+	import Lenis from 'lenis';
+
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	// Thin accent rule at the top of the viewport that tracks reading progress.
+	const progress = document.createElement('div');
+	progress.className = 'scroll-progress';
+	progress.setAttribute('aria-hidden', 'true');
+	document.body.append(progress);
+
+	const setProgress = (value: number) => {
+		progress.style.transform = `scaleX(${value})`;
+	};
+
+	if (reduceMotion) {
+		const onScroll = () => {
+			const max = document.documentElement.scrollHeight - window.innerHeight;
+			setProgress(max > 0 ? window.scrollY / max : 0);
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+	} else {
+		const lenis = new Lenis({
+			duration: 1.1,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			anchors: { offset: -72 },
+			respectReducedMotion: true,
+			autoRaf: true,
+		});
+		lenis.on('scroll', (instance) => setProgress(instance.progress));
+	}
+</script>

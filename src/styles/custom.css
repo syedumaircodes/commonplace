@@ -1,150 +1,334 @@
+/* =========================================================================
+   SpiritLibrary — Geist design system
+   Dark theme only. Tokens mirror Vercel's Geist `ds` scale.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   Fonts — Geist Sans / Mono / Serif, self-hosted variable files
+   ------------------------------------------------------------------------- */
+
+@font-face {
+	font-family: 'Geist Sans';
+	src: url('/fonts/geist-sans-var.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Sans';
+	src: url('/fonts/geist-sans-italic-var.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Sans Fallback';
+	src: local('Arial');
+	ascent-override: 94.56%;
+	descent-override: 27.76%;
+	line-gap-override: 0%;
+	size-adjust: 106.28%;
+}
+
+@font-face {
+	font-family: 'Geist Mono';
+	src: url('/fonts/geist-mono-var.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Serif';
+	src: url('/fonts/geist-serif-var.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Serif Fallback';
+	src: local('Times New Roman');
+	ascent-override: 87.78%;
+	descent-override: 25.77%;
+	line-gap-override: 0%;
+	size-adjust: 114.49%;
+}
+
+/* -------------------------------------------------------------------------
+   Tokens
+   ------------------------------------------------------------------------- */
+
 :root {
-	/* =========================================================================
-	   Design tokens — shared by every page.
-	   ========================================================================= */
+	/* Type */
+	--font-sans: 'Geist Sans', 'Geist Sans Fallback', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+	--font-serif: 'Geist Serif', 'Geist Serif Fallback', 'Times New Roman', Times, serif;
+	--font-display: var(--font-serif);
 
-	--font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-	--font-body: 'Manrope', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	/* Motion */
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-swift: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-	--sl-font: var(--font-body);
+	/* Geist dark gray scale */
+	--ds-gray-100: hsl(0, 0%, 10%);
+	--ds-gray-200: hsl(0, 0%, 12%);
+	--ds-gray-300: hsl(0, 0%, 16%);
+	--ds-gray-400: hsl(0, 0%, 18%);
+	--ds-gray-500: hsl(0, 0%, 27%);
+	--ds-gray-600: hsl(0, 0%, 53%);
+	--ds-gray-700: hsl(0, 0%, 56%);
+	--ds-gray-800: hsl(0, 0%, 49%);
+	--ds-gray-900: hsl(0, 0%, 63%);
+	--ds-gray-1000: hsl(0, 0%, 93%);
+
+	--ds-gray-alpha-100: rgba(255, 255, 255, 0.06);
+	--ds-gray-alpha-200: rgba(255, 255, 255, 0.09);
+	--ds-gray-alpha-300: rgba(255, 255, 255, 0.13);
+	--ds-gray-alpha-400: rgba(255, 255, 255, 0.14);
+	--ds-gray-alpha-500: rgba(255, 255, 255, 0.24);
+	--ds-gray-alpha-600: rgba(255, 255, 255, 0.51);
+	--ds-gray-alpha-700: rgba(255, 255, 255, 0.54);
+	--ds-gray-alpha-800: rgba(255, 255, 255, 0.47);
+	--ds-gray-alpha-900: rgba(255, 255, 255, 0.61);
+	--ds-gray-alpha-1000: rgba(255, 255, 255, 0.92);
+
+	--ds-background-100: hsl(0, 0%, 4%);
+	--ds-background-200: hsl(0, 0%, 0%);
+
+	/* Geist blue scale */
+	--ds-blue-100: hsl(212, 100%, 97%);
+	--ds-blue-200: hsl(210, 100%, 96%);
+	--ds-blue-300: hsl(210, 100%, 94%);
+	--ds-blue-400: hsl(209, 100%, 90%);
+	--ds-blue-500: hsl(209, 100%, 80%);
+	--ds-blue-600: hsl(208, 100%, 66%);
+	--ds-blue-700: hsl(212, 100%, 48%);
+	--ds-blue-800: hsl(212, 100%, 41%);
+	--ds-blue-900: hsl(211, 100%, 42%);
+	--ds-blue-1000: hsl(211, 100%, 15%);
+
+	/* Functional palette */
+	--bg: var(--ds-background-100);
+	--bg-raise: var(--ds-background-200);
+	--surface: var(--ds-background-100);
+	--surface-hover: var(--ds-gray-100);
+	--surface-active: var(--ds-gray-200);
+	--ink: var(--ds-gray-1000);
+	--ink-muted: var(--ds-gray-900);
+	--ink-faint: var(--ds-gray-700);
+	--line: var(--ds-gray-alpha-400);
+	--line-strong: var(--ds-gray-alpha-500);
+	--line-active: var(--ds-gray-alpha-600);
+	--accent: var(--ds-blue-600);
+	--accent-hover: var(--ds-blue-500);
+	--accent-strong: var(--ds-blue-700);
+	--accent-subtle: color-mix(in srgb, var(--ds-blue-600) 12%, transparent);
+	--on-accent: var(--ds-background-100);
+
+	/* Materials — radii */
+	--radius-sm: 6px;
+	--radius-md: 6px;
+	--radius-lg: 12px;
+	--radius-xl: 16px;
+
+	/* Materials — shadows */
+	--shadow-small: 0 2px 2px rgba(0, 0, 0, 0.4);
+	--shadow-medium: 0 2px 2px rgba(0, 0, 0, 0.4), 0 8px 8px -8px rgba(0, 0, 0, 0.4);
+	--shadow-large: 0 2px 2px rgba(0, 0, 0, 0.4), 0 8px 16px -4px rgba(0, 0, 0, 0.4);
+	--shadow-modal:
+		0 0 0 1px var(--ds-gray-alpha-400), 0 1px 1px rgba(0, 0, 0, 0.05),
+		0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 24px 32px -8px rgba(0, 0, 0, 0.6);
+	--focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--ds-blue-700);
+
+	/* Layout */
+	--content-width: 46rem;
+	--shell-max: 76rem;
+}
+
+/* -------------------------------------------------------------------------
+   Starlight variable mapping
+   ------------------------------------------------------------------------- */
+
+:root {
+	--sl-font: var(--font-sans);
 	--sl-font-mono: var(--font-mono);
 
-	/* Cool ink on a deep charcoal ground. */
-	--bg: #272935;
-	--surface: color-mix(in srgb, #272935 85%, #566876);
-	--ink: #bbbbbb;
-	--ink-muted: color-mix(in srgb, #bbbbbb 72%, #566876);
-	--ink-faint: #566876;
-	--line: color-mix(in srgb, #566876 38%, transparent);
-	--line-strong: #566876;
-	--accent: #a8d8ee;
-
-	/* Starlight theme mapping. */
 	--sl-color-white: var(--ink);
-	--sl-color-gray-1: #bbbbbb;
+	--sl-color-gray-1: var(--ink);
 	--sl-color-gray-2: var(--ink-muted);
-	--sl-color-gray-3: var(--ink-muted);
-	--sl-color-gray-4: var(--ink-faint);
-	--sl-color-gray-5: var(--line-strong);
-	--sl-color-gray-6: var(--surface);
-	--sl-color-black: #1e2029;
+	--sl-color-gray-3: var(--ink-faint);
+	--sl-color-gray-4: var(--ds-gray-500);
+	--sl-color-gray-5: var(--ds-gray-400);
+	--sl-color-gray-6: var(--ds-gray-200);
+	--sl-color-black: var(--bg-raise);
 
 	--sl-color-bg: var(--bg);
 	--sl-color-bg-nav: var(--bg);
 	--sl-color-bg-sidebar: var(--bg);
-
-	--sl-color-text: #bbbbbb;
+	--sl-color-bg-inline-code: var(--ds-gray-100);
+	--sl-color-text: var(--ink-muted);
 	--sl-color-text-accent: var(--accent);
-
+	--sl-color-text-invert: var(--on-accent);
 	--sl-color-accent: var(--accent);
-	--sl-color-accent-high: #a8d8ee;
-	--sl-color-accent-low: color-mix(in srgb, #a8d8ee 18%, #272935);
+	--sl-color-accent-high: var(--accent-hover);
+	--sl-color-accent-low: var(--accent-subtle);
 	--sl-color-bg-accent: var(--accent);
-	--sl-color-text-invert: var(--bg);
-
 	--sl-color-hairline: var(--line);
 	--sl-color-hairline-light: var(--line-strong);
-	--sl-color-hairline-shade: transparent;
-
+	--sl-color-hairline-shade: var(--line);
+	--sl-color-backdrop-overlay: rgba(0, 0, 0, 0.6);
+	--sl-shadow-sm: var(--shadow-small);
+	--sl-shadow-md: var(--shadow-medium);
+	--sl-shadow-lg: var(--shadow-modal);
 	--sl-card-bg: var(--surface);
-	--sl-color-bg-inline-code: var(--surface);
 }
 
-/* No social links in the header, so remove the divider that follows them. */
-.social-icons::after {
-	display: none;
-}
+/* -------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------- */
 
 body {
 	background-color: var(--bg);
 	color: var(--sl-color-text);
-	font-family: var(--font-body);
+	font-family: var(--font-sans);
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
 }
 
 ::selection {
-	background: color-mix(in srgb, var(--accent) 82%, transparent);
-	color: var(--bg);
+	background: var(--accent);
+	color: var(--on-accent);
 }
 
-:where(a, button, summary, [tabindex]):focus-visible {
-	outline: 1.5px solid var(--accent);
-	outline-offset: 3px;
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: none;
+	box-shadow: var(--focus-ring);
+	border-radius: var(--radius-sm);
+}
+
+.sl-markdown-content :where(a):focus-visible {
+	border-radius: 2px;
 }
 
 * {
 	scrollbar-width: thin;
-	scrollbar-color: var(--line-strong) transparent;
+	scrollbar-color: var(--ds-gray-500) transparent;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	html {
-		scroll-behavior: smooth;
-	}
+html.lenis,
+html.lenis body {
+	height: auto;
 }
 
-/* =========================================================================
+.lenis.lenis-smooth iframe {
+	pointer-events: none;
+}
+
+/* Reading progress — thin accent rule under the nav. */
+.scroll-progress {
+	position: fixed;
+	inset: 0 0 auto 0;
+	z-index: 60;
+	height: 2px;
+	background: var(--accent);
+	transform: scaleX(0);
+	transform-origin: 0 50%;
+	pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
    Top navigation
-   ========================================================================= */
+   ------------------------------------------------------------------------- */
 
 header.header {
-	background: color-mix(in srgb, var(--bg) 84%, transparent);
-	-webkit-backdrop-filter: blur(18px) saturate(140%);
-	backdrop-filter: blur(18px) saturate(140%);
-	border-bottom-color: color-mix(in srgb, var(--line) 75%, transparent);
+	background: color-mix(in srgb, var(--bg) 72%, transparent);
+	-webkit-backdrop-filter: blur(16px) saturate(160%);
+	backdrop-filter: blur(16px) saturate(160%);
+	border-bottom: 1px solid var(--line);
 }
 
 .site-title {
-	font-family: var(--font-display);
-	font-size: 1.5rem;
-	font-weight: 400;
+	gap: 0.5rem;
+	font-family: var(--font-sans);
+	font-size: 0.9375rem;
+	font-weight: 600;
 	letter-spacing: -0.012em;
 	color: var(--ink);
-	transition: color 400ms var(--ease-out);
+	transition: color 300ms var(--ease-swift);
 }
 
 .site-title:hover {
 	color: var(--accent);
 }
 
-/* Search pill */
-
-site-search button {
-	min-height: 2.25rem;
-	padding: 0.35rem 0.9rem;
-	border: 1px solid var(--line);
-	border-radius: 999px;
-	background: transparent;
-	color: var(--ink-muted);
-	transition:
-		border-color 350ms var(--ease-out),
-		color 350ms var(--ease-out),
-		background-color 350ms var(--ease-out);
+.brand-mark {
+	width: 1rem;
+	height: 1rem;
+	flex-shrink: 0;
+	color: var(--accent);
+	transition: transform 600ms var(--ease-out);
 }
 
-site-search button:hover {
-	border-color: var(--line-strong);
-	background: color-mix(in srgb, var(--ink) 5%, transparent);
-	color: var(--ink);
+.brand-mark path {
+	fill: currentColor;
+}
+
+.site-title:hover .brand-mark {
+	transform: rotate(90deg);
+}
+
+/* Search */
+
+site-search button[data-open-modal] {
+	color: var(--ink-muted);
+	transition:
+		border-color 250ms var(--ease-swift),
+		color 250ms var(--ease-swift),
+		background-color 250ms var(--ease-swift);
+}
+
+@media (min-width: 50rem) {
+	site-search button[data-open-modal] {
+		border: 1px solid var(--line);
+		border-radius: var(--radius-full);
+		background: transparent;
+		color: var(--ink-muted);
+		height: 2.25rem;
+		font-family: var(--font-sans);
+		font-size: 0.875rem;
+		padding-inline-start: 0.875rem;
+		padding-inline-end: 0.625rem;
+	}
+
+	site-search button[data-open-modal]:hover {
+		border-color: var(--line-active);
+		background: var(--ds-gray-alpha-100);
+		color: var(--ink);
+	}
 }
 
 site-search button kbd {
-	border-color: var(--line-strong);
+	font-family: var(--font-mono);
+	font-size: 0.6875rem;
+	gap: 0.25em;
+	padding: 0.1rem 0.35rem;
+	border: 1px solid var(--line-strong);
 	border-radius: 4px;
 	background: transparent;
 	color: var(--ink-faint);
 }
 
-/* The search dialog is a surface panel, not a page background. */
-
 site-search dialog {
-	background: var(--surface);
-	border: 1px solid var(--line);
-	border-radius: 1rem;
-	color: var(--sl-color-text);
+	background: var(--bg);
+	border: 1px solid var(--line-strong);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-modal);
+	color: var(--ink);
 }
 
 site-search dialog input {
@@ -152,10 +336,12 @@ site-search dialog input {
 }
 
 site-search dialog :focus-visible {
-	outline-color: var(--accent);
+	box-shadow: var(--focus-ring);
 }
 
-/* Sidebar and mobile menu */
+/* -------------------------------------------------------------------------
+   Sidebar
+   ------------------------------------------------------------------------- */
 
 .sidebar-pane,
 .sidebar-content {
@@ -166,71 +352,130 @@ site-search dialog :focus-visible {
 	border-right: 1px solid var(--line);
 }
 
-.sidebar-content a {
-	color: var(--ink-muted);
-	transition: color 300ms var(--ease-out);
+.sidebar-content .large {
+	font-family: var(--font-sans);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	color: var(--ink);
 }
 
-.sidebar-content a:hover {
-	color: var(--accent);
+.sidebar-content a {
+	color: var(--ink-muted);
+	font-size: 0.875rem;
+	border-radius: var(--radius-sm);
+	transition:
+		color 250ms var(--ease-swift),
+		background-color 250ms var(--ease-swift);
+}
+
+.sidebar-content a:hover,
+.sidebar-content a:focus {
+	color: var(--ink);
 }
 
 .sidebar-content a[aria-current='page'],
-.sidebar-content a[aria-current='true'] {
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
 	color: var(--accent);
-	background: color-mix(in srgb, var(--accent) 8%, transparent);
-	border-radius: 0.375rem;
+	background: var(--accent-subtle);
+	font-weight: 500;
+}
+
+.sidebar-content summary {
+	color: var(--ink-muted);
+	border-radius: var(--radius-sm);
+	transition: color 250ms var(--ease-swift);
+}
+
+.sidebar-content summary:hover {
+	color: var(--ink);
+}
+
+.sidebar-content .caret {
+	color: var(--ink-faint);
+}
+
+.sidebar-content ul ul li {
+	border-inline-start: 1px solid var(--line);
 }
 
 .mobile-menu {
 	background: var(--bg);
 }
 
-/* =========================================================================
-   Notes page
-   ========================================================================= */
+/* -------------------------------------------------------------------------
+   Page shell
+   ------------------------------------------------------------------------- */
 
 main h1 {
 	font-family: var(--font-display);
-	font-size: clamp(2.4rem, 5vw, 3.4rem);
+	font-size: clamp(2.5rem, 5vw, 3.5rem);
 	font-weight: 400;
-	line-height: 1.1;
-	letter-spacing: -0.022em;
+	line-height: 1.05;
+	letter-spacing: -0.028em;
 	color: var(--ink);
+	text-wrap: balance;
+}
+
+/* -------------------------------------------------------------------------
+   Markdown content
+   ------------------------------------------------------------------------- */
+
+.sl-markdown-content {
+	--sl-content-gap-y: 1.25rem;
 }
 
 .sl-markdown-content h2 {
-	font-family: var(--font-display);
-	font-weight: 400;
-	letter-spacing: -0.014em;
+	font-family: var(--font-sans);
+	font-size: 1.5rem;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: -0.012em;
 	color: var(--ink);
+	text-wrap: balance;
 }
 
-.sl-markdown-content h3,
+.sl-markdown-content h3 {
+	font-family: var(--font-sans);
+	font-size: 1.25rem;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: -0.008em;
+	color: var(--ink);
+	text-wrap: balance;
+}
+
 .sl-markdown-content h4,
 .sl-markdown-content h5,
 .sl-markdown-content h6 {
+	font-family: var(--font-sans);
 	font-weight: 600;
-	letter-spacing: -0.008em;
+	letter-spacing: -0.004em;
 	color: var(--ink);
 }
 
 .sl-markdown-content p,
 .sl-markdown-content li {
 	color: var(--ink-muted);
+	font-size: 1rem;
+	line-height: 1.7;
 }
 
 .sl-markdown-content strong {
 	color: var(--ink);
+	font-weight: 550;
 }
 
 .sl-markdown-content a {
 	color: var(--accent);
 	text-underline-offset: 0.2em;
+	text-decoration-thickness: 1px;
+	transition: color 250ms var(--ease-swift);
 }
 
 .sl-markdown-content a:hover {
-	color: color-mix(in srgb, var(--accent) 82%, #ffffff);
+	color: var(--accent-hover);
 }
 
 .sl-markdown-content hr {
@@ -238,26 +483,55 @@ main h1 {
 }
 
 .sl-markdown-content blockquote {
-	border-inline-start-color: var(--line-strong);
+	border-inline-start: 2px solid var(--ds-gray-500);
 	color: var(--ink-muted);
+	padding-inline-start: 1.25rem;
+}
+
+.sl-markdown-content blockquote strong {
+	color: var(--ink);
 }
 
 .sl-markdown-content code {
+	font-family: var(--font-mono);
+	font-size: 0.8125rem;
 	color: var(--ink);
 }
 
 .sl-markdown-content :not(pre) > code {
-	background: var(--surface);
+	background: var(--ds-gray-100);
 	border: 1px solid var(--line);
+	border-radius: 4px;
+	padding: 0.15em 0.4em;
+}
+
+.sl-markdown-content pre,
+.sl-markdown-content .expressive-code {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	background: var(--bg-raise);
+	overflow: hidden;
+}
+
+.sl-markdown-content .expressive-code .frame {
+	border-radius: var(--radius-lg);
+}
+
+.sl-markdown-content .expressive-code pre {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
 }
 
 .sl-markdown-content table {
 	border-color: var(--line);
+	font-size: 0.9375rem;
 }
 
 .sl-markdown-content th {
-	background: var(--surface);
+	background: var(--surface-hover);
 	color: var(--ink);
+	font-weight: 600;
 }
 
 .sl-markdown-content td {
@@ -265,13 +539,78 @@ main h1 {
 	color: var(--ink-muted);
 }
 
-/* =========================================================================
-   Home page only
-   Layout rules that only apply to the splash hero.
-   ========================================================================= */
+.sl-markdown-content img,
+.sl-markdown-content video {
+	border-radius: var(--radius-lg);
+}
+
+/* Asides (note / tip / caution / danger) */
+
+.sl-markdown-content .sl-aside {
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--line);
+	background: var(--surface-hover);
+}
+
+.sl-markdown-content .sl-aside .sl-aside__title {
+	color: var(--ink);
+}
+
+/* -------------------------------------------------------------------------
+   Pagination + footer
+   ------------------------------------------------------------------------- */
+
+.pagination-links a {
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	color: var(--ink-muted);
+	box-shadow: none;
+	transition:
+		border-color 250ms var(--ease-swift),
+		color 250ms var(--ease-swift),
+		transform 250ms var(--ease-swift);
+}
+
+.pagination-links a:hover {
+	border-color: var(--line-active);
+	color: var(--ink);
+	transform: translateY(-1px);
+}
+
+.pagination-links .link-title {
+	color: var(--ink);
+	font-size: 1.125rem;
+	line-height: 1.3;
+}
+
+footer .meta {
+	color: var(--ink-faint);
+	font-size: 0.8125rem;
+}
+
+footer .meta a {
+	color: var(--ink-faint);
+}
+
+footer .meta a:hover {
+	color: var(--ink);
+}
+
+footer .kudos {
+	color: var(--ink-faint);
+}
+
+footer .kudos:hover {
+	color: var(--ink);
+}
+
+/* -------------------------------------------------------------------------
+   Home page shell
+   ------------------------------------------------------------------------- */
 
 html[data-has-hero] {
-	--sl-content-width: 76rem;
+	--sl-content-width: var(--shell-max);
 }
 
 [data-has-hero] main {
@@ -283,13 +622,12 @@ html[data-has-hero] {
 }
 
 html[data-has-hero] .sl-container {
-	max-width: 76rem;
+	max-width: var(--shell-max);
 	margin-inline: auto;
 	padding-inline: clamp(1.25rem, 5vw, 4.5rem);
 	padding-block-end: clamp(3rem, 6vw, 5rem);
 }
 
-/* Starlight's own page footer is empty on the splash page. */
 [data-has-hero] .sl-container > footer {
 	display: none;
 }
@@ -299,6 +637,14 @@ html[data-has-hero] .sl-container {
 }
 
 #topics {
-	margin-top: clamp(1.5rem, 3vw, 3rem);
-	scroll-margin-top: calc(var(--sl-nav-height) + 2.5rem);
+	margin-top: clamp(2rem, 5vw, 4rem);
+	scroll-margin-top: calc(var(--sl-nav-height) + 2rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
 }

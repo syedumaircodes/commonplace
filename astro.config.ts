@@ -20,25 +20,37 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'SpiritLibrary',
+			description: 'Personal notes on databases, security, and the things I build.',
 			head: [
 				{ tag: 'meta', attrs: { name: 'color-scheme', content: 'dark' } },
 				{
 					tag: 'link',
-					attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-				},
-				{
-					tag: 'link',
 					attrs: {
-						rel: 'preconnect',
-						href: 'https://fonts.gstatic.com',
+						rel: 'preload',
+						href: '/fonts/geist-sans-var.woff2',
+						as: 'font',
+						type: 'font/woff2',
 						crossorigin: 'anonymous',
 					},
 				},
 				{
 					tag: 'link',
 					attrs: {
-						rel: 'stylesheet',
-						href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
+						rel: 'preload',
+						href: '/fonts/geist-serif-var.woff2',
+						as: 'font',
+						type: 'font/woff2',
+						crossorigin: 'anonymous',
+					},
+				},
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'preload',
+						href: '/fonts/geist-mono-var.woff2',
+						as: 'font',
+						type: 'font/woff2',
+						crossorigin: 'anonymous',
 					},
 				},
 			],
@@ -46,8 +58,10 @@ export default defineConfig({
 			tableOfContents: false,
 			lastUpdated: true,
 			components: {
+				Head: './src/components/Head.astro',
 				Hero: './src/components/Hero.astro',
 				Sidebar: './src/components/Sidebar.astro',
+				SiteTitle: './src/components/SiteTitle.astro',
 				ThemeSelect: './src/components/ThemeSelect.astro',
 				ThemeProvider: './src/components/ThemeProvider.astro',
 			},
