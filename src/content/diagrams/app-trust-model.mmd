@@ -1,0 +1,27 @@
+flowchart TB
+  subgraph you["you"]
+    direction LR
+    Y1["write: the code"] ~~~ Y2["pick: libraries"]
+  end
+
+  subgraph app["app"]
+    direction LR
+    A1["names: people"] ~~~ A2["passwords: secret"]
+    A3["payments: money"] ~~~ A4["visits: booked"]
+  end
+
+  subgraph people["people"]
+    direction LR
+    U1["ana"] ~~~ U2["ben"] ~~~ U3["chen"]
+  end
+
+  you -->|builds| app
+  people -->|trust with their data| app
+
+  classDef data fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  classDef actor fill:#141414,stroke:#3f3f3f,color:#ededed
+  class A1,A2,A3,A4 data
+  class Y1,Y2,U1,U2,U3 actor
+  style you fill:#101f36,stroke:#4a7bd0,color:#dbe8ff
+  style app fill:transparent,stroke:#5b7bd5,stroke-dasharray:5 4,color:#ededed
+  style people fill:#2a161b,stroke:#b5525f,color:#ffdfe3

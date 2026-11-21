@@ -1,9 +1,23 @@
 ---
 title: Introduction to Application Security
+description: Introduction to application security and basic keywords.
 ---
+
+import Diagram from "@/components/Diagram.astro";
 
 To operate effectively in any environment that requires security knowledge, it is essential to first establish a strong foundational understanding of the field. This involves navigating the vast array of acronyms that often complicate the security ecosystem and understanding what they actually mean in practice. By mastering these basics, one can better understand the requirements for securing an environment and identify the potential threats that must be considered when developing a forward-looking security strategy.
 
 At its core, application security is about trust. Every application handles data that is valuable to someone—whether that is personal names, passwords, payment information, or sensitive medical appointments. Users entrust this information to the application, often without a second thought. However, the nature of software means that a single coding error does not just affect one individual; because every user interacts with the same codebase, one mistake can potentially impact the entire user base simultaneously.
 
-While it is tempting to assume that security is solely the responsibility of a dedicated security team, the reality is that security is everyone's responsibility. The people who write the pages, configure the servers, and select the libraries are the ones making the most critical decisions. These types of mistakes are far more common than most realize. When a problem is identified during the development phase, it is a simple fix; however, once a vulnerability is discovered in a live environment, it puts everyone's data at risk. This is why security must be a priority for everyone involved in building software.
+While it is tempting to assume that security is solely the responsibility of a dedicated security team, the reality is that security is everyone's responsibility. The people who write the pages, configure the servers, and select the libraries are the ones making the most critical decisions. These types of mistakes are far more common than most realize. When a problem is identified during the development phase, it is a simple fix; however, once a vulnerability is discovered in a live environment, it puts everyone's data at risk.
+
+<Diagram
+  name="app-trust-model"
+  caption="People trust an application with their data; you are the one building and maintaining it."
+/>
+
+Although security is a term used frequently, it is rarely defined, yet it is a practice we already apply to our daily lives. Locking a front door, using a PIN on a phone, or keeping a password private are all basic security habits. Software security is fundamentally the same habit applied to a different environment; it is the act of protecting a program's information and the system it runs on from any unauthorized person or entity.
+
+It is a common misconception that security is a one-time purchase or a single switch that can be flipped to guarantee safety. Because software and the world around it are constantly evolving, security cannot be a static state. Instead, it should be viewed as a continuous habit that must be maintained.
+
+It is important to recognize that nothing is perfectly secure. For example, a door with ten locks may be incredibly safe, but it becomes so impractical that no one would want to use it. This highlights that security is ultimately a balance and the goal is to provide enough protection to make causing harm difficult, without creating so many obstacles that the system becomes unusable. True security is simply an everyday habit applied to software and consistently maintained.
