@@ -1,0 +1,37 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 56
+    padding: 16
+---
+flowchart LR
+  subgraph THREAT["threat"]
+    direction TB
+    T1["who:&nbsp;&nbsp;a person"] ~~~ T2["oops:&nbsp;&nbsp;a mistake"] ~~~ T3["event:&nbsp;&nbsp;a flood"]
+  end
+
+  subgraph VULN["vulnerability"]
+    direction TB
+    V1["code:&nbsp;&nbsp;missing check"] ~~~ V2["app:&nbsp;&nbsp;old version"] ~~~ V3["login:&nbsp;&nbsp;shared password"]
+  end
+
+  subgraph ASSET["asset"]
+    direction TB
+    A1["data:&nbsp;&nbsp;customers"] ~~~ A2["work:&nbsp;&nbsp;orders"] ~~~ A3["host:&nbsp;&nbsp;server"] ~~~ A4["trust:&nbsp;&nbsp;good name"]
+  end
+
+  THREAT --> VULN --> ASSET
+
+  classDef threatRow fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+  classDef vulnRow fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  classDef assetRow fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+  class T1,T2,T3 threatRow
+  class V1,V2,V3 vulnRow
+  class A1,A2,A3,A4 assetRow
+
+  style THREAT fill:#2a161b,stroke:#b5525f,color:#ffdfe3
+  style VULN fill:#101f36,stroke:#5b7bd5,color:#dbe8ff
+  style ASSET fill:#2a161b,stroke:#b5525f,color:#ffdfe3
+
+  linkStyle default stroke:#e07a5f,stroke-width:1.5px

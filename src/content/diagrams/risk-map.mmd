@@ -1,0 +1,15 @@
+block-beta
+  columns 3
+  LIKELY["likely<br/>try: many"] space PUBLIC["public page<br/>who: anyone<br/>data: every customer"]
+  space ADMIN["admin only<br/>who: an admin<br/>shows: wrong date"] space
+  LOW["low<br/>both: low"] space HARMFUL["harmful<br/>harm: much"]
+
+  LOW --> LIKELY
+  LOW --> HARMFUL
+
+  classDef axisCard fill:#151b25,stroke:#3f3f3f,color:#ededed
+  classDef publicCard fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+  classDef adminCard fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  class LIKELY,LOW,HARMFUL axisCard
+  class PUBLIC publicCard
+  class ADMIN adminCard

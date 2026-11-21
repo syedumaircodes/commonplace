@@ -1,0 +1,27 @@
+flowchart LR
+  subgraph LEFT[" "]
+    direction TB
+    STOLEN["stolen password<br/>key: office"]
+    REPORT["report tool<br/>orders: read"]
+    BADGE(["delete: no"])
+  end
+
+  subgraph RIGHT[" "]
+    direction TB
+    OFFICE["office<br/>door: one"]
+    FILES["files<br/>door: two"]
+    SAFE["safe<br/>door: three"]
+  end
+
+  STOLEN --> OFFICE
+  REPORT --> FILES
+
+  classDef stolenCard fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+  classDef reportCard fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  classDef filesCard fill:#173a2a,stroke:#3f8f63,color:#d6f5e3
+  class STOLEN,OFFICE,BADGE stolenCard
+  class REPORT reportCard
+  class FILES,SAFE filesCard
+
+  style LEFT fill:transparent,stroke:transparent
+  style RIGHT fill:transparent,stroke:transparent

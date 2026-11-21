@@ -1,0 +1,26 @@
+---
+title: Assets and Risks
+description: Why we need to protect assests from various types of risks
+---
+
+import Diagram from "@/components/Diagram.astro";
+
+An asset is anything worth protecting. The customer list, the orders, the server they run on, even the company's good name. A threat is a person or an event or a mistake that could harm an asset, like someone trying to break in, a careless change, or even a flood in the server. Threats are there whether or not you do anything about them. A vulnerability, on the other hand, is a weakness that a threat can use to reach the asset, such as a missing check, an old version with a known bug, or a password that everyone knows.
+
+<Diagram
+  name="assets-and-risk"
+  caption="A threat uses a vulnerability to reach an asset: the person, mistake, or event only causes harm when a weakness lets it through."
+/>
+
+Notice how you need all three for any harm to happen: the asset, the threat, and the vulnerability that connects them. Take away the vulnerability, and the threat can't reach the asset anymore.
+
+Risk is about how likely something bad is to happen, together with how much it would hurt if it did. So you picture two axes. Likelihood goes up and how easy it is, and how many people would try. While impact goes to the right, covering how much data, how much money, and how many people would be affected.
+
+Take a weakness that anyone on the internet could use on the page, one that holds every customer's detail. That sits up in the corner, likely and harmful. Then there's a bug that only an administrator could trigger, like the wrong date showing up. That one sits down at the bottom.
+
+You can't fix everything at once, So a team fixes the top corner first and works its way down. That's what risk is for, deciding what to fix first, given the time you actually have.
+
+<Diagram
+  name="risk-map"
+  caption="Likelihood rises up and impact moves right, so the public page issue sits in the likely-and-harmful corner while the admin-only bug stays low."
+/>

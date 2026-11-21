@@ -1,0 +1,21 @@
+---
+title: Least privilege and defense in depth
+description: How least privileage works and why never use only one layer of protection.
+---
+
+import Diagram from "@/components/Diagram.astro";
+
+Least privilege is a simple rule. Give each person and each program only the access its job needs and nothing more. Think of it a bit like keys. A cleaner gets a key to the office, not to the safe. If that key gets lost, the safe is still locked. In software, it's the same idea. A reporting tool that only reads orders. It gets read access, not the right to delete them.
+
+Now, why does that matter? Well, because things can go wrong. A password leaks, a program has a bug. With least privilege, whoever ends up with that access only gets one door, not the whole building.
+
+<Diagram
+  name="least-privilege-depth"
+  caption="A stolen password reaches one office door, and the reporting tool reads orders but cannot delete them or open the safe."
+/>
+
+Defense in depth is the idea of using more than one layer of protection, so that a single failure doesn't expose everything. For example, you might have customer data on a server, with a check in front of the site on every page for whose data it is, which limits who can read the files on the server, and a backup stored somewhere else.
+
+Now, say one layer fails. For example, the check has a bug and someone gets past it. The next layer still stands, the page still checks whose data it is and stops right there.
+
+No single layer is perfect, and that's actually the point: you don't bet everything on one.
