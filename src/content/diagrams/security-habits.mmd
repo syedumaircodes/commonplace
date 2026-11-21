@@ -1,0 +1,51 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 60
+    rankSpacing: 150
+    padding: 20
+---
+flowchart LR
+  subgraph left_col
+    direction TB
+    subgraph front["front door"]
+      D1["locked"]
+    end
+
+    subgraph phone["phone"]
+      D2["PIN"]
+    end
+
+    subgraph password["password"]
+      D3["kept to yourself"]
+    end
+  end
+
+  subgraph right_col
+    direction TB
+    HABIT(["a habit"])
+
+    subgraph app["an app"]
+      A1["information"]
+      A2["the system it runs on"]
+    end
+
+    HABIT ~~~ app
+  end
+
+  phone --> app
+
+  MORE(["more protection"]) --> EASY(["easy to use"])
+
+  classDef inner fill:#141414,stroke:#3f3f3f,color:#ededed
+  classDef pill fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  classDef focus fill:#0f2e1d,stroke:#5b7bd5,color:#dbe8ff,stroke-width:2px
+  class D1,D2,D3,A1,A2 inner
+  class HABIT,MORE pill
+  class EASY focus
+  style front fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  style phone fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  style password fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  style app fill:#0f2e1d,stroke:#3f8f63,color:#d6f5e3
+  style left_col fill:transparent,stroke:none,color:transparent
+  style right_col fill:transparent,stroke:none,color:transparent
