@@ -1,0 +1,28 @@
+---
+title: Security Attacks History and the CIA Triad
+description: A brief overview of the famous security attacks of the last decade and how they link to the CIA Triad.
+---
+
+When you put a few well-known security incidents side by side, you can actually see how security has changed. Each one seems to move the problem somewhere new.
+
+Back in 2014, it was Heartbleed, a bug in OpenSSL, which was a library that a huge number of sites used to encrypt their traffic. The problem was that it let anyone on the internet read the memory of systems running the two vulnerable versions.
+
+Then, in 2017, Equifax announced a breach, and the personal information of 147 million people was exposed from one company. This really shows how a single system can hold a whole country's worth of people.
+
+That same year, there was WannaCry, which was ransomware. A program that basically locks your files and asks for money to unlock them. It spread on its own through a weakness in the way Windows shared files from one computer to the next, and then it asked users to pay to get their files back.
+
+In 2020, attackers got into how SolarWinds built its Orion software and slipped their own code into it. What made this so clever was that the code was signed by the company, just like the real thing, so it looked completely legitimate to the customers who ran it.
+
+Looking at these incidents together, you can see a pattern: shared code, data at scale, money, and then the software itself. Each time, the attackers went where the value was.
+
+## The CIA Triad
+
+At the heart of security are three questions, and they're easiest to see when you look at one small example. Think of a list of customers, for instance, with their names, their cities, and how many orders they've placed. Those are the kinds of questions you can ask about it, and together, they're called the CIA Triad.
+
+We start with confidentiality, which is the first one. It means that only the people who should be able to read the data actually can. For example, the support team reads the list while a stranger on the internet doesn't. When a file password leaks, confidentiality is what failed.
+
+Integrity is the second one. It means that the data is correct, and that nobody who wasn't allowed to change it did. If someone quietly turned two orders into twenty, nothing would have leaked at all, but now you couldn't trust the list.
+
+Availability is the third one. It means that the data is there when you need it. A list that nobody can open because the server is down doesn't really protect anything, right? It just stops the business.
+
+Notice how each question protects something different, and that fixing one can sometimes hurt another. Drop the list away so tightly that nobody can read it, and confidentiality becomes perfect, but availability is gone. So with any system, you should always ask all three: Who can read it? Is it still correct? And can you reach it when you need it?
