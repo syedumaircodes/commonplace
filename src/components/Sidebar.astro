@@ -1,5 +1,4 @@
 ---
-import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
 import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
 import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
 
@@ -22,4 +21,3 @@ const visibleSidebar = sidebar.filter(belongsToCurrentTopic);
 
 <SidebarPersister><SidebarSublist sublist={visibleSidebar} /></SidebarPersister>
 
-<div class="md:sl-hidden"><MobileMenuFooter /></div>
