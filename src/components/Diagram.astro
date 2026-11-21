@@ -1,0 +1,182 @@
+---
+import { PeleError, render } from 'pele';
+
+interface Props {
+	/** Name of a `.mmd` file in `src/content/diagrams/` (extension optional). */
+	name?: string;
+	/** Inline Mermaid source. Takes precedence over `name`. */
+	source?: string;
+	/** Caption shown beneath the diagram. */
+	caption?: string;
+	/** Base label size in pixels. */
+	fontSize?: number;
+}
+
+const { name, source, caption, fontSize = 15 } = Astro.props;
+
+// Every diagram source in `src/content/diagrams/` is inlined at build time.
+const sources = import.meta.glob('../content/diagrams/**/*.mmd', {
+	query: '?raw',
+	import: 'default',
+	eager: true,
+}) as Record<string, string>;
+
+const normalize = (value: string) =>
+	value.replace(/^\.\.\/content\/diagrams\//, '').replace(/^\.\/?/, '').replace(/\.mmd$/, '');
+
+const byName = new Map<string, string>();
+for (const [path, text] of Object.entries(sources)) {
+	byName.set(normalize(path), text);
+}
+
+function getSource(): string {
+	if (source) return source.trim();
+	if (!name) {
+		throw new Error('<Diagram> requires either a `source` or a `name` prop.');
+	}
+	const key = normalize(name);
+	const found = byName.get(key) ?? byName.get(key.replace(/^.*\//, ''));
+	if (found === undefined) {
+		const available = [...byName.keys()].sort().join(', ') || 'none';
+		throw new Error(
+			`Diagram "${name}" was not found in src/content/diagrams. Available diagrams: ${available}`,
+		);
+	}
+	return found.trim();
+}
+
+/** Stable, SVG-safe id prefix so multiple diagrams on a page don't share ids. */
+function hash(input: string): string {
+	let h = 2166136261;
+	for (let i = 0; i < input.length; i += 1) {
+		h ^= input.charCodeAt(i);
+		h = Math.imul(h, 16777619);
+	}
+	return (h >>> 0).toString(36);
+}
+
+const mermaid = getSource();
+
+let svg = '';
+let error: { message: string; snippet?: string } | null = null;
+
+try {
+	svg = render(mermaid, {
+		idPrefix: `pele-${hash(mermaid)}`,
+		fontSize,
+		fontFamily: "'Geist Sans', ui-sans-serif, system-ui, sans-serif",
+		fontFamilyMono: "'Geist Mono', ui-monospace, monospace",
+		responsive: true,
+	}).svg;
+} catch (caught) {
+	if (caught instanceof PeleError) {
+		error = {
+			message: caught.message,
+			snippet: caught.snippet || undefined,
+		};
+	} else {
+		throw caught;
+	}
+}
+---
+
+<figure class="diagram">
+	{
+		error ? (
+			<div class="diagram-error" role="alert">
+				<p class="diagram-error-title">Diagram could not be rendered</p>
+				<p class="diagram-error-message">{error.message}</p>
+				{error.snippet && <pre class="diagram-error-snippet">{error.snippet}</pre>}
+			</div>
+		) : (
+			<div class="diagram-frame" set:html={svg} />
+		)
+	}
+	{caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+	.diagram {
+		/* Pele theme variables, mapped onto the site's design tokens. */
+		--pele-bg: transparent;
+		--pele-fg: var(--ink);
+		--pele-fg-on-light: #100f0f;
+		--pele-fg-on-dark: #ffffff;
+		--pele-muted: var(--ink-faint);
+		--pele-line: var(--ink-muted);
+		--pele-surface: var(--ds-gray-200);
+		--pele-surface-alt: var(--ds-gray-300);
+		--pele-border: var(--ds-gray-500);
+		--pele-accent: var(--accent);
+		--pele-critical: #e5484d;
+		--pele-error: #e5484d;
+		--pele-font: var(--font-sans);
+		--pele-font-mono: var(--font-mono);
+		--pele-radius: var(--radius-sm);
+		--pele-series-1: var(--ds-blue-600);
+		--pele-series-2: #f58518;
+		--pele-series-3: #54a24b;
+		--pele-series-4: #e45756;
+		--pele-series-5: #72b7b2;
+		--pele-series-6: #eeca3b;
+		--pele-series-7: #b279a2;
+		--pele-series-8: #9d755d;
+
+		margin: 1.5rem 0;
+		padding: clamp(1rem, 3vw, 1.5rem);
+		border: 1px solid var(--line);
+		border-radius: var(--radius-lg);
+		background: var(--bg-raise);
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+	}
+
+	.diagram-frame {
+		display: flex;
+		justify-content: center;
+	}
+
+	.diagram-frame :global(svg) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+	}
+
+	.diagram figcaption {
+		margin-top: 0.875rem;
+		color: var(--ink-faint);
+		font-size: 0.8125rem;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.diagram-error {
+		margin: 0;
+		font-size: 0.875rem;
+		line-height: 1.55;
+	}
+
+	.diagram-error-title {
+		margin: 0 0 0.375rem;
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	.diagram-error-message {
+		margin: 0;
+		color: var(--ink-muted);
+	}
+
+	.diagram-error-snippet {
+		margin: 0.75rem 0 0;
+		padding: 0.75rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-sm);
+		background: var(--surface-hover);
+		color: var(--ink);
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		white-space: pre-wrap;
+		overflow-x: auto;
+	}
+</style>

@@ -41,4 +41,10 @@ export const topics: Topic[] = [
     kind: 'course',
     source: 'Microsoft',
   },
+  {
+    slug: 'security-fundamentals',
+    title: 'Security Fundamentals',
+    description: 'Notes on core security principles and practices.',
+    kind: 'course',
+  },
 ];
