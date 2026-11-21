@@ -10,8 +10,14 @@ const { topic } = Astro.props;
 const prefix = `notes/${topic}`;
 
 const notes = (await getCollection('docs', ({ id }) => id.startsWith(`${prefix}/`)))
-	.filter(({ id }) => id !== `${prefix}/index`)
-	.sort((a, b) => a.id.localeCompare(b.id));
+	// Exclude topic and nested section index pages from the note list.
+	.filter(({ id }) => !/(^|\/)index$/.test(id))
+	// Respect explicit `sidebar.order`, then fall back to filename order.
+	.sort((a, b) => {
+		const orderA = a.data.sidebar?.order ?? Number.MAX_SAFE_INTEGER;
+		const orderB = b.data.sidebar?.order ?? Number.MAX_SAFE_INTEGER;
+		return orderA - orderB || a.id.localeCompare(b.id);
+	});
 ---
 
 {

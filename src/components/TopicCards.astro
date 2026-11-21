@@ -1,5 +1,14 @@
 ---
 import { topics } from '@/data/topics';
+
+const kindLabels = {
+	book: 'Book',
+	course: 'Course',
+	specialization: 'Specialization',
+	article: 'Article',
+	video: 'Video',
+	docs: 'Docs',
+} as const;
 ---
 
 <ol class="topic-list">
@@ -8,6 +17,10 @@ import { topics } from '@/data/topics';
 			<li>
 				<a class="topic-row" href={`/notes/${topic.slug}/`}>
 					<span class="topic-main">
+						<span class="topic-meta">
+							<span class="topic-kind">{kindLabels[topic.kind]}</span>
+							{topic.source && <span class="topic-source">{topic.source}</span>}
+						</span>
 						<span class="topic-title">{topic.title}</span>
 						<span class="topic-description">{topic.description}</span>
 					</span>
@@ -74,6 +87,31 @@ import { topics } from '@/data/topics';
 	.topic-main {
 		display: block;
 		min-width: 0;
+	}
+
+	.topic-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.7rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-muted);
+	}
+
+	.topic-kind {
+		padding: 0.2rem 0.55rem;
+		border: 1px solid var(--line-strong);
+		border-radius: 999px;
+		color: var(--accent);
+	}
+
+	.topic-source {
+		text-transform: none;
+		letter-spacing: 0.01em;
 	}
 
 	.topic-title {

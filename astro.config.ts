@@ -2,6 +2,18 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
+import { topics } from './src/data/topics';
+
+// One sidebar group per topic, derived from `src/data/topics.ts` so the
+// registry is the only place a topic needs to be registered.
+const sidebar = topics.map((topic) => ({
+	label: topic.title,
+	items: [
+		{ label: 'Overview', link: `/notes/${topic.slug}/` },
+		{ autogenerate: { directory: `notes/${topic.slug}` } },
+	],
+}));
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://spiritlibrary.vercel.app',
@@ -32,35 +44,14 @@ export default defineConfig({
 			],
 			customCss: ['./src/styles/custom.css'],
 			tableOfContents: false,
+			lastUpdated: true,
 			components: {
 				Hero: './src/components/Hero.astro',
 				Sidebar: './src/components/Sidebar.astro',
 				ThemeSelect: './src/components/ThemeSelect.astro',
 				ThemeProvider: './src/components/ThemeProvider.astro',
 			},
-			sidebar: [
-				{
-					label: 'Grokking Relational Database Design',
-					items: [
-						{ label: 'Overview', link: '/notes/grokking-relational-database-design/' },
-						{ autogenerate: { directory: 'notes/grokking-relational-database-design' } },
-					],
-				},
-				{
-					label: 'Security Engineering v3',
-					items: [
-						{ label: 'Overview', link: '/notes/security-engineering-v3/' },
-						{ autogenerate: { directory: 'notes/security-engineering-v3' } },
-					],
-				},
-				{
-					label: 'Microsoft SQL Server',
-					items: [
-						{ label: 'Overview', link: '/notes/microsoft-sql/' },
-						{ autogenerate: { directory: 'notes/microsoft-sql' } },
-					],
-				},
-			],
+			sidebar,
 		}),
 	],
 });
