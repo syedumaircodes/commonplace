@@ -523,20 +523,71 @@ main h1 {
 	background: transparent;
 }
 
+/* Tables — a bordered, scrollable card with a quiet header band. */
+
 .sl-markdown-content table {
-	border-color: var(--line);
-	font-size: 0.9375rem;
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	border: 1px solid var(--line);
+	border-collapse: separate;
+	border-spacing: 0;
+	border-radius: var(--radius-lg);
+	background: var(--bg-raise);
+	font-size: 0.875rem;
+	line-height: 1.55;
+}
+
+.sl-markdown-content th,
+.sl-markdown-content td {
+	padding: 0.75rem 1rem;
+	border-bottom: 1px solid var(--line);
+	vertical-align: top;
+}
+
+/* Keep a consistent inset on the outer cells rather than flush text. */
+.sl-markdown-content :is(th:first-child, td:first-child) {
+	padding-inline-start: 1rem;
+}
+
+.sl-markdown-content :is(th:last-child, td:last-child) {
+	padding-inline-end: 1rem;
 }
 
 .sl-markdown-content th {
 	background: var(--surface-hover);
+	border-bottom-color: var(--line-strong);
 	color: var(--ink);
+	font-size: 0.75rem;
 	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
 }
 
 .sl-markdown-content td {
-	border-color: var(--line);
 	color: var(--ink-muted);
+}
+
+.sl-markdown-content tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.sl-markdown-content tbody tr {
+	transition: background-color 200ms var(--ease-swift);
+}
+
+.sl-markdown-content tbody tr:hover {
+	background: var(--ds-gray-alpha-100);
+}
+
+.sl-markdown-content td strong {
+	color: var(--ink);
+}
+
+.sl-markdown-content table code {
+	font-size: 0.8125rem;
 }
 
 .sl-markdown-content img,
