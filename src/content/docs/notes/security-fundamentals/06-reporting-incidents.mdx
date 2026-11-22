@@ -1,0 +1,16 @@
+---
+title: Reporting Incidents
+description: How to safely report incidents you encounter on websites.
+---
+
+If you find a problem in someone else's software by accident, just by using it. Responsible disclosure, also called coordinated disclosure, is a way of handling that situation. You report the problem privately to the owner first and give them time to fix it before anyone discusses it publicly.
+
+The process has three steps. First, the finder reports the issue privately. Then the owner confirms it and builds a fix. Finally, once people can update, the details go public, often with credit to the finder.
+
+Posting the problem right away would be risky because the moment it becomes public, attackers know about it too, and nobody has a fix yet. Going public at all matters because users deserve to know, and it keeps owners from sitting on a problem. All of it starts with the finder knowing where to send that first report.
+
+Security.txt is a small text file a site publishes at a standard address that everyone agrees on, and it explains how to report a security problem.
+
+GitHub's file, for example, lives `at /.well-known/security.txt.` The first line is the important one. Contact states where to send a report, which in GitHub's case points to their page on HackerOne, a site companies use to receive security reports. Policy points to the rules for reporting, and Expires is the date this file stops being trusted, so someone has to keep it current. There is no signing and no searching around.
+
+It is one plain file at the same address on any site that has one, so whoever finds a problem knows exactly where to send it.
