@@ -1,0 +1,20 @@
+---
+title: CVEs
+description: Introduction to CVEs and how they work.
+---
+
+When thousands of products have thousands of problems, how do people know they are talking about the same one? A CVE is an identifier for one publicly known vulnerability. The letters stand for Common Vulnerabilities and Exposures. `CVE-2021-44228` is a specific identifier, and every report that uses that ID refers to the same problem. The ID itself is just a year and a number. It does not tell you how bad the problem is or which version fixes it. It is only a name everyone can agree on.
+
+Hundreds of organizations called CVE Numbering Authorities hand out CVEs, and most of them are software companies naming problems in their own products. All of it is one program, sponsored by CISA, the Cybersecurity and Infrastructure Security Agency. So whoever hands out the name, it means the same problem to everyone.
+
+The official CVE record for a problem in log4j, a library that many Java programs use for writing log messages, shows how this works in practice. The ID appears right at the top, and that is the one name every other source uses for this one problem. Below it is the description, which explains that someone could run their own code through Apache log4j. The record says what the problem is and which versions are affected.
+
+It also shows who assigned it, the numbering authority for that project, and when it was published. At the bottom are the references, links to the advisories and the fixes. The record itself stays short on purpose. It names the problem and points you to the places that say more. That is how you would look up a real vulnerability record.
+
+## CVEs and CWEs
+
+A CVE names one problem in one product, but many problems are the same kind of mistake made again in different code. A weakness category is a kind of mistake that leads to problems, such as trusting input without checking it. The common list of these is CWE, the Common Weakness Enumeration, a community-developed list that MITRE keeps. For example, one patient opening another patient's record just by changing a number in the address is a specific instance. Each bug like that gets its own CVE, but they all share one weakness number, CWE-639. Fixing one bug fixes one bug, but knowing the category tells you what to look for everywhere else in your code.
+
+A CVE record says what the problem is, but if you build software, you need something more specific: which package, which versions, and which version fixes it. The GitHub Advisory Database is a free public collection of security advisories mapped to packages, the libraries you install with tools like npm for JavaScript, pip for Python, and Maven for Java.
+
+Many of them point to a CVE and say exactly which versions are affected and which are patched. OSV, short for Open Source Vulnerabilities, is an open database that gathers advisories from many sources into one shared format, so tools can read them all the same way. So one problem can end up with several records: a CVE, a GitHub Advisory, and an OSV entry. They point to each other, and each one adds what its readers need.
