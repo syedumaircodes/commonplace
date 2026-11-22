@@ -1,0 +1,30 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 48
+    padding: 16
+---
+flowchart LR
+  subgraph NORMAL["a normal search"]
+    N1["search box<br/>lunch"] --> N2["query built<br/>WHERE user = you<br/>AND body LIKE '%lunch%'"] --> N3["database<br/>returns your matches"]
+  end
+
+  subgraph ATTACK["an injection"]
+    A1["search box<br/>' OR 1=1 --"] --> A2["query built<br/>WHERE user = you<br/>AND body LIKE '%'<br/>OR 1=1 --"] --> A3["database<br/>returns every message"]
+  end
+
+  classDef inputCard fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  classDef queryCard fill:#151b25,stroke:#3f3f3f,color:#ededed
+  classDef safeCard fill:#173a2a,stroke:#3f8f63,color:#d6f5e3
+  classDef badCard fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+
+  class N1,A1 inputCard
+  class N2,A2 queryCard
+  class N3 safeCard
+  class A3 badCard
+
+  style NORMAL fill:#0f1f17,stroke:#3f8f63,color:#d6f5e3
+  style ATTACK fill:#2a161b,stroke:#b5525f,color:#ffdfe3
+
+  linkStyle default stroke:#7a7a7a,stroke-width:1.5px

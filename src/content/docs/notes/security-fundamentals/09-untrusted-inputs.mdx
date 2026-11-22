@@ -1,0 +1,36 @@
+---
+title: Untrusted Inputs
+description: Introduction to how code can be comprimised.
+---
+
+import Diagram from "@/components/Diagram.astro";
+
+When you are in an environment where you or your team produces code, or you are in an organization that is primarily software-based, you will want to keep an eye on the processes and practices that enable security in the code you produce. The goal is to preemptively put things in practice so that you have higher confidence in the security of the software you produce. Understanding how to secure systems while producing code is the foundation of that confidence.
+
+Input is anything a program gets from outside its own code. A box on a form, the address in the browser, a file someone is uploading, or even a reply from another program. All of that comes from somewhere you do not control, which is why it is called untrusted input. The program has no idea who typed it or why. Most people type something normal, so we do not expect anything malicious, but one person might type something on purpose and the program cannot tell them apart. So input stays untrusted until the code checks it.
+
+In most cases, the input gets pasted right next to the program's own instructions. When the input is written in a certain way, the program follows it as an instruction instead of keeping it as data. That is the whole trick behind attacks like SQL injection and cross-site scripting. A vulnerability is a weakness someone can use to make a program do something it should not. Input handled the wrong way sits near the top of every list of the most common vulnerabilities. So most vulnerabilities start right at the point where outside text comes in.
+
+## SQL Injection
+
+When a program wants data from its database, it sends a query, a small question written in SQL, the language most databases speak. Consider a messages app with a search box. The query asks for only your messages with the search word somewhere in the text. A lot of code builds that query by taking the text of the query and pasting the search words into the middle of it. Type "lunch" and the database gets a normal question back, just one match.
+
+Now, what if someone types something else? If you write a SQL injection and ask for all of the data, the database does exactly what it is told and sends back every message in the table, everyone's, not only yours. SQL injection is when input changes the query instead of being looked up by it. The same trick can read, change, or even delete data the program never wanted to touch.
+
+<Diagram
+  name="sql-injection"
+  caption="The same search box, two queries. A normal word stays inside the quotes as data, while the injected text closes the quote and adds its own condition, so the database returns every message."
+/>
+
+## Cross-Site Scripting (XSS)
+
+A web page is really a list of instructions for the browser written in HTML, and the browser follows those instructions. One of them is the script tag. When the browser finds a script on a page, it runs it right away with everything that page is allowed to do.
+
+Many sites show you text that somebody else wrote, such as a note, a comment, or a name on a profile. The site stores it, then builds a page with that text in the middle, and sends the page to whoever asks. So what happens when, someone saves a comment with a script tag instead?
+
+The site puts that text into the page exactly the same way. You open the page, and the browser cannot tell the text from the site's own instructions. So your browser runs it, as if the site itself had sent it. This is called cross-site scripting. Someone else's code runs in your page, able to read what they see and act as you on that site. It happens anywhere a page shows text from a user the way it was typed.
+
+<Diagram
+  name="cross-site-scripting"
+  caption="One user's comment is stored and then pasted into everyone's page. By the time the browser reads it, the text and the site's own instructions look the same, so the script runs with the site's access."
+/>

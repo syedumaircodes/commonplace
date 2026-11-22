@@ -1,0 +1,27 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 28
+    rankSpacing: 52
+    padding: 16
+---
+flowchart TB
+  ATTACKER["attacker<br/>posts a comment:<br/>#lt;script#gt;steal()#lt;/script#gt;"] --> STORE["site stores the comment<br/>as ordinary text"]
+
+  VICTIM["victim<br/>opens the page"] --> PAGE["site pastes the text<br/>into the page HTML"]
+
+  STORE --> PAGE
+  PAGE --> BROWSER["browser reads the page<br/>it cannot tell text from instructions"]
+  BROWSER --> RUN["the script runs<br/>as the site<br/>it reads the page<br/>and acts as the victim"]
+
+  classDef attackerCard fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+  classDef siteCard fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  classDef victimCard fill:#173a2a,stroke:#3f8f63,color:#d6f5e3
+  classDef runCard fill:#3a1f1f,stroke:#b5525f,color:#ffe4e7
+
+  class ATTACKER attackerCard
+  class STORE,PAGE siteCard
+  class VICTIM,BROWSER victimCard
+  class RUN runCard
+
+  linkStyle default stroke:#7a7a7a,stroke-width:1.5px
