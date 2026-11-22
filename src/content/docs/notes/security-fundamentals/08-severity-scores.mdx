@@ -1,0 +1,22 @@
+---
+title: Severity scores
+description: Introduction to Severity scores and their detials.
+---
+
+The GitHub Advisory Database is a searchable collection where every row is one advisory. Down the left are the ecosystems, such as npm, pip, Maven, and more. New ones arrive every day, so the list changes all the time.
+
+Searching for a package like log4j-core shows the advisories for that package, each with its severity. One entry covers remote code injection in log4j and is rated critical.
+
+What a builder needs is all there: the package, the affected versions, and the patch versions to move to. Every advisory has its own ID, the GHSA, alongside the CVE it is about, so one search finds the same problem everywhere. Search it for what you run, and it tells you exactly which version to update to.
+
+## Severity Scores
+
+A severity score is a number from 0 to 10 that says how bad a vulnerability could be. The common one is CVSS, the Common Vulnerability Scoring System, from an organization called FIRST.
+
+It is worked out from questions about the problem. Can someone use it over the network? Do they need to sign in first? Does someone have to click something? And what happens to confidentiality, integrity, and availability? The number falls into a band: low up to 3.9, medium from 4, high from 7, and critical from 9 to 10.
+
+A severity score tells you how bad a vulnerability could be, but a different question is whether anyone is using it today. CISA keeps a list called Known Exploited Vulnerabilities, or KEV.
+
+Every entry on it has really been used in attacks. If something you run is on that list, it goes to the top of the pile. For everything else, there is EPSS, the Exploit Prediction Scoring System, also from FIRST. It estimates the chance that a CVE will be used in the wild in the next 30 days.
+
+CISA's Known Exploited Vulnerabilities catalog is published by CISA itself on GitHub. The whole list lives in files there. It comes as two files with the same list in them, one you can open as a spreadsheet and one made for programs to read. The notes under the files say this copy is updated whenever the catalog is, usually within minutes of CISA's own site.

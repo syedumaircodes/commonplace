@@ -3,7 +3,14 @@ title: CVEs
 description: Introduction to CVEs and how they work.
 ---
 
+import Diagram from "@/components/Diagram.astro";
+
 When thousands of products have thousands of problems, how do people know they are talking about the same one? A CVE is an identifier for one publicly known vulnerability. The letters stand for Common Vulnerabilities and Exposures. `CVE-2021-44228` is a specific identifier, and every report that uses that ID refers to the same problem. The ID itself is just a year and a number. It does not tell you how bad the problem is or which version fixes it. It is only a name everyone can agree on.
+
+<Diagram
+  name="cve-identifiers"
+  caption="Different sources call one flaw different things. The CVE Program and its numbering authorities give it one shared identifier."
+/>
 
 Hundreds of organizations called CVE Numbering Authorities hand out CVEs, and most of them are software companies naming problems in their own products. All of it is one program, sponsored by CISA, the Cybersecurity and Infrastructure Security Agency. So whoever hands out the name, it means the same problem to everyone.
 
