@@ -1,0 +1,28 @@
+---
+title: Containers
+description: Introduction to Containers.
+---
+
+A program that works on one computer often fails on the next because it depends on everything around it: the files, the libraries, the settings, the exact versions of each. That is the environment.
+
+A container is a running program packed together with everything it needs, in a box with its own view of the system, its own files, its own list of running programs, its own network address. The program inside only sees what is inside the box.
+
+All containers run on the host, the computer underneath them, and they all share the host's kernel, the core of its operating system. So it is one core with walls drawn around each program.
+
+A virtual machine brings a whole operating system of its own, kernel and all. That is much heavier and much slower to start. A container skips that, so it starts in a moment and uses far less. But what you get is thinner walls around one shared kernel.
+
+## Images
+
+When you start a container, it starts from a container image, a package that holds everything the container needs: the files, the program, its libraries, and its settings.
+
+The image itself never changes. It is read-only. It is built from a recipe, one step at a time: start from a small system, add the language, add the app. Each step adds a layer, a slab holding only what that step changed on top of the last one.
+
+Images live in a registry, a place to store and share them, like a library for images. A computer pulls the image it needs from there. If it already has some of the layers, it reuses them and only fetches what is new.
+
+From one image you can start as many containers as you like, which also means whatever is in the image, the good and the bad, ends up in every container.
+
+One of the things that surprises people is how much of a container's risk comes in with the image. It could include old packages, or tools you don't need at all. An image from a registry can be out of date, or not be what it says, and still look very good.
+
+Every image starts from a base image, the one its recipe is built on top of, and it inherits everything the base image has, whether the app needs it or not. A full base image is built to be handy for everyone: compilers, tools, libraries, for pictures and databases, hundreds of packages.
+
+Your app might use a handful of them, but the rest just came along for the ride. Each of these packages is an attack surface. Each one can have its own known problem, so a scanner finds a lot more on the big one, mostly in things the app never touches. That is a lot of noise to read through, and a lot of real risk you did not need. That is why many images come in a slim version, with only what is needed to run the language.
