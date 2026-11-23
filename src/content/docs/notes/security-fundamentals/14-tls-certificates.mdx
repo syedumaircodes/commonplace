@@ -1,0 +1,41 @@
+---
+title: TLS Certificates
+description: Introduction TLS certificates and how they work.
+---
+
+import Diagram from "@/components/Diagram.astro";
+
+A laptop and a site communicate by sending requests and receiving responses. That message does not fly straight back. It passes through the restaurant's wifi, your internet provider, and other networks along the way. None of them are yours, and you cannot see who is running them. If nothing protects it, the network traffic travels as plain text.
+
+Think of it like a postcard. Anyone at any stop along the way can read it, everywhere, including a password. And it is not only reading. Someone in the path can change it too, swap a link, add something to the page. With plain text, the laptop has no way to tell the page was touched.
+
+TLS, which stands for Transport Layer Security, and it turns that postcard into a sealed envelope. Every message between the two ends gets wrapped, so only those two can open it. It starts with a handshake, a short exchange before any real data moves. The two ends agree on the same secret keys without ever sending those keys across the network. And the server proves who it is, so you know you are talking to the real site and not someone in between.
+
+From then on, every message is encrypted, which means scrambled, so that only someone with the key can turn it back. Anyone watching in between sees scrambled characters and nothing else. And if anyone changes a message on the way, the seal breaks and the other end throws it away. When the web uses TLS, that means HTTPS.
+
+The same requests and responses travel inside the envelope. One thing still shows on the outside: which side you are talking to. But what you need and what you send, and what comes back, stays sealed.
+
+## Keys and Certificates
+
+One of the things that makes an encrypted connection work is a pair of keys made together. A public key, which anyone is allowed to have, and a private key, which only its owner ever keeps. What one key does, only the other one can check.
+
+A certificate is a small file, like an ID card, that ties a name to a public key. This name, this key. The server sends it during the handshake, so the other end knows which key belongs to the site. It is only good between two dates, and after that it expires. And it is signed by whoever issued the certificate, the part that says someone vouches for this card. Now, a certificate is public, so anyone can copy it.
+
+That alone proves nothing. The server also signs part of the handshake with its private key. Only the private key can make a signature the public key on the card accepts.
+
+A certificate says this name goes with this key. But why should your browser believe it? That depends entirely on who signed it. That is the job of a certificate authority, an organization whose whole business is vouching for these names.
+
+It checks that you control the name you are asking for and then signs your certificate. Usually it is a chain. The site's card is signed by an intermediate, and the intermediate is signed by a root. Your system and your browser ship with a short list of root certificates they already trust.
+
+The browser follows the signatures up, and if it reaches one of these roots, the whole chain is trusted. That is called the chain of trust, a line of signatures from the site up to a root. You can also make a certificate signed by itself, called self-signed. It works fine for encrypting, but nothing on the trusted list vouches for it, so a browser cannot tell it apart from a fake and warns you before going any further.
+
+<Diagram
+  name="tls-certificates"
+  caption="A certificate ties a name to a public key and is signed by its issuer. The browser follows those signatures from the site, through an intermediate, up to a root it already trusts. A self-signed certificate reaches no trusted root, so the browser warns instead."
+/>
+
+Certificate authorities are trusted to check every name they sign for. But what happens if one gets it wrong and signs a certificate for the wrong person? That is where Certificate Transparency, a system of public records for certificates, comes in.
+
+Every certificate an authority issues for the public web gets recorded in public logs, open for anyone to read. Browsers like Chrome and Safari only trust a certificate when it shows it was logged. And the logs only grow.
+
+An entry can be added but never taken out or changed without it showing, so whatever was issued stays on the record. So a site owner can search the logs for their own name and spot any certificate they never asked for. That has actually happened. Certificates for Google's own sites, issued by mistake by an authority, were found exactly this way.

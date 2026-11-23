@@ -1,0 +1,33 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 24
+    rankSpacing: 56
+    padding: 16
+---
+flowchart TB
+  subgraph CARD["what a certificate holds"]
+    direction LR
+    NAME["name<br/>spiritlibrary.com"] --- KEY["public key<br/>belongs to that name"] --- SIGN["issuer's signature<br/>vouches for the card"]
+  end
+
+  subgraph CHAIN["the chain of trust"]
+    direction LR
+    SITE["site certificate<br/>spiritlibrary.com<br/>signed by the intermediate"] --> MID["intermediate certificate<br/>signed by the root"] --> ROOT["root certificate<br/>already in your browser"] --> TRUST(["trusted<br/>padlock shown"])
+  end
+
+  %% Invisible link only stacks the two panels vertically.
+  CARD ~~~ CHAIN
+
+  classDef field fill:#17253d,stroke:#5b7bd5,color:#dbe8ff
+  classDef card fill:#151b25,stroke:#3f3f3f,color:#ededed
+  classDef trusted fill:#173a2a,stroke:#3f8f63,color:#d6f5e3
+
+  class NAME,KEY,SITE,MID field
+  class SIGN,ROOT card
+  class TRUST trusted
+
+  style CARD fill:#101820,stroke:#3f3f3f,color:#ededed
+  style CHAIN fill:#101820,stroke:#3f3f3f,color:#ededed
+
+  linkStyle default stroke:#7a7a7a,stroke-width:1.5px
