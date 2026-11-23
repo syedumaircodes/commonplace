@@ -1,0 +1,26 @@
+---
+title: Authentication Methods
+description: Introduction to different authentication methods and how applications use them.
+---
+
+## Sessions
+
+One of the things that surprises people about the web is that it has no memory. Every request from your browser arrives at the site on its own. So after you sign in, how does the site know the next request is still you? You sign in once, the site checks your proof and then starts a session, which is the site remembering that you are signed in.
+
+It gives your browser a cookie, a small piece of data the browser keeps for that site. Then that browser sends the cookie with every request after that automatically. You do nothing, the site reads it, and in this case the cookie is what says who you are. No password again until the session ends.
+
+The issue is that the site trusts the cookie, so anyone who has it is treated as you. That is why a session cookie has to be hard to steal, impossible to fake, and it has to stop working once you sign out.
+
+## JSON Web Tokens
+
+Some sites do not look you up on every request. Instead they hand you a token, and a common kind is called a JSON Web Token, or JWT. It looks like one long string but is actually three parts separated by dots.
+
+The first part is the header, which says what kind of token it is and how it was signed. The second part is the claims, the facts the site wants to remember: who you are, what you are allowed to do, and when the token expires. Those two parts look scrambled but they are not hidden at all. They are written in Base64, a way of writing any data with plain letters and numbers. Turn it back and you can actually read it, so anyone who has the token can read the claims. The third part is the signature, a value worked out from the first two parts and the site's own secret key.
+
+Only that key can reproduce it. That value goes at the end and that is what makes the token trustworthy. Say someone changes "admin" from "no" to "yes" in the claims. The site works out the signature again with its key and it does not match, so the token is refused. Readable by anyone, but changeable by no one who does not have the key.
+
+## Multi-Factor Authentication
+
+When you sign in with a password, you prove something you know, and that is the trouble with it. Anything you know can be guessed, phished, or leaked with a table from some other site. With the password alone, a stolen password opens the door. Multi-factor authentication is a way of signing in that asks for more than one kind of proof.
+
+Something you know plus something you have, like a code from an app on your phone, or something you are, like a fingerprint. The point is that they are different kinds. The same stolen password opens the first lock, but whoever has it does not have your phone, so the door stays shut.

@@ -1,0 +1,24 @@
+---
+title: Permissions
+description: Introduction to permissions and how they work.
+---
+
+## Authentication vs. Authorization
+
+Two words that sound almost the same, yet they mean two different checks. Authentication is the check that proves who you are. A password, a code on your phone, a badge at the door. Once it passes, the site knows this is Sam. Authorization is the check of what you are allowed to do once the site knows who you are.
+
+If you can open your files. The payroll room is a different question, and the answer for you is no. This is where things go wrong. A site that checks who you are and then never asks the second question lets any signed-in user through every door. So authentication first, then authorization on every request. Two separate checks.
+
+## Roles and Permissions
+
+A permission is one specific action someone can be allowed to do. Read your own files, edit your own files, or view the list of every user. A role is a named group of permissions. The user role can read and edit its own files. The admin role gets everything a user has, plus viewing every user. You define that once.
+
+Then each person gets a role. Adding a new person is one line, and changing what every admin can do is one change in one place. Now the user list page asks one thing: does this person have the view all users permission? It follows the line. The page never checks for a name, only the permissions.
+
+## Single Sign-On
+
+Single Sign-On allows you to sign in with an account you already have somewhere else. The nice part is the site you are signing in to never sees your password. When you click it, the site sends your browser over to the provider. You sign in there, at the provider, with your password and maybe a second step.
+
+Your password goes only to the provider. The site you started on is not even involved. Once you are in, the provider sends you back to the site with signed proof of who you are. The site checks the provider's signature, and if it is good, then you are signed in.
+
+This is single sign-on, and under the hood it is usually two standards. OAuth for handing out access, and OpenID Connect, which adds the proof of who you are. So the site gets only what you agree to share, like your name, and never your password. Fewer passwords for you to keep track of, and one less place for a password to leak from.
