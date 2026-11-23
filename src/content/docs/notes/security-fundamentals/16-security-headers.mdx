@@ -1,0 +1,12 @@
+---
+title: Security Headers
+description: Introduction to security headers and how they are used.
+---
+
+A response coming back from a site includes headers on top, and security headers are a few more of those, lines that tell the browser how to protect this page. The browser reads them before it shows anything. The first is Strict-Transport-Security, a header that tells the browser that for this site it should only use HTTPS for a long time. HSTS for short.
+
+So next time, even if someone follows a plain link, the browser never even tries to use the unencrypted way. Then Content-Security-Policy, a list of where scripts and other content may come from, for example only from the site itself.
+
+If something injected into the page tries to load a script from anywhere else, the browser refuses it. X-Content-Type-Options tells the browser not to guess, so a file that says it is text is treated as text even if it looks like a script. And Referrer-Policy decides how much the browser tells the next site about where you came from, which can include a full address with private details in it.
+
+None of these fix a bug. They are just instructions, and they take away a lot of ways a small mistake turns into a big one.
