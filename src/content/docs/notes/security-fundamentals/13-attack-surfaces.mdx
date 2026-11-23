@@ -1,0 +1,22 @@
+---
+title: Attack Surfaces
+description: Introduction to different kinds of attack surface a hacker may try to exploit.
+---
+
+You can write very careful code and still get broken into. Code does not run on its own. It runs on infrastructure, which is basically everything underneath it. The machines, the networks, and the settings that every program depends on.
+
+Each of those is something an attacker can go after without ever touching your code. Most of that infrastructure is servers. A server is a computer whose whole job is to answer other computers all day long. So most of the time, many servers are open to the outside on purpose, and that is exactly what makes them a target. A lot of break-ins do not really need a bug at all. A setting left on that should have been off, an option someone did not close, a misconfiguration.
+
+Securing an application is not only about the code. The machine it runs on, the network around it, and the settings in between all need the same care. Good code still needs a safe place to run.
+
+## Attack Surface
+
+How many ways are there into a system? Every page, every form, every login, every tool that answers from the outside, all of those together are the system's attack surface, which is every place where someone could try to get in.
+
+Some of those doors are there on purpose, others nobody meant to leave there: a test page still online, a tool installed and forgotten. An attacker does not care which is which. They try every door. Every door you keep has to be watched, kept up to date, and checked. That is work, and the doors nobody remembers get none of it. So one of the most useful habits in security is if something does not need to be reachable, close it.
+
+## Shared Responsibility in the Cloud
+
+When you put an application in the cloud, it runs in someone else's buildings, on someone else's machines. Those companies are called cloud providers, and you rent what you need from them instead of owning it. So who secures what? The provider takes care of the buildings, the hardware, the guards at the door, and the machines in the racks. You take care of what you put in it.
+
+The split is called shared responsibility. The line moves. Say you rent a whole machine. Then keeping its operating system up to date is now your job. Rent a platform that runs your code for you, and the provider takes that over. Use ready-made software, and you mostly look after your data and who can sign in. But notice how one part is always yours, whichever way you go, your data, your accounts, and the settings you choose. A lot of cloud incidents happen right there, in the customer's part of the stack.
