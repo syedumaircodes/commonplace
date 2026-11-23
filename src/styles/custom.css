@@ -224,18 +224,6 @@ html.lenis body {
 	pointer-events: none;
 }
 
-/* Reading progress — thin accent rule under the nav. */
-.scroll-progress {
-	position: fixed;
-	inset: 0 0 auto 0;
-	z-index: 60;
-	height: 2px;
-	background: var(--accent);
-	transform: scaleX(0);
-	transform-origin: 0 50%;
-	pointer-events: none;
-}
-
 /* -------------------------------------------------------------------------
    Top navigation
    ------------------------------------------------------------------------- */
