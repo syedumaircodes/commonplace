@@ -1,0 +1,32 @@
+---
+title: Networks and Access Control
+description: Introduction to Networks and Access Control.
+---
+
+Two computers on a network each have an IP address, a number that tells the network which computer a message is for. Think of it like a street address. But one computer runs many programs at once, so a port is a numbered door on that address, and a program that waits for connections sits behind its own port.
+
+A message carries both: which computer and which door. For example, your browser opening a secure site goes to port 443, the usual door for HTTPS. A remote login goes to port 22, same building, different doors. And here is the interesting thing, a port with a program behind it answers anyone who can reach it and knock on it. Thousands of doors on every computer, and you want as few of them lit as you can get away with.
+
+## Firewalls
+
+What decides which connections reach a computer at all? A firewall, a filter that sits in front of a computer or a whole network and decides which connections get through. Every connection has to pass it before it reaches a single door.
+
+It works from a short list of rules. Each rule looks at where a connection comes from and which port it is going to. Web traffic to port 443 from anywhere is allowed. Remote logins on port 22 only from the office. And the last rule is the important one. Anything no rule allows is dropped.
+
+That is called deny by default. So even if some program behind the fence is listening by mistake, nobody outside can reach it. Now, a firewall decides who can knock. It does not fix a weak program behind an allowed door. Traffic that is allowed in reaches it all the same.
+
+## Network Segmentation
+
+When every machine sits in one flat network, every machine can reach every other one: the web server, the database, the laptops, even the printer. It is simple and convenient until one of them gets broken into. Say the printer is the weak one. From there, an attacker just moves sideways, machine to machine, until they reach the database.
+
+So networks are split into network zones, which are groups of machines with the same exposure, with a firewall between each group. The machines that face the internet go in one zone, the data in another.
+
+Only the web server is allowed through to the database. Nothing else is. Now, if the same printer gets broken into, the attacker stays in its room. Splitting a network like this is called segmentation, and it turns one big break-in into a small one.
+
+## Zero Trust
+
+The old way of thinking treated the network as a castle with a moat. Getting past the wall is hard, but once you are inside the wall, everything trusts you. The trouble with this approach is that once someone slips in, they are trusted too.
+
+And these days the people and services are often outside the walls anyway, at home, in a cafe, or in the cloud. Zero trust is a way of working where no request is trusted because of where it comes from, not even from inside. Every single request proves who is asking and that they are allowed to do this one thing, every time.
+
+So if someone gets hold of one account, it opens only what that account is allowed to do and nothing more. It is more checking for sure, but at the end of the day it is a lot less trust handed out for free.
