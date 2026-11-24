@@ -1,0 +1,16 @@
+---
+title: AI Powered Applications
+description: learn how LLMs can be integrated into regular software.
+---
+
+There are several types of generative AI applications you see in real-world use cases. The most common ones, and how everything started becoming popular, were text-based chatting, like ChatGPT. Nowadays there are several chat interfaces, and it is becoming more pervasive to have chat-based applications with a conversational feedback loop where you interact with large language models.
+
+## Multi-Model Applications
+
+A multi-model application can be hard to grasp if you have never tried to scale an application. It starts with a prompt from the user, which goes to a framework. The framework receives the prompt and decides which machine learning model to route the request to. An application might handle math, coding questions, or translations. Based on the input, the framework decides which model to use. A coding question goes to one model, which figures out the right response and sends it back through the framework to the user. Questions that are not about coding, such as translations, go to other models specialized in that area.
+
+These specialized models are valuable because they are smaller and more effective. A specialized model uses fewer resources, scales more easily, and gives better responses for its domain. Think of a generic model as someone who knows a lot about many subjects but lacks depth in any of them.
+
+As a model becomes more specific, it becomes smaller, because it concentrates only on what matters for its domain. A coding model, trains only on programming languages and is highly effective at generating code, but if you ask it something unrelated, the responses will not be very good.
+
+Generic models are large and cover many subjects but are less effective, while specific models are smaller and more effective within their domain. Sometimes models can even talk to each other to craft a response, though that is a more involved setup. At a basic level, having many different models on the back end depending on what you want to achieve makes sense, especially when solving problems at scale.
