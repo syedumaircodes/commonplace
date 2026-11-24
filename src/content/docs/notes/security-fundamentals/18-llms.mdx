@@ -1,0 +1,30 @@
+---
+title: Large Language Models
+description: Introduction to large language models.
+---
+
+When we talk about generative AI, we are mostly talking about user-facing applications. You have probably used one already, even if you're non-technical. You connect through a website like ChatGPT, and the internet carries your request to a data center, where a server somewhere produces the answer and sends it back to your screen. The cloud, made up of big companies running data centers in several places, is what hosts these services and lets them scale.
+
+Every request starts with a user prompt, an input. That input goes into the application code, which may run on one or more servers depending on scale. Most systems run in a cloud environment, which allows applications to grow and shrink based on demand. If one user becomes a million, the cloud creates several copies of the same application and replicates them. The application may also be split into parts, one handling the application itself and another handling data or heavier compute.
+
+For most AI workloads, that heavier compute uses GPUs,the same hardware that made interactive graphics and video games possible. Those GPUs do the intense computations behind generative AI. The processing then goes back to the application, which makes decisions based on the generated data, and finally returns the result to the user.
+
+## Building an LLM
+
+You do not usually set out to build a large language model from scratch. The process starts with data. You gather a dataset, which is your data source, and that data needs cleaning. If you are in the medical field, for example, you collect medical data while making sure no personal identifiable information is present. So a lot of the work is data-related.
+
+Then comes training. You use that data to train the model, which produces the actual large language model. Training happens in a cloud platform. You choose the type of task, the data, and a compute system, then start the training. The machine decides when the result is good enough.
+
+The type of training matters. Classification predicts yes or no, blue, red, green, one, zero, on or off. For large language models, you do natural language processing, or NLP, predicting based on text data using multiclass or multilabel classification. That means using a lot of plain text so the model understands what to do with language.
+
+## How LLMs work
+
+To understand how LLMs work, you first need to understand tokenizers. A tokenizer is a process that converts text into numbers. Large language models take text as input and generate text as output, but they do this by segmenting a phrase into smaller chunks, and each chunk becomes a numerical value.
+
+Those values are put into an array, which lets the machine process them and identify what each piece represents. By using numerical values, we create an index, an encoding of the original text chunk. These chunks are not necessarily whole words. A chunk might include a bit of whitespace, a word might be split in two, and even a question mark can be its own chunk.
+
+All of these representations make it easier for the machine learning model to understand text, which is the best method we have for machines to process language.
+
+Once text is broken into tokens and converted to numbers, the model acts as a probability machine. Given a piece of text, it predicts the probability of what comes next, token by token. Given massive amounts of training text, the model determines the probability of each next token.
+
+> So we should never treat these models as fact-spitting machines, even when their output looks accurate and correct. They only produce probabilities.
