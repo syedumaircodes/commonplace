@@ -21,3 +21,9 @@ const visibleSidebar = sidebar.filter(belongsToCurrentTopic);
 
 <SidebarPersister><SidebarSublist sublist={visibleSidebar} /></SidebarPersister>
 
+<script>
+	document.querySelectorAll('.sidebar-content details').forEach((d) => {
+		d.setAttribute('open', '');
+		d.querySelector('summary')?.addEventListener('click', (e) => e.preventDefault());
+	});
+</script>

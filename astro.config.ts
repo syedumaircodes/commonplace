@@ -62,6 +62,7 @@ export default defineConfig({
 				Hero: './src/components/Hero.astro',
 				Sidebar: './src/components/Sidebar.astro',
 				SiteTitle: './src/components/SiteTitle.astro',
+				SocialIcons: './src/components/SocialIcons.astro',
 				ThemeSelect: './src/components/ThemeSelect.astro',
 				ThemeProvider: './src/components/ThemeProvider.astro',
 			},
