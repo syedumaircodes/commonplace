@@ -1,5 +1,11 @@
 /** The kind of source a topic's notes are gathered from. */
-export type SourceKind = 'book' | 'course' | 'specialization' | 'article' | 'video' | 'docs';
+export type SourceKind =
+  | "book"
+  | "course"
+  | "specialization"
+  | "article"
+  | "video"
+  | "docs";
 
 export interface Topic {
   /** URL segment for the topic. Must match the folder under `src/content/docs/notes/`. */
@@ -19,9 +25,15 @@ export interface Topic {
 // Array order is the order topics appear on the home page.
 export const topics: Topic[] = [
   {
-    slug: 'security-fundamentals',
-    title: 'Security Fundamentals',
-    description: 'Notes on core security principles and practices.',
-    kind: 'course',
+    slug: "security-fundamentals",
+    title: "Security Fundamentals",
+    description: "Notes on core security principles and practices.",
+    kind: "course",
+  },
+  {
+    slug: "microsoft-sql-server",
+    title: "Microsoft SQL Server",
+    description: "Notes on working with Microsoft SQL Server.",
+    kind: "specialization",
   },
 ];
