@@ -1,0 +1,16 @@
+---
+title: LLM Security
+description: Introduction on how to secure LLMs
+---
+
+A potential problem with LLMs sensitive information disclosure, where particular information within a model is used or provided without proper sanitization. You can trick a model into providing personal information by framing a request the right way, such as asking for a summary of yourself to use as a starting point for an article. The model may give information it has about you, and it may also hallucinate, producing inaccurate details.
+
+To prevent this, you need something that sits in the middle between what you say and what goes to the model, and between the model and the response. One approach is an HTTP API with a single endpoint that redacts personally identifiable information using regular expressions. JSON-formatted rules can strip out personal information and other potentially problematic details.
+
+The prompt goes into the application, gets processed, and comes back with the information redacted. This can apply to prompts going into a large language model or coming back from one. Unless the system is closed off enough behind a firewall, you need a service that detects and redacts sensitive details either coming into or coming out of the large language model, so specific names and details are not exposed in situations outside your control.
+
+## Insecure Plugins
+
+A plugin is code that interacts with a large language model. The core issue is implicitly trusting what comes back from the large language model and acting on it to call other code that could be leveraged for remote execution. Plugins in different frameworks and SDKs will look and be named slightly differently.
+
+Simple plugins like looking up realtime data about something are mostly harmless but if this were a broader function doing system commands, accessing a database, or depending on other things, it could be very dangerous to have available. T
