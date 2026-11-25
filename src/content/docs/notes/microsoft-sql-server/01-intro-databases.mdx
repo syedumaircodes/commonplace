@@ -1,0 +1,36 @@
+---
+title: Introduction to Databases
+description: Introduction to relational databases and how are they used.
+---
+
+import Diagram from "@/components/Diagram.astro";
+
+A database is an organized collection of structured information, much like a library full of books, where each book holds a title, an author, and detailed chapters. In a database, this information is stored in tables made up of rows and columns.
+
+Tables serve as the backbone of data organization and management, and understanding their structure is essential for efficient data retrieval, manipulation, and overall database design.
+
+A database table is built from several key elements that define how data is stored and accessed.
+
+- Columns represent the attributes of the data and each has a specific data type that dictates what kind of information it can hold, such as integers, strings, dates, or binary data.
+
+- Rows, also called records, represent individual data entries, where each row contains a unique combination of values across the columns.
+
+- A primary key is a column or set of columns that uniquely identifies each row in the table, ensuring no two rows share the same value.
+
+- A foreign key is a column or set of columns in one table that references the primary key of another table, establishing a link between them.
+
+- Constraints are rules applied to columns to enforce data integrity and consistency, such as `NOT NULL` and `UNIQUE`.
+
+## Table relationships
+
+In a database, tables are often connected to one another through keys and relationships, which help maintain data integrity and support complex queries.
+
+In a one-to-many relationship, a single row in one table can be associated with multiple rows in another. In a many-to-many relationship, multiple rows in one table can relate to multiple rows in another, and these are typically implemented using a junction table.
+
+An online store shows both shapes. One customer places many orders, so `CUSTOMERS` and `ORDERS` are one-to-many. Orders and products are many-to-many because a single order can hold several products and a product can appear in many orders. `ORDER_ITEMS` is the junction table that holds each order-and-product pair, along with the quantity.
+
+<Diagram
+	name="table-relationships"
+	caption="Each customer has many orders, and each order has many line items. Order items carry both foreign keys, so they join orders and products into a many-to-many relationship."
+/>
+
