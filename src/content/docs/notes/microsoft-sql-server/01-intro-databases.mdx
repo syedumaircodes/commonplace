@@ -30,7 +30,14 @@ In a one-to-many relationship, a single row in one table can be associated with 
 An online store shows both shapes. One customer places many orders, so `CUSTOMERS` and `ORDERS` are one-to-many. Orders and products are many-to-many because a single order can hold several products and a product can appear in many orders. `ORDER_ITEMS` is the junction table that holds each order-and-product pair, along with the quantity.
 
 <Diagram
-	name="table-relationships"
-	caption="Each customer has many orders, and each order has many line items. Order items carry both foreign keys, so they join orders and products into a many-to-many relationship."
+  name="table-relationships"
+  caption="Each customer has many orders, and each order has many line items. Order items carry both foreign keys, so they join orders and products into a many-to-many relationship."
 />
 
+## Visualizing relationships
+
+Visual aids such as entity-relationship diagrams (ERDs) can help users better understand table structures. ERDs illustrate the tables within a database schema, along with their columns, primary keys, foreign keys, and the relationships between them.
+
+> Understanding database structure through the ERD provides a clear roadmap for how data is organized and interconnected before working with actual data.
+
+Each table and its relationships contribute to the database's overall function, enabling efficient querying and data management. The structure of individual tables can also be explored directly using different tools.
